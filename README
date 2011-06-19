@@ -21,24 +21,27 @@ Completion
 ==========
    Major features and their completion / testing percentages
 
-                     | done % | test % |
-   -------------------------------------
-   | Commands        |    40% |    75% |
-   |  Keys           |   100% |    95% |
-   |  Strings        |   100% |    30% |
-   |  Hashes         |     0% |     0% |
-   |  Lists          |     0% |     0% |
-   |  Sets           |     0% |     0% |
-   |  Sorted Sets    |     0% |     0% |
-   |  Pub/Sub        |     0% |     0% |
-   |  Transactions   |     0% |     0% |
-   |  Connection     |   100% |    86% |
-   |  Server         |     0% |     0% |
-   -------------------------------------
-   | Pipelining      |   100% |     0% |
-   | Partitioning    |     0% |     0% |
-   | Replication     |     0% |     0% |
-   -------------------------------------
+                     | done % | docs % | test % |
+   ----------------------------------------------
+   | Manager         |   100% |   100% |      % |
+   | Client          |   100% |   100% |      % |
+	----------------------------------------------
+   | Commands        |        |        |    75% |
+   |  Keys           |   100% |   100% |    95% |
+   |  Strings        |   100% |   100% |    30% |
+   |  Hashes         |     0% |     0% |     0% |
+   |  Lists          |     0% |     0% |     0% |
+   |  Sets           |     0% |     0% |     0% |
+   |  Sorted Sets    |     0% |     0% |     0% |
+   |  Pub/Sub        |     0% |     0% |     0% |
+   |  Transactions   |     0% |     0% |     0% |
+   |  Connection     |   100% |   100% |    86% |
+   |  Server         |     0% |     0% |     0% |
+   ----------------------------------------------
+   | Pipelining      |   100% |   100% |     0% |
+   | Partitioning    |     0% |     0% |     0% |
+   | Replication     |     0% |     0% |     0% |
+   ----------------------------------------------
 	(21 tests, 141 assertions)
 
 Example

@@ -127,6 +127,15 @@
 			}
 		}
 
+		/**
+		 * Internal method to read a reply from the redis server
+		 *
+		 * @param object $command an instance of the command that was sent
+		 * @returns mixed the appropriate response according to the command that caused it
+		 * @throws NotConnectedException if the client is not connected
+		 * @throws RedisServerException if the client recieves an error reply from the redis server
+		 * @throws RuntimeException if the client recieved a response that was not understood
+		 */
 		private function read($command) {
 			if( !$this->connected )
 				throw new NotConnectedException("{$this->address}:{$this->port}");
