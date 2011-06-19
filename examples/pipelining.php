@@ -17,6 +17,7 @@
 	$benchmark->start('connect');
 	$redis = new RedisManager();
 	$client = $redis->connect('127.0.0.1', 6379);
+	$client->auth('test');
 	$benchmark->stop('connect');	
 
 	$benchmark->start('normal');
