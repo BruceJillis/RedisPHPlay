@@ -19,16 +19,22 @@ Goals
 
 Overview
 ========
-   The RedisPHPlay library is geared towards being usable in development. This is represent in a few ways: All validation exceptions have 1 supertype RedisValidationException, making them easy 
-   to catch. All other exceptions are RedisExceptions. Everything is documented. All input is validated. All output is as typefull as possible. Speed, the library tries to use memory as efficient
-   as possible. Completenes, the library tries to implement all redis commands and to encapsulate best practices surrounding it.
+   The RedisPHPlay library is geared towards being usable in development. This 
+   is represent in a few ways: All validation exceptions have 1 supertype 
+   RedisValidationException, making them easy to catch. All other exceptions are 
+   RedisExceptions. Everything is documented. All input is validated. All output 
+   is as typefull as possible. Speed, the library tries to use memory as 
+   efficient as possible. Completenes, the library tries to implement all redis 
+   commands and to encapsulate best practices surrounding it.
 
 Contents
 ========
    etc/
-       contains api docs, coverage docs, win32 redis binary and the settings for phpdoctor (the documentation generator).
+       contains api docs, coverage docs, win32 redis binary and the settings for 
+       phpdoctor (the documentation generator).
    examples/
-      contains a number of examples that show how to work with the library and redis in general.
+      contains a number of examples that show how to work with the library and 
+      redis in general.
    library/
       the main code of RedisPHPlay. include RedisPHPlay.php to get started.
    tests/
