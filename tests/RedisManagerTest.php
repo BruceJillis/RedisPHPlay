@@ -1,5 +1,5 @@
 <?php
-	require '..\library\PHPRedisFast.php';
+	require '..\library\RedisPHPlay.php';
 	
 	echo "THIS TEST REQUIRES A REDIS ON 127.0.0.1:6379!\n";
 	

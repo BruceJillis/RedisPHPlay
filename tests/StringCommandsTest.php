@@ -1,5 +1,5 @@
 <?php
-	require '..\library\PHPRedisFast.php';
+	require '..\library\RedisPHPlay.php';
 	
 	/**
 	 * Test for the String commands ( http://redis.io/commands#string ).

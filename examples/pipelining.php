@@ -5,7 +5,7 @@
 	 * 
 	 * @package Redis\Examples
 	 */
-	require '..\library\PHPRedisFast.php';
+	require '..\library\RedisPHPlay.php';
 	require '..\library\Benchmark.php';
 	
 	$benchmark = new Benchmark();

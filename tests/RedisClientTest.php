@@ -1,5 +1,5 @@
 <?php
-	require '..\library\PHPRedisFast.php';
+	require '..\library\RedisPHPlay.php';
 	
 	/**
 	 * Test for the RedisClient.

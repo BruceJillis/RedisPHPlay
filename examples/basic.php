@@ -5,7 +5,7 @@
 	 * 
 	 * @package Redis\Examples
 	 */
-	require '..\library\PHPRedisFast.php';
+	require '..\library\RedisPHPlay.php';
 
 	$redis = new RedisManager();
 	$client = $redis->connect('127.0.0.1', 6379);
