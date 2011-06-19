@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sun, 19 Jun 2011 13:19:11 +0000">
+<meta name="when" content="Sun, 19 Jun 2011 16:22:32 +0000">
 
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
 <link rel="start" href="../../../overview-summary.html">
@@ -39,8 +39,25 @@
 
 <table class="title">
 <tr><th colspan="2" class="title">Class Summary</th></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/append.html">APPEND</a></td><td class="description">APPEND key value ~ Append a value to a keyIf key already exists and is a string, this command appends the value at the end of the string. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/decr.html">DECR</a></td><td class="description">DECR key ~ Decrement the integer value of a key by oneDecrements the number stored at key by one. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/decrby.html">DECRBY</a></td><td class="description">DECRBY key decrement ~ Decrement the integer value of a key by the given numberDecrements the number stored at key by decrement. </td></tr>
 <tr><td class="name"><a href="../../../redis/commands/strings/get.html">GET</a></td><td class="description">GET key ~ Get the value of a keyGet the value of key. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/getbit.html">GETBIT</a></td><td class="description">GETBIT key offset ~ Returns the bit value at offset in the string value stored at keyReturns the bit value at offset in the string value stored at key. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/getrange.html">GETRANGE</a></td><td class="description">GETRANGE key start end ~ Get a substring of the string stored at a keyWarning: this command was renamed to GETRANGE, it is called SUBSTR in Redis versions </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/getset.html">GETSET</a></td><td class="description">GETSET key value ~ Set the string value of a key and return its old valueAtomically sets key to value and returns the old value stored at key. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/incr.html">INCR</a></td><td class="description">INCR key ~ Increment the integer value of a key by oneIncrements the number stored at key by one. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/incrby.html">INCRBY</a></td><td class="description">INCRBY key increment ~ Increment the integer value of a key by the given numberIncrements the number stored at key by increment. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/mget.html">MGET</a></td><td class="description">MGET key [key ...] ~ Get the values of all the given keysReturns the values of all specified keys. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/mset.html">MSET</a></td><td class="description">MSET key [key ...] ~ Get the values of all the given keysSets the given keys to their respective values. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/msetnx.html">MSETNX</a></td><td class="description">MSETNX key value [key value ...] ~ Set multiple keys to multiple values, only if none of the keys existSets the given keys to their respective values. </td></tr>
 <tr><td class="name"><a href="../../../redis/commands/strings/set.html">SET</a></td><td class="description">SET key value ~ Set the string value of a keySet key to hold the string value. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/setbit.html">SETBIT</a></td><td class="description">SETBIT key offset value ~ Sets or clears the bit at offset in the string value stored at keySets or clears the bit at offset in the string value stored at key.
+</td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/setex.html">SETEX</a></td><td class="description">SETEX key seconds value ~ Set the value and expiration of a keySet key to hold the string value and set key to timeout after a given number of seconds. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/setnx.html">SETNX</a></td><td class="description">SETNX key value ~ Set the value of a key, only if the key does not existSet key to hold string value if key does not exist. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/setrange.html">SETRANGE</a></td><td class="description">SETRANGE key offset value ~ Overwrite part of a string at key starting at the specified offsetOverwrites part of the string stored at key, starting at the specified offset, for the entire length of value. </td></tr>
+<tr><td class="name"><a href="../../../redis/commands/strings/strlen.html">STRLEN</a></td><td class="description">STRLEN key ~ Get the length of the value stored in a keyReturns the length of the string value stored at key. </td></tr>
 </table>
 
 <hr>

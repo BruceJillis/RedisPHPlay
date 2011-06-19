@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 19 Jun 2011 16:22:34 +0000">
+
+<link rel="stylesheet" type="text/css" href="../../../stylesheet.css">
+<link rel="start" href="../../../overview-summary.html">
+
+<title>SETNX (API Documentation: PHP Redis Fast)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../redis/commands/strings/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../../../redis/commands/strings/package-tree.html">Tree</a></li>
+<li><a href="../../../overview-files.html">Files</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../todo-list.html">Todo</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../../index.html" target="_top">Frames</a>
+<a href="../../../redis\commands\strings\setnx.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">Redis\Commands\Strings\SETNX</div>
+<a href="../../../source/library/stringcommands.php.html#line375" class="location">library\StringCommands.php at line 375</a>
+
+<h1>Class SETNX</h1>
+
+<pre class="tree"><a href="../../../redis/commands/rediscommand.html">RedisCommand</a><br>    └─<strong>SETNX</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public  class <strong>SETNX</strong><br>extends <a href="../../../redis/commands/rediscommand.html">RedisCommand</a>
+
+</p>
+
+<div class="comment" id="overview_description"><p>SETNX key value ~ Set the value of a key, only if the key does not exist</p><p>Set key to hold string value if key does not exist. In that case, it is equal to SET. When key already holds a value, no operation is performed. SETNX is short for "SET if Not eXists".</p><p>Design pattern: Locking with SETNX</p><p>SETNX can be used as a locking primitive. For example, to acquire the lock of the key foo, the client could try the following:
+SETNX lock.foo <current Unix time + lock timeout + 1>
+If SETNX returns 1 the client acquired the lock, setting the lock.foo key to the Unix time at which the lock should no longer be considered valid. The client will later use DEL lock.foo in order to release the lock.
+If SETNX returns 0 the key is already locked by some other client. We can either return to the caller if it's a non blocking lock, or enter a loop retrying to hold the lock until we succeed or some kind of timeout expires.
+Handling deadlocks
+In the above locking algorithm there is a problem: what happens if a client fails, crashes, or is otherwise not able to release the lock? It's possible to detect this condition because the lock key contains a UNIX timestamp. If
+such a  timestamp is equal to the current Unix time the lock is no longer valid.
+When this happens we can't just call DEL against the key to remove the lock and then try to issue a SETNX, as there is a race condition here, when multiple clients detected an expired lock and are trying to release it.
+C1 and C2 read lock.foo to check the timestamp, because they both received 0 after executing SETNX, as the lock is still held by C3 that crashed after holding the lock.
+C1 sends DEL lock.foo
+C1 sends SETNX lock.foo and it succeeds
+C2 sends DEL lock.foo
+C2 sends SETNX lock.foo and it succeeds
+ERROR: both C1 and C2 acquired the lock because of the race condition.
+Fortunately, it's possible to avoid this issue using the following algorithm. Let's see how C4, our sane client, uses the good algorithm:
+C4 sends SETNX lock.foo in order to acquire the lock
+The crashed client C3 still holds it, so Redis will reply with 0 to C4.
+C4 sends GET lock.foo to check if the lock expired. If it is not, it will sleep for some time and retry from the start.
+Instead, if the lock is expired because the Unix time at lock.foo is older than the current Unix time, C4 tries to perform:
+GETSET lock.foo <current Unix timestamp + lock timeout + 1>
+Because of the GETSET semantic, C4 can check if the old value stored at key is still an expired timestamp. If it is, the lock was acquired.
+If another client, for instance C5, was faster than C4 and acquired the lock with the GETSET operation, the C4 GETSET operation will return a non expired timestamp. C4 will simply restart from the first step. Note that even if
+C4 set the key
+a bit a few seconds in the future this is not a problem.
+Important note: In order to make this locking algorithm more robust, a client holding a lock should always check the timeout didn't expire before unlocking the key with DEL because client failures can be complex, not just
+crashing but also
+blocking a lot of time against some operations and trying to issue DEL after a lot of time (when the LOCK is already held by another client).</p><p>Time complexity: O(1)</p></div>
+
+<dl>
+<dt>Since::</dt>
+<dd>2.1.18</dd>
+</dl>
+<hr>
+
+<table class="inherit">
+<tr><th colspan="2">Fields inherited from Redis\Commands\RedisCommand</th></tr>
+<tr><td><a href="../../../redis/commands/rediscommand.html#name">name</a></td></tr></table>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#validate()">validate</a>(mixed arguments)</p><p class="description">Validate arguments for a command</p></td>
+</tr>
+</table>
+
+<table class="inherit">
+<tr><th colspan="2">Methods inherited from Redis\Commands\RedisCommand</th></tr>
+<tr><td><a href="../../../redis/commands/rediscommand.html#__construct()">__construct</a>, <a href="../../../redis/commands/rediscommand.html#build()">build</a>, <a href="../../../redis/commands/rediscommand.html#serialize()">serialize</a>, <a href="../../../redis/commands/rediscommand.html#validate()">validate</a>, <a href="../../../redis/commands/rediscommand.html#validateEnumerate()">validateEnumerate</a>, <a href="../../../redis/commands/rediscommand.html#validateEquals()">validateEquals</a>, <a href="../../../redis/commands/rediscommand.html#validateGlobStylePattern()">validateGlobStylePattern</a>, <a href="../../../redis/commands/rediscommand.html#validateInt()">validateInt</a>, <a href="../../../redis/commands/rediscommand.html#validateKey()">validateKey</a>, <a href="../../../redis/commands/rediscommand.html#validateLargerThen()">validateLargerThen</a>, <a href="../../../redis/commands/rediscommand.html#validateString()">validateString</a>, <a href="../../../redis/commands/rediscommand.html#validateTimestamp()">validateTimestamp</a></td></tr></table>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../../../source/library/stringcommands.php.html#line376" class="location">library\StringCommands.php at line 376</a>
+
+<h3 id="validate()">validate</h3>
+<code class="signature">public  void <strong>validate</strong>(mixed arguments)</code>
+<div class="details">
+<p>Validate arguments for a command</p><dl>
+<dt>Throws:</dt>
+<dd>InvalidCommandException - if the arguments supplied to the command were incorrect</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../../../overview-summary.html">Overview</a></li>
+<li><a href="../../../redis/commands/strings/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../../../redis/commands/strings/package-tree.html">Tree</a></li>
+<li><a href="../../../overview-files.html">Files</a></li>
+<li><a href="../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../todo-list.html">Todo</a></li>
+<li><a href="../../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../../index.html" target="_top">Frames</a>
+<a href="../../../redis\commands\strings\setnx.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

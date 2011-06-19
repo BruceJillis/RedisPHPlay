@@ -27,7 +27,7 @@
             <h2>Class Coverage Distribution</h2>
             <canvas id="classCoverageDistribution" width="475" height="200"></canvas>
             <script>
-            var ccd = new RGraph.Bar('classCoverageDistribution', [15,0,0,0,0,0,0,0,1,2,0,22]);
+            var ccd = new RGraph.Bar('classCoverageDistribution', [27,0,0,0,0,0,0,0,1,2,0,26]);
             ccd.Set('chart.background.barcolor1', 'white');
             ccd.Set('chart.background.barcolor2', 'white');
             ccd.Set('chart.colors', ['blue']);
@@ -44,7 +44,7 @@
             <h2>Class Complexity</h2>
             <canvas id="classComplexity" width="475" height="200"></canvas>
             <script>
-            var cc = new RGraph.Scatter('classComplexity', [[100,1,"blue","AUTH"],[100,2,"blue","_ECHO"],[100,2,"blue","PING"],[0,1,"blue","QUIT"],[100,1,"blue","SELECT"],[100,2,"blue","DEL"],[100,2,"blue","EXISTS"],[100,2,"blue","EXPIRE"],[100,2,"blue","EXPIREAT"],[100,1,"blue","KEYS"],[100,2,"blue","MOVE"],[100,2,"blue","PERSIST"],[100,2,"blue","RANDOMKEY"],[100,1,"blue","RENAME"],[100,1,"blue","RENAMENX"],[0,2,"blue","SORT"],[100,1,"blue","TTL"],[85.714285714286,3,"blue","TYPE"],[70.93023255814,5,"blue","RedisClient"],[81.818181818182,21,"blue","RedisCommand"],[100,0,"blue","RedisException"],[100,2,"blue","CouldNotConnectException"],[0,1,"blue","RedisServerException"],[0,1,"blue","AlreadyConnectedException"],[0,1,"blue","NotConnectedException"],[0,1,"blue","CouldNotCloseException"],[0,1,"blue","CannotFlushDirectConnectionException"],[100,1,"blue","CommandNotFoundException"],[100,2,"blue","RedisManager"],[100,0,"blue","ValidationException"],[0,1,"blue","SmallerThenException"],[0,1,"blue","InvalidKeyException"],[0,1,"blue","NotEqualToException"],[0,1,"blue","NotAnIntException"],[0,1,"blue","NotAnStringException"],[0,1,"blue","NotATimestampException"],[0,1,"blue","NotAGlobStylePatternException"],[0,1,"blue","NotInEnumerationException"],[100,2,"blue","GET"],[100,2,"blue","SET"]]);
+            var cc = new RGraph.Scatter('classComplexity', [[100,1,"blue","AUTH"],[100,2,"blue","_ECHO"],[100,2,"blue","PING"],[0,1,"blue","QUIT"],[100,1,"blue","SELECT"],[100,2,"blue","DEL"],[100,2,"blue","EXISTS"],[100,2,"blue","EXPIRE"],[100,2,"blue","EXPIREAT"],[100,1,"blue","KEYS"],[100,2,"blue","MOVE"],[100,2,"blue","PERSIST"],[100,2,"blue","RANDOMKEY"],[100,1,"blue","RENAME"],[100,1,"blue","RENAMENX"],[0,2,"blue","SORT"],[100,1,"blue","TTL"],[85.714285714286,3,"blue","TYPE"],[70.93023255814,5,"blue","RedisClient"],[81.818181818182,21,"blue","RedisCommand"],[100,0,"blue","RedisException"],[100,2,"blue","CouldNotConnectException"],[0,1,"blue","RedisServerException"],[0,1,"blue","AlreadyConnectedException"],[0,1,"blue","NotConnectedException"],[0,1,"blue","CouldNotCloseException"],[0,1,"blue","CannotFlushDirectConnectionException"],[100,1,"blue","CommandNotFoundException"],[100,2,"blue","RedisManager"],[100,0,"blue","ValidationException"],[0,1,"blue","SmallerThenException"],[0,1,"blue","InvalidKeyException"],[0,1,"blue","NotEqualToException"],[0,1,"blue","NotAnIntException"],[0,1,"blue","NotAnStringException"],[0,1,"blue","NotATimestampException"],[0,1,"blue","NotAGlobStylePatternException"],[0,1,"blue","NotInEnumerationException"],[100,1,"blue","APPEND"],[100,1,"blue","DECR"],[100,1,"blue","DECRBY"],[100,2,"blue","GET"],[0,1,"blue","GETBIT"],[0,1,"blue","GETRANGE"],[100,1,"blue","GETSET"],[0,1,"blue","INCR"],[0,1,"blue","INCRBY"],[0,2,"blue","MGET"],[0,2,"blue","MSET"],[0,2,"blue","MSETNX"],[100,1,"blue","SET"],[0,1,"blue","SETBIT"],[0,1,"blue","SETEX"],[0,1,"blue","SETNX"],[0,1,"blue","SETRANGE"],[0,1,"blue","STRLEN"]]);
             cc.Set('chart.xmax', 100);
             cc.Set('chart.background.barcolor1', 'white');
             cc.Set('chart.background.barcolor2', 'white');
@@ -61,6 +61,9 @@
             <h2>Top Project Risks</h2>
             <ul>
               <li><a href="htdocs_RedisPHPlay_library_RedisCommand.php.html#8">RedisCommand</a> (23)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#215">MGET</a> (6)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#258">MSETNX</a> (6)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#236">MSET</a> (6)</li>
               <li><a href="htdocs_RedisPHPlay_library_RedisClient.php.html#9">RedisClient</a> (5)</li>
               <li><a href="htdocs_RedisPHPlay_library_KeyCommands.php.html#277">TYPE</a> (3)</li>
 
@@ -70,16 +73,16 @@
           <td valign="top">
             <h2>Least Tested Methods</h2>
             <ul>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#39">NotEqualToException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#28">InvalidKeyException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#17">SmallerThenException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisExceptions.php.html#72">CannotFlushDirectConnectionException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#50">NotAnIntException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#61">NotAnStringException::__construct</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#117">GETRANGE::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#176">INCR::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#197">INCRBY::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#95">GETBIT::validate</a> (0%)</li>
               <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#94">NotInEnumerationException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#83">NotAGlobStylePatternException::__construct</a> (0%)</li>
               <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#72">NotATimestampException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisExceptions.php.html#61">CouldNotCloseException::__construct</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#83">NotAGlobStylePatternException::__construct</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#216">MGET::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#237">MSET::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_StringCommands.php.html#402">SETRANGE::validate</a> (0%)</li>
 
             </ul>
           </td>
@@ -91,7 +94,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.0.4</a> using <a href="http://www.php.net/" target="_top">PHP 5.3.5</a> and PHPUnit 3.5.13 at Sun Jun 19 15:21:14 CEST 2011.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.0.4</a> using <a href="http://www.php.net/" target="_top">PHP 5.3.5</a> and PHPUnit 3.5.13 at Sun Jun 19 18:20:50 CEST 2011.</td></tr>
     </table>
 
     <br/>

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sun, 19 Jun 2011 13:19:24 +0000">
+<meta name="when" content="Sun, 19 Jun 2011 16:22:46 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -38,44 +38,429 @@
 
 <a name="line1"></a><pre class="php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
 <a name="line2"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line3"></a>	 * GET key ~ Get the value of a key
+<a name="line3"></a>	 * APPEND key value ~ Append a value to a key
 <a name="line4"></a>	 * 
-<a name="line5"></a>	 * Get the value of key. If the key does not exist the special value nil is returned. An error is returned if the value stored at key is not a string, because GET only handles string values.
+<a name="line5"></a>	 * If key already exists and is a string, this command appends the value at the end of the string. If key does not exist it is created and set as an empty string, so APPEND will be similar to SET in this special case.
 <a name="line6"></a>	 * 
-<a name="line7"></a>	 * Time complexity: O(1)
-<a name="line8"></a>	 * 
-<a name="line9"></a>	 * @since: 0.0.7
-<a name="line10"></a>	 * @return mixed Bulk reply: the value of key, or nil when key does not exist.
-<a name="line11"></a>	 * @package Redis\Commands\Strings
-<a name="line12"></a>	 */</span>
-<a name="line13"></a>	<span style="color: #000000; font-weight: bold;">class</span> GET <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
-<a name="line14"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line15"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line16"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line17"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line18"></a>			<span style="color: #009900;">&#125;</span>
-<a name="line19"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line20"></a>	<span style="color: #009900;">&#125;</span>
-<a name="line21"></a>&nbsp;
-<a name="line22"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line23"></a>	 * SET key value ~ Set the string value of a key
-<a name="line24"></a>	 * 
-<a name="line25"></a>	 * Set key to hold the string value. If key already holds a value, it is overwritten, regardless of its type. 
+<a name="line7"></a>	 * Time complexity: O(1). The amortized time complexity is O(1) assuming the appended value is small and the already present value is of any size, since the dynamic string library used by Redis will double the free 
+<a name="line8"></a>	 * space available on every reallocation.
+<a name="line9"></a>	 * 
+<a name="line10"></a>	 * @since: 0.0.7
+<a name="line11"></a>	 * @return int Integer reply: the length of the string after the append operation.
+<a name="line12"></a>	 * @package Redis\Commands\Strings
+<a name="line13"></a>	 */</span>
+<a name="line14"></a>	<span style="color: #000000; font-weight: bold;">class</span> APPEND <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line15"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line16"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line17"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line18"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line19"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line20"></a>&nbsp;
+<a name="line21"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line22"></a>	 * DECR key ~ Decrement the integer value of a key by one
+<a name="line23"></a>	 * 
+<a name="line24"></a>	 * Decrements the number stored at key by one. If the key does not exist, it is set to 0 before performing the operation. An error is returned if the key contains a value of the wrong type or contains a string that is 
+<a name="line25"></a>	 * not representable as integer. This operation is limited to 64 bit signed integers. See INCR for extra information on increment/decrement operations.
 <a name="line26"></a>	 * 
 <a name="line27"></a>	 * Time complexity: O(1)
 <a name="line28"></a>	 * 
 <a name="line29"></a>	 * @since: 0.0.7
-<a name="line30"></a>	 * @return boolean Status code reply: always OK since SET can't fail.
+<a name="line30"></a>	 * @return int Integer reply: the value of key after the decrement
 <a name="line31"></a>	 * @package Redis\Commands\Strings
 <a name="line32"></a>	 */</span>
-<a name="line33"></a>	<span style="color: #000000; font-weight: bold;">class</span> SET <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line33"></a>	<span style="color: #000000; font-weight: bold;">class</span> DECR <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
 <a name="line34"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line35"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line36"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line37"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line38"></a>			<span style="color: #009900;">&#125;</span>
-<a name="line39"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line40"></a>	<span style="color: #009900;">&#125;</span></pre>
+<a name="line35"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line36"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line37"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line38"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line39"></a>&nbsp;
+<a name="line40"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line41"></a>	 * DECRBY key decrement ~ Decrement the integer value of a key by the given number
+<a name="line42"></a>	 * 
+<a name="line43"></a>	 * Decrements the number stored at key by decrement. If the key does not exist, it is set to 0 before performing the operation. An error is returned if the key contains a value of the wrong type or contains a string that 
+<a name="line44"></a>	 * is not representable as integer. This operation is limited to 64 bit signed integers.
+<a name="line45"></a>	 * 
+<a name="line46"></a>	 * See INCR for extra information on increment/decrement operations.
+<a name="line47"></a>	 * 
+<a name="line48"></a>	 * Time complexity: O(1)
+<a name="line49"></a>	 * 
+<a name="line50"></a>	 * @since: 0.0.7
+<a name="line51"></a>	 * @return int Integer reply: the value of key after the decrement
+<a name="line52"></a>	 * @package Redis\Commands\Strings
+<a name="line53"></a>	 */</span>
+<a name="line54"></a>	<span style="color: #000000; font-weight: bold;">class</span> DECRBY <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line55"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line56"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line57"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line58"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line59"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line60"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line61"></a>&nbsp;
+<a name="line62"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line63"></a>	 * GET key ~ Get the value of a key
+<a name="line64"></a>	 * 
+<a name="line65"></a>	 * Get the value of key. If the key does not exist the special value nil is returned. An error is returned if the value stored at key is not a string, because GET only handles string values.
+<a name="line66"></a>	 * 
+<a name="line67"></a>	 * Time complexity: O(1)
+<a name="line68"></a>	 * 
+<a name="line69"></a>	 * @since: 0.0.7
+<a name="line70"></a>	 * @return mixed Bulk reply: the value of key, or nil when key does not exist.
+<a name="line71"></a>	 * @package Redis\Commands\Strings
+<a name="line72"></a>	 */</span>
+<a name="line73"></a>	<span style="color: #000000; font-weight: bold;">class</span> GET <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line74"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line75"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line76"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line77"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line78"></a>			<span style="color: #009900;">&#125;</span>
+<a name="line79"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line80"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line81"></a>&nbsp;
+<a name="line82"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line83"></a>	 * GETBIT key offset ~ Returns the bit value at offset in the string value stored at key
+<a name="line84"></a>	 * 
+<a name="line85"></a>	 * Returns the bit value at offset in the string value stored at key. When offset is beyond the string length, the string is assumed to be a contiguous space with 0 bits. When key does not exist it is assumed to be an empty 
+<a name="line86"></a>	 * string, so offset is always out of range and the value is also assumed to be a contiguous space with 0 bits.
+<a name="line87"></a>	 * 
+<a name="line88"></a>	 * Time complexity: O(1)
+<a name="line89"></a>	 * 
+<a name="line90"></a>	 * @since: 2.1.8
+<a name="line91"></a>	 * @return int Integer reply: the bit value stored at offset.
+<a name="line92"></a>	 * @package Redis\Commands\Strings
+<a name="line93"></a>	 */</span>
+<a name="line94"></a>	<span style="color: #000000; font-weight: bold;">class</span> GETBIT <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line95"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line96"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line97"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line98"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line99"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line100"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line101"></a>&nbsp;
+<a name="line102"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line103"></a>	 * GETRANGE key start end ~ Get a substring of the string stored at a key
+<a name="line104"></a>	 * 
+<a name="line105"></a>	 * Warning: this command was renamed to GETRANGE, it is called SUBSTR in Redis versions &lt;= 2.0.
+<a name="line106"></a>	 * Returns the substring of the string value stored at key, determined by the offsets start and end (both are inclusive). Negative offsets can be used in order to provide an offset starting from the end of the 
+<a name="line107"></a>	 * string. So -1 means the last character, -2 the penultimate and so forth. The function handles out of range requests by limiting the resulting range to the actual length of the string.
+<a name="line108"></a>	 * 
+<a name="line109"></a>	 * Time complexity: O(N) where N is the length of the returned string. The complexity is ultimately determined by the returned length, but because creating a substring from an existing string is very cheap, it 
+<a name="line110"></a>	 * can be considered O(1) for small strings.
+<a name="line111"></a>	 * 
+<a name="line112"></a>	 * @since: 2.1.8
+<a name="line113"></a>	 * @return array Bulk reply
+<a name="line114"></a>	 * @package Redis\Commands\Strings
+<a name="line115"></a>	 */</span>
+<a name="line116"></a>	<span style="color: #000000; font-weight: bold;">class</span> GETRANGE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line117"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line118"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line119"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line120"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line121"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line122"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line123"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line124"></a>&nbsp;
+<a name="line125"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line126"></a>	 * GETSET key value ~ Set the string value of a key and return its old value
+<a name="line127"></a>	 * 
+<a name="line128"></a>	 * Atomically sets key to value and returns the old value stored at key. Returns an error when key exists but does not hold a string value.
+<a name="line129"></a>	 * 
+<a name="line130"></a>	 * Design pattern
+<a name="line131"></a>	 * 
+<a name="line132"></a>	 * GETSET can be used together with INCR for counting with atomic reset. For example: a process may call INCR against the key mycounter every time some event occurs, but from time to time we need to get the value of 
+<a name="line133"></a>	 * the counter and reset it to zero atomically. This can be done using GETSET mycounter &quot;0&quot;:
+<a name="line134"></a>	 * 
+<a name="line135"></a>	 *   redis&gt; INCR mycounter
+<a name="line136"></a>	 * 
+<a name="line137"></a>	 *   (integer) 1
+<a name="line138"></a>	 * 
+<a name="line139"></a>	 *   redis&gt; GETSET mycounter &quot;0&quot;
+<a name="line140"></a>	 * 
+<a name="line141"></a>	 *   &quot;1&quot;
+<a name="line142"></a>	 * 
+<a name="line143"></a>	 *   redis&gt; GET mycounter
+<a name="line144"></a>	 * 
+<a name="line145"></a>	 *   &quot;0&quot;
+<a name="line146"></a>	 * 
+<a name="line147"></a>	 * Time complexity: O(1)
+<a name="line148"></a>	 * 
+<a name="line149"></a>	 * @since: 0.0.91
+<a name="line150"></a>	 * @return mixed Bulk reply: the old value stored at key, or nil when key did not exist.
+<a name="line151"></a>	 * @package Redis\Commands\Strings
+<a name="line152"></a>	 */</span>
+<a name="line153"></a>	<span style="color: #000000; font-weight: bold;">class</span> GETSET <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line154"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line155"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line156"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line157"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line158"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line159"></a>&nbsp;
+<a name="line160"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line161"></a>	 * INCR key ~ Increment the integer value of a key by one
+<a name="line162"></a>	 * 
+<a name="line163"></a>	 * Increments the number stored at key by one. If the key does not exist, it is set to 0 before performing the operation. An error is returned if the key contains a value of the wrong type or contains a string that is 
+<a name="line164"></a>	 * not representable as integer. This operation is limited to 64 bit signed integers.Redis stores integers in their integer representation, so for string values that actually hold an integer, there is no overhead for 
+<a name="line165"></a>	 * storing the string representation of the integer.
+<a name="line166"></a>	 * 
+<a name="line167"></a>	 * Note: this is a string operation because Redis does not have a dedicated integer type. The the string stored at the key is interpreted as a base-10 64 bit signed integer to execute the operation.
+<a name="line168"></a>	 * 
+<a name="line169"></a>	 * Time complexity: O(1)
+<a name="line170"></a>	 * 
+<a name="line171"></a>	 * @since: 0.0.7
+<a name="line172"></a>	 * @return int Integer reply: the value of key after the increment
+<a name="line173"></a>	 * @package Redis\Commands\Strings
+<a name="line174"></a>	 */</span>
+<a name="line175"></a>	<span style="color: #000000; font-weight: bold;">class</span> INCR <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line176"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line177"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line178"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line179"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line180"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line181"></a>&nbsp;
+<a name="line182"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line183"></a>	 * INCRBY key increment ~ Increment the integer value of a key by the given number
+<a name="line184"></a>	 * 
+<a name="line185"></a>	 * Increments the number stored at key by increment. If the key does not exist, it is set to 0 before performing the operation. An error is returned if the key contains a value of the wrong type or contains a string that is not 
+<a name="line186"></a>	 * representable as integer. This operation is limited to 64 bit signed integers.
+<a name="line187"></a>	 * 
+<a name="line188"></a>	 * See INCR for extra information on increment/decrement operations.
+<a name="line189"></a>	 * 
+<a name="line190"></a>	 * Time complexity: O(1)
+<a name="line191"></a>	 * 
+<a name="line192"></a>	 * @since: 0.0.7
+<a name="line193"></a>	 * @return int Integer reply: the value of key after the increment
+<a name="line194"></a>	 * @package Redis\Commands\Strings
+<a name="line195"></a>	 */</span>
+<a name="line196"></a>	<span style="color: #000000; font-weight: bold;">class</span> INCRBY <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line197"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line198"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line199"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line200"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line201"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line202"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line203"></a>&nbsp;
+<a name="line204"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line205"></a>	 * MGET key [key ...] ~ Get the values of all the given keys
+<a name="line206"></a>	 * 
+<a name="line207"></a>	 * Returns the values of all specified keys. For every key that does not hold a string value or does not exist, the special value nil is returned. Because of this, the operation never fails.
+<a name="line208"></a>	 * 
+<a name="line209"></a>	 * Time complexity: O(N) where N is the number of keys to retrieve.
+<a name="line210"></a>	 * 
+<a name="line211"></a>	 * @since: 0.0.7
+<a name="line212"></a>	 * @return array Multi-bulk reply: list of values at the specified keys.
+<a name="line213"></a>	 * @package Redis\Commands\Strings
+<a name="line214"></a>	 */</span>
+<a name="line215"></a>	<span style="color: #000000; font-weight: bold;">class</span> MGET <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line216"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line217"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line218"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line219"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line220"></a>			<span style="color: #009900;">&#125;</span>
+<a name="line221"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line222"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line223"></a>&nbsp;
+<a name="line224"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line225"></a>	 * MSET key [key ...] ~ Get the values of all the given keys
+<a name="line226"></a>	 * 
+<a name="line227"></a>	 * Sets the given keys to their respective values. MSET replaces existing values with new values, just as regular SET. See MSETNX if you don't want to overwrite existing values.
+<a name="line228"></a>	 * MSET is atomic, so all given keys are set at once. It is not possible for clients to see that some of the keys were updated while others are unchanged.
+<a name="line229"></a>	 * 
+<a name="line230"></a>	 * Time complexity: O(N) where N is the number of keys to set.
+<a name="line231"></a>	 * 
+<a name="line232"></a>	 * @since: 0.0.7
+<a name="line233"></a>	 * @return boolean Status code reply: always OK since MSET can't fail.
+<a name="line234"></a>	 * @package Redis\Commands\Strings
+<a name="line235"></a>	 */</span>
+<a name="line236"></a>	<span style="color: #000000; font-weight: bold;">class</span> MSET <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line237"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line238"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line239"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line240"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line241"></a>			<span style="color: #009900;">&#125;</span>
+<a name="line242"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line243"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line244"></a>&nbsp;
+<a name="line245"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line246"></a>	 * MSETNX key value [key value ...] ~ Set multiple keys to multiple values, only if none of the keys exist
+<a name="line247"></a>	 * 
+<a name="line248"></a>	 * Sets the given keys to their respective values. MSETNX will not perform any operation at all even if just a single key already exists.
+<a name="line249"></a>	 * Because of this semantic MSETNX can be used in order to set different keys representing different fields of an unique logic object in a way that ensures that either all the fields or none at all are set.
+<a name="line250"></a>	 * MSETNX is atomic, so all given keys are set at once. It is not possible for clients to see that some of the keys were updated while others are unchanged.
+<a name="line251"></a>	 * 
+<a name="line252"></a>	 * Time complexity: O(N) where N is the number of keys to set.
+<a name="line253"></a>	 * 
+<a name="line254"></a>	 * @since: 1.0.01
+<a name="line255"></a>	 * @return int Integer reply, specifically: 1 if the all the keys were set. 0 if no key was set (at least one key already existed).
+<a name="line256"></a>	 * @package Redis\Commands\Strings
+<a name="line257"></a>	 */</span>
+<a name="line258"></a>	<span style="color: #000000; font-weight: bold;">class</span> MSETNX <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line259"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line260"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line261"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line262"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line263"></a>			<span style="color: #009900;">&#125;</span>
+<a name="line264"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line265"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line266"></a>&nbsp;
+<a name="line267"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line268"></a>	 * SET key value ~ Set the string value of a key
+<a name="line269"></a>	 * 
+<a name="line270"></a>	 * Set key to hold the string value. If key already holds a value, it is overwritten, regardless of its type. 
+<a name="line271"></a>	 * 
+<a name="line272"></a>	 * Time complexity: O(1)
+<a name="line273"></a>	 * 
+<a name="line274"></a>	 * @since: 0.0.7
+<a name="line275"></a>	 * @return boolean Status code reply: always OK since SET can't fail.
+<a name="line276"></a>	 * @package Redis\Commands\Strings
+<a name="line277"></a>	 */</span>
+<a name="line278"></a>	<span style="color: #000000; font-weight: bold;">class</span> SET <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line279"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line280"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line281"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line282"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line283"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line284"></a>&nbsp;
+<a name="line285"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line286"></a>	 * SETBIT key offset value ~ Sets or clears the bit at offset in the string value stored at key
+<a name="line287"></a>	 * 
+<a name="line288"></a>	 * Sets or clears the bit at offset in the string value stored at key.
+<a name="line289"></a>	 * The bit is either set or cleared depending on value, which can be either 0 or 1. When key does not exist, a new string value is created. The string is grown to make sure it can hold a bit at offset. The offset 
+<a name="line290"></a>	 * argument is required to be greater than or equal to 0, and smaller than 232 (this limits bitmaps to 512MB). When the string at key is grown, added bits are set to 0.
+<a name="line291"></a>	 * 
+<a name="line292"></a>	 * Warning: When setting the last possible bit (offset equal to 232 -1) and the string value stored at key does not yet hold a string value, or holds a small string value, Redis needs to allocate all intermediate 
+<a name="line293"></a>	 * memory which can block the server for some time. On a 2010 MacBook Pro, setting bit number 232 -1 (512MB allocation) takes ~300ms, setting bit number 230 -1 (128MB allocation) takes ~80ms, setting bit number 
+<a name="line294"></a>	 * 228 -1 (32MB allocation) takes ~30ms and setting bit number 226 -1 (8MB allocation) takes ~8ms. Note that once this first allocation is done, subsequent calls to SETBIT for the same key will not have the 
+<a name="line295"></a>	 * allocation overhead.
+<a name="line296"></a>	 * 
+<a name="line297"></a>	 * Time complexity: O(1)
+<a name="line298"></a>	 * 
+<a name="line299"></a>	 * @since: 2.1.18
+<a name="line300"></a>	 * @return int Integer reply: the original bit value stored at offset.
+<a name="line301"></a>	 * @package Redis\Commands\Strings
+<a name="line302"></a>	 */</span>
+<a name="line303"></a>	<span style="color: #000000; font-weight: bold;">class</span> SETBIT <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line304"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line305"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line306"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line307"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line308"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line309"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line310"></a>&nbsp;
+<a name="line311"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line312"></a>	 * SETEX key seconds value ~ Set the value and expiration of a key
+<a name="line313"></a>	 * 
+<a name="line314"></a>	 * Set key to hold the string value and set key to timeout after a given number of seconds. This command is equivalent to executing the following commands:
+<a name="line315"></a>  	 * SET mykey value
+<a name="line316"></a>	 * EXPIRE mykey seconds
+<a name="line317"></a>	 * SETEX is atomic, and can be reproduced by using the previous two commands inside an MULTI/EXEC block. It is provided as a faster alternative to the given sequence of operations, because this operation is 
+<a name="line318"></a>	 *	    very common when Redis is used as a cache. An error is returned when seconds is invalid.
+<a name="line319"></a>	 * 
+<a name="line320"></a>	 * Time complexity: O(1)
+<a name="line321"></a>	 * 
+<a name="line322"></a>	 * @since: 2.1.18
+<a name="line323"></a>	 * @return int Integer reply: the original bit value stored at offset.
+<a name="line324"></a>	 * @package Redis\Commands\Strings
+<a name="line325"></a>	 */</span>
+<a name="line326"></a>	<span style="color: #000000; font-weight: bold;">class</span> SETEX <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line327"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line328"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line329"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line330"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line331"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line332"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line333"></a>&nbsp;
+<a name="line334"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line335"></a>	 * SETNX key value ~ Set the value of a key, only if the key does not exist
+<a name="line336"></a>	 * 
+<a name="line337"></a>	 * Set key to hold string value if key does not exist. In that case, it is equal to SET. When key already holds a value, no operation is performed. SETNX is short for &quot;SET if Not eXists&quot;.
+<a name="line338"></a>	 * 
+<a name="line339"></a>	 * Design pattern: Locking with SETNX
+<a name="line340"></a>	 * 
+<a name="line341"></a> 	 * SETNX can be used as a locking primitive. For example, to acquire the lock of the key foo, the client could try the following:
+<a name="line342"></a>	 * SETNX lock.foo &lt;current Unix time + lock timeout + 1&gt;
+<a name="line343"></a>	 * If SETNX returns 1 the client acquired the lock, setting the lock.foo key to the Unix time at which the lock should no longer be considered valid. The client will later use DEL lock.foo in order to release the lock.
+<a name="line344"></a>	 * If SETNX returns 0 the key is already locked by some other client. We can either return to the caller if it's a non blocking lock, or enter a loop retrying to hold the lock until we succeed or some kind of timeout expires.
+<a name="line345"></a>	 * Handling deadlocks
+<a name="line346"></a> 	 * In the above locking algorithm there is a problem: what happens if a client fails, crashes, or is otherwise not able to release the lock? It's possible to detect this condition because the lock key contains a UNIX timestamp. If 
+<a name="line347"></a>	 * such a  timestamp is equal to the current Unix time the lock is no longer valid.
+<a name="line348"></a>	 * When this happens we can't just call DEL against the key to remove the lock and then try to issue a SETNX, as there is a race condition here, when multiple clients detected an expired lock and are trying to release it.
+<a name="line349"></a>	 * C1 and C2 read lock.foo to check the timestamp, because they both received 0 after executing SETNX, as the lock is still held by C3 that crashed after holding the lock.
+<a name="line350"></a>	 * C1 sends DEL lock.foo
+<a name="line351"></a>	 * C1 sends SETNX lock.foo and it succeeds
+<a name="line352"></a>	 * C2 sends DEL lock.foo
+<a name="line353"></a>	 * C2 sends SETNX lock.foo and it succeeds
+<a name="line354"></a>	 * ERROR: both C1 and C2 acquired the lock because of the race condition.
+<a name="line355"></a>	 * Fortunately, it's possible to avoid this issue using the following algorithm. Let's see how C4, our sane client, uses the good algorithm:
+<a name="line356"></a>	 * C4 sends SETNX lock.foo in order to acquire the lock
+<a name="line357"></a>	 * The crashed client C3 still holds it, so Redis will reply with 0 to C4.
+<a name="line358"></a>	 * C4 sends GET lock.foo to check if the lock expired. If it is not, it will sleep for some time and retry from the start.
+<a name="line359"></a>	 * Instead, if the lock is expired because the Unix time at lock.foo is older than the current Unix time, C4 tries to perform:
+<a name="line360"></a>	 * GETSET lock.foo &lt;current Unix timestamp + lock timeout + 1&gt;
+<a name="line361"></a>	 * Because of the GETSET semantic, C4 can check if the old value stored at key is still an expired timestamp. If it is, the lock was acquired.
+<a name="line362"></a>	 * If another client, for instance C5, was faster than C4 and acquired the lock with the GETSET operation, the C4 GETSET operation will return a non expired timestamp. C4 will simply restart from the first step. Note that even if 
+<a name="line363"></a>	 * C4 set the key 
+<a name="line364"></a>	 * a bit a few seconds in the future this is not a problem.
+<a name="line365"></a>	 * Important note: In order to make this locking algorithm more robust, a client holding a lock should always check the timeout didn't expire before unlocking the key with DEL because client failures can be complex, not just 
+<a name="line366"></a>	 * crashing but also 
+<a name="line367"></a>	 * blocking a lot of time against some operations and trying to issue DEL after a lot of time (when the LOCK is already held by another client).
+<a name="line368"></a>	 * 
+<a name="line369"></a>	 * Time complexity: O(1)
+<a name="line370"></a>	 * 
+<a name="line371"></a>	 * @since: 2.1.18
+<a name="line372"></a>	 * @return int Integer reply, specifically: 1 if the key was set, 0 if the key was not set.
+<a name="line373"></a>	 * @package Redis\Commands\Strings
+<a name="line374"></a>	 */</span>
+<a name="line375"></a>	<span style="color: #000000; font-weight: bold;">class</span> SETNX <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line376"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line377"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line378"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line379"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line380"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line381"></a>&nbsp;
+<a name="line382"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line383"></a>	 * SETRANGE key offset value ~ Overwrite part of a string at key starting at the specified offset
+<a name="line384"></a>	 * 
+<a name="line385"></a>	 * Overwrites part of the string stored at key, starting at the specified offset, for the entire length of value. If the offset is larger than the current length of the string at key, the string is padded with zero-bytes to make 
+<a name="line386"></a>	 * offset fit. Non-existing keys are considered as empty strings, so this command will make sure it holds a string large enough to be able to set value at offset.
+<a name="line387"></a> 	 * Note that the maximum offset that you can set is 229 -1 (536870911), as Redis Strings are limited to 512 megabytes. If you need to grow beyond this size, you can use multiple keys. 
+<a name="line388"></a>	 * Warning: When setting the last possible byte and the string value stored at key does not yet hold a string value, or holds a small string value, Redis needs to allocate all intermediate memory which can block the server for some time. 
+<a name="line389"></a>	 * On a 2010 MacBook Pro, setting byte number 536870911 (512MB allocation) takes ~300ms, setting byte number 134217728 (128MB allocation) takes ~80ms, setting bit number 33554432 (32MB allocation) takes ~30ms and setting bit number 
+<a name="line390"></a>	 * 8388608 (8MB allocation) takes ~8ms. Note that once this first allocation is done, subsequent calls to SETRANGE for the same key will not have the allocation overhead.
+<a name="line391"></a>	 * 
+<a name="line392"></a>	 * Patterns
+<a name="line393"></a>	 * Thanks to SETRANGE and the analogous GETRANGE commands, you can use Redis strings as a linear array with O(1) random access. This is a very fast and efficient storage in many real world use cases.
+<a name="line394"></a>	 * 
+<a name="line395"></a>	 * Time complexity: O(1), not counting the time taken to copy the new string in place. Usually, this string is very small so the amortized complexity is O(1). Otherwise, complexity is O(M) with M being the length of the value argument.
+<a name="line396"></a>	 * 
+<a name="line397"></a>	 * @since: 2.1.18
+<a name="line398"></a>	 * @return int Integer reply: the original bit value stored at offset.
+<a name="line399"></a>	 * @package Redis\Commands\Strings
+<a name="line400"></a>	 */</span>
+<a name="line401"></a>	<span style="color: #000000; font-weight: bold;">class</span> SETRANGE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line402"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line403"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line404"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line405"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line406"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line407"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line408"></a>&nbsp;
+<a name="line409"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line410"></a>	 * STRLEN key ~ Get the length of the value stored in a key
+<a name="line411"></a>	 * 
+<a name="line412"></a>	 * Returns the length of the string value stored at key. An error is returned when key holds a non-string value.
+<a name="line413"></a>	 * 
+<a name="line414"></a>	 * Time complexity: O(1)
+<a name="line415"></a>	 * 
+<a name="line416"></a>	 * @since: 2.1.2
+<a name="line417"></a>	 * @return int Integer reply: the original bit value stored at offset.
+<a name="line418"></a>	 * @package Redis\Commands\Strings
+<a name="line419"></a>	 */</span>
+<a name="line420"></a>	<span style="color: #000000; font-weight: bold;">class</span> <a href="http://www.php.net/strlen"><span style="color: #990000;">STRLEN</span></a> <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line421"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line422"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line423"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line424"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line425"></a>	<span style="color: #009900;">&#125;</span></pre>
 <div class="header">
 <h1>PHP Redis Fast</h1>
 <ul>
