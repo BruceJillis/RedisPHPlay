@@ -21,24 +21,24 @@ Completion
 ==========
 	Major features and their completion / testing percentages
 
-							| done %	| test % |
-	-------------------------------------
-	| Commands			|    40% |    75% |
-	|	Keys				|   100% |    87% |
-	|	Strings			|    10% |   100% |
-	|	Hashes			|     0% |     0% |
-	|	Lists				|     0% |     0% |
-	|	Sets				|     0% |     0% |
-	|	Sorted Sets		|     0% |     0% |
-	|	Pub/Sub			|     0% |     0% |
-	|	Transactions	|     0% |     0% |
-	|	Connection		|   100% |    81% |
-	|	Server         |     0% |     0% |
-	-------------------------------------
-	| Pipelining		|   100% |     0% |
-	| Partitioning    |     0% |     0% |
-	| Replication     |     0% |     0% |
-	-------------------------------------
+                     | done % | test % |
+   -------------------------------------
+   | Commands        |    40% |    75% |
+   |  Keys           |   100% |    87% |
+   |  Strings        |    10% |   100% |
+   |  Hashes         |     0% |     0% |
+   |  Lists          |     0% |     0% |
+   |  Sets           |     0% |     0% |
+   |  Sorted Sets    |     0% |     0% |
+   |  Pub/Sub        |     0% |     0% |
+   |  Transactions   |     0% |     0% |
+   |  Connection     |   100% |    81% |
+   |  Server         |     0% |     0% |
+   -------------------------------------
+   | Pipelining      |   100% |     0% |
+   | Partitioning    |     0% |     0% |
+   | Replication     |     0% |     0% |
+   -------------------------------------
 
 Example
 =======
