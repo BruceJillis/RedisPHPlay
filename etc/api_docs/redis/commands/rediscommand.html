@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 19 Jun 2011 13:19:11 +0000">
+
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+<link rel="start" href="../../overview-summary.html">
+
+<title>RedisCommand (API Documentation: PHP Redis Fast)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../redis/commands/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../../redis/commands/package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../redis\commands\rediscommand.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">Redis\Commands\RedisCommand</div>
+<a href="../../source/library/rediscommand.php.html#line8" class="location">library\RedisCommand.php at line 8</a>
+
+<h1>Class RedisCommand</h1>
+
+<pre class="tree"><strong>RedisCommand</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public abstract  class <strong>RedisCommand</strong></p>
+
+<div class="comment" id="overview_description"><p>Base class for all commands implemented by PHP Redis Fast</p></div>
+
+<hr>
+
+<table id="summary_field">
+<tr><th colspan="2">Field Summary</th></tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#name">$name</a></p></td>
+</tr>
+</table>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#__construct()">__construct</a>()</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#build()">build</a>(mixed arguments)</p><p class="description">Build a request ready to be sent to the server</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#serialize()">serialize</a>(mixed commands)</p></td>
+</tr>
+<tr>
+<td class="type">abstract  void</td>
+<td class="description"><p class="name"><a href="#validate()">validate</a>(mixed arguments)</p><p class="description">Validate arguments for a command</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateEnumerate()">validateEnumerate</a>(mixed value, mixed values)</p><p class="description">Validate if a value is an glob-style pattern</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateEquals()">validateEquals</a>(mixed actual, mixed expected)</p><p class="description">Validate if a count ($actual) is equal to $expected.</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateGlobStylePattern()">validateGlobStylePattern</a>(mixed value)</p><p class="description">Validate if a value is an glob-style pattern</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateInt()">validateInt</a>(mixed value)</p><p class="description">Validate if a value is an int</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateKey()">validateKey</a>(mixed key)</p><p class="description">Validate if a key contains invalid characters</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateLargerThen()">validateLargerThen</a>(mixed actual, mixed expected)</p><p class="description">Validate if a count ($actual) is larger then $expected.</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateString()">validateString</a>(mixed value)</p><p class="description">Validate if a value is a string</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateTimestamp()">validateTimestamp</a>(mixed value)</p><p class="description">Validate if a value is an timestamp</p></td>
+</tr>
+</table>
+
+<h2 id="detail_field">Field Detail</h2>
+<a href="../../source/library/rediscommand.php.html#line9" class="location">library\RedisCommand.php at line 9</a>
+
+<h3 id="name">name</h3>
+<code class="signature">protected  mixed <strong>$name</strong> = 30</code>
+<div class="details">
+</div>
+
+<hr>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../../source/library/rediscommand.php.html#line11" class="location">library\RedisCommand.php at line 11</a>
+
+<h3 id="__construct()">__construct</h3>
+<code class="signature">public  void <strong>__construct</strong>()</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line27" class="location">library\RedisCommand.php at line 27</a>
+
+<h3 id="build()">build</h3>
+<code class="signature">public  void <strong>build</strong>(mixed arguments)</code>
+<div class="details">
+<p>Build a request ready to be sent to the server</p><dl>
+<dt>Returns:</dt>
+<dd>string the serialized command ready to be sent over a socket to the server</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line31" class="location">library\RedisCommand.php at line 31</a>
+
+<h3 id="serialize()">serialize</h3>
+<code class="signature">protected  void <strong>serialize</strong>(mixed commands)</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line20" class="location">library\RedisCommand.php at line 20</a>
+
+<h3 id="validate()">validate</h3>
+<code class="signature">public abstract  void <strong>validate</strong>(mixed arguments)</code>
+<div class="details">
+<p>Validate arguments for a command</p><dl>
+<dt>Throws:</dt>
+<dd>InvalidCommandException - if the arguments supplied to the command were incorrect</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line115" class="location">library\RedisCommand.php at line 115</a>
+
+<h3 id="validateEnumerate()">validateEnumerate</h3>
+<code class="signature">public final  void <strong>validateEnumerate</strong>(mixed value, mixed values)</code>
+<div class="details">
+<p>Validate if a value is an glob-style pattern</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/notatimestampexception.html">NotATimestampException</a> - if the value is not a valid timestamp</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line53" class="location">library\RedisCommand.php at line 53</a>
+
+<h3 id="validateEquals()">validateEquals</h3>
+<code class="signature">public final  void <strong>validateEquals</strong>(mixed actual, mixed expected)</code>
+<div class="details">
+<p>Validate if a count ($actual) is equal to $expected.</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/notequaltoexception.html">NotEqualToException</a> - if the actual amount is larger then the expected amount</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line105" class="location">library\RedisCommand.php at line 105</a>
+
+<h3 id="validateGlobStylePattern()">validateGlobStylePattern</h3>
+<code class="signature">public final  void <strong>validateGlobStylePattern</strong>(mixed value)</code>
+<div class="details">
+<p>Validate if a value is an glob-style pattern</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/notatimestampexception.html">NotATimestampException</a> - if the value is not a valid timestamp</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line75" class="location">library\RedisCommand.php at line 75</a>
+
+<h3 id="validateInt()">validateInt</h3>
+<code class="signature">public final  void <strong>validateInt</strong>(mixed value)</code>
+<div class="details">
+<p>Validate if a value is an int</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/notanintexception.html">NotAnIntException</a> - if the value is not an int</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line63" class="location">library\RedisCommand.php at line 63</a>
+
+<h3 id="validateKey()">validateKey</h3>
+<code class="signature">public final  void <strong>validateKey</strong>(mixed key)</code>
+<div class="details">
+<p>Validate if a key contains invalid characters</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/invalidkeyexception.html">InvalidKeyException</a> - if the key contains valid characters</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line43" class="location">library\RedisCommand.php at line 43</a>
+
+<h3 id="validateLargerThen()">validateLargerThen</h3>
+<code class="signature">public final  void <strong>validateLargerThen</strong>(mixed actual, mixed expected)</code>
+<div class="details">
+<p>Validate if a count ($actual) is larger then $expected.</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/smallerthenexception.html">SmallerThenException</a> - if the actual amount is larger then the expected amount</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line85" class="location">library\RedisCommand.php at line 85</a>
+
+<h3 id="validateString()">validateString</h3>
+<code class="signature">public final  void <strong>validateString</strong>(mixed value)</code>
+<div class="details">
+<p>Validate if a value is a string</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/notanintexception.html">NotAnIntException</a> - if the value is not a string</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line95" class="location">library\RedisCommand.php at line 95</a>
+
+<h3 id="validateTimestamp()">validateTimestamp</h3>
+<code class="signature">public final  void <strong>validateTimestamp</strong>(mixed value)</code>
+<div class="details">
+<p>Validate if a value is an timestamp</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/notatimestampexception.html">NotATimestampException</a> - if the value is not a valid timestamp</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../redis/commands/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../../redis/commands/package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../redis\commands\rediscommand.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

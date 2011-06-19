@@ -1,0 +1,1 @@
+phpunit --coverage-html ../etc/coverage/ .

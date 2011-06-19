@@ -1,0 +1,1 @@
+php c:/xampp/htdocs/phpdoctor/phpdoc.php documentation.ini
