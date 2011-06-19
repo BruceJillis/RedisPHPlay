@@ -4,22 +4,22 @@ RedisPHPlay is a fast, full-featured, native PHP, redis client.
 
 Goals
 =====
-	* fast
-	* easy to use
-	* fully documented
-	* fully unit-tested
-	* translates as much as possible to native PHP datatype:
-		* status reply		boolean
-		* error reply		exception
-		* integer reply	integer
-		* bulk reply		array(one of the above)
-		* nil					null
-	* support for Master/Slave replication
-	* support for Clustering
+   * fast
+   * easy to use
+   * fully documented
+   * fully unit-tested
+   * translates as much as possible to native PHP datatype:
+      * status reply    boolean
+      * error reply     exception
+      * integer reply   integer
+      * bulk reply      array(one of the above)
+      * nil             null
+   * support for Master/Slave replication
+   * support for Clustering
 
 Completion
 ==========
-	Major features and their completion / testing percentages
+   Major features and their completion / testing percentages
 
                      | done % | test % |
    -------------------------------------
@@ -42,11 +42,11 @@ Completion
 
 Example
 =======
-	<?php
-		$redis = new RedisManager();
-		$handle = $redis->connect('localhost', 6379);
+   <?php
+      $redis = new RedisManager();
+      $handle = $redis->connect('localhost', 6379);
 
-		if( !$handle->AUTH('password') ) 
-			die('could not authenticate');
-		$handle->SET('foo', 1); // true 
-		echo $handle->GET('foo'); // 1
+      if( !$handle->AUTH('password') ) 
+         die('could not authenticate');
+      $handle->SET('foo', 1); // true 
+      echo $handle->GET('foo'); // 1
