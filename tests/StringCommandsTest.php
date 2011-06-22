@@ -113,5 +113,78 @@
 			$client->close();
 			$this->assertFalse($client->connected());
 		}
+
 		*/
+		/**
+		 * Testing key command INCR
+		 */		
+		public function testIncr() {
+			$client = $this->connect();	
+			$this->assertTrue($client->SET('foo', 1));
+			$this->assertEquals($client->INCR('foo'), 2);
+			$this->assertEquals($client->GET('foo'), 2);
+			$client->close();
+			$this->assertFalse($client->connected());
+		}
+
+		/**
+		 * Testing key command INCRBY
+		 */		
+		public function testIncrBy() {
+			$client = $this->connect();	
+			$this->assertTrue($client->SET('foo', 1));
+			$this->assertEquals($client->INCRBY('foo', 10), 11);
+			$this->assertEquals($client->GET('foo'), 11);
+			$client->close();
+			$this->assertFalse($client->connected());
+		}
+
+		/**
+		 * test MGET
+		 */
+		function testMGet() {
+			$client = $this->connect();	
+			$client->set('a', 1);
+			$client->set('b', 2);
+			$ar = $client->mget('a', 'b');
+			$this->assertEquals(2, count($ar));
+			$this->assertEquals(1, $ar[0]);
+			$this->assertEquals(2, $ar[1]);
+			$client->incr('a');
+			$client->incr('b');
+			$ar = $client->mget('a', 'b');
+			$this->assertEquals(2, count($ar));
+			$this->assertEquals(2, $ar[0]);
+			$this->assertEquals(3, $ar[1]);
+		}
+
+		/**
+		 * test MSET
+		 */
+		function testMSet() {
+			$client = $this->connect();
+			$client->mset('a', 123, 'b', 999);
+			$ar = $client->mget('a', 'b');
+			$this->assertEquals(2, count($ar));
+			$this->assertEquals(123, $ar[0]);
+			$this->assertEquals(999, $ar[1]);
+			$client->incr('a');
+			$client->set('b', 111);
+			$ar = $client->mget('a', 'b');
+			$this->assertEquals(2, count($ar));
+			$this->assertEquals(124, $ar[0]);
+			$this->assertEquals(111, $ar[1]);
+		}
+
+		/**
+		 * test STRLEN
+		 */
+		function testStrlen() {
+			$client = $this->connect();
+			$client->set('foo', 'abcd');
+			$this->assertEquals(4, $client->strlen('foo'));
+			$client->append('foo', '12');
+			$this->assertEquals(6, $client->strlen('foo'));
+		}
+
 	}
