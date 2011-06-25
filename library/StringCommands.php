@@ -90,7 +90,6 @@
 	 * @since: 2.1.8
 	 * @return int Integer reply: the bit value stored at offset.
 	 * @package Redis\Commands\Strings
-	 */
 	class GETBIT extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 2);
@@ -98,6 +97,7 @@
 			$this->validateInt($arguments[1]);
 		}
 	}
+	 */
 
 	/**
 	 * GETRANGE key start end ~ Get a substring of the string stored at a key
@@ -112,7 +112,6 @@
 	 * @since: 2.1.8
 	 * @return array Bulk reply
 	 * @package Redis\Commands\Strings
-	 */
 	class GETRANGE extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 3);
@@ -121,6 +120,7 @@
 			$this->validateInt($arguments[2]);
 		}
 	}
+	 */
 
 	/**
 	 * GETSET key value ~ Set the string value of a key and return its old value
@@ -299,7 +299,6 @@
 	 * @since: 2.1.18
 	 * @return int Integer reply: the original bit value stored at offset.
 	 * @package Redis\Commands\Strings
-	 */
 	class SETBIT extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 3);
@@ -307,6 +306,7 @@
 			$this->validateInt($arguments[1]);
 		}
 	}
+	 */
 
 	/**
 	 * SETEX key seconds value ~ Set the value and expiration of a key
@@ -377,6 +377,10 @@
 			$this->validateEquals(count($arguments), 2);
 			$this->validateKey($arguments[0]);
 		}
+
+		function output($line) {
+			return intval($line) == 1;
+		}
 	}
 
 	/**
@@ -397,7 +401,6 @@
 	 * @since: 2.1.18
 	 * @return int Integer reply: the original bit value stored at offset.
 	 * @package Redis\Commands\Strings
-	 */
 	class SETRANGE extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 3);
@@ -405,6 +408,7 @@
 			$this->validateInt($arguments[1]);
 		}
 	}
+	 */
 
 	/**
 	 * STRLEN key ~ Get the length of the value stored in a key

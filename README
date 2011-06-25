@@ -35,6 +35,18 @@ Contents
    examples/
       contains a number of examples that show how to work with the library and 
       redis in general.
+			* basic.php
+				 - examples of basic operations 
+			* pipelining.php
+				 - benchmark showing the speedup of pipelining
+			* sharding.php
+				 - (WIP) examples showing the sharding/replication functionality of the library
+			* twitter.php
+				 - (TODO) simple example showing how you could store twitter messages using RedisPHPlay				
+			* shardedcounter.php
+				 - (TODO) how to implement a highly robust, sharded counter 
+					- http://code.google.com/intl/nl-NL/appengine/articles/sharding_counters.html 
+					- https://sites.google.com/site/io/building-scalable-web-applications-with-google-app-engine
    library/
       the main code of RedisPHPlay. include RedisPHPlay.php to get started.
    tests/
@@ -46,13 +58,13 @@ Completion
 
                      | done % | docs % | test % |
    ----------------------------------------------
-   | Manager         |   100% |   100% |   100% |
-   | Client          |   100% |   100% |    71% |
+   | Manager         |    95% |     0% |   100% |
+   | Client          |    95% |     0% |    67% |
    ----------------------------------------------
-   | Commands        |        |        |    75% |
+   | Commands        |        |        |        |
    |  Keys           |   100% |   100% |    95% |
-   |  Strings        |   100% |   100% |    30% |
-   |  Hashes         |     0% |     0% |     0% |
+   |  Strings        |   100% |   100% |   100% |
+   |  Hashes         |   100% |   100% |   100% |
    |  Lists          |     0% |     0% |     0% |
    |  Sets           |     0% |     0% |     0% |
    |  Sorted Sets    |     0% |     0% |     0% |
@@ -61,11 +73,11 @@ Completion
    |  Connection     |   100% |   100% |    86% |
    |  Server         |     0% |     0% |     0% |
    ----------------------------------------------
-   | Pipelining      |   100% |   100% |     0% |
+   | Pipelining      |    90% |     0% |     0% |
    | Partitioning    |     0% |     0% |     0% |
    | Replication     |     0% |     0% |     0% |
    ----------------------------------------------
-   (21 tests, 141 assertions)
+   (39 tests, 276 assertions)
 
 Example
 =======

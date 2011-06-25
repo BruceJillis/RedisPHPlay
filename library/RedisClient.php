@@ -1,20 +1,11 @@
 <?php
 	define('CRLF', "\r\n");
-
-	/**
-	 * This class acts as a single connection to a redis instance.
-	 *
-	 * @package Redis
-	 */
-	class RedisClient {
-		private $address = null;
-		private $port = null;
-		private $timeout = 30;
-		private $connected = false;
-		private $pipelining = false;
-		private $pipeline = '';
-		private $pipeline_count = 0;
-		private $pipeline_amount = 0;
+	
+	class Connection {
+		protected $address = null;
+		protected $port = null;
+		protected $timeout = 30;
+		protected $connected = false;
 		
 		/**
 		 * Basic constructor.
@@ -38,28 +29,6 @@
 			return $this->connected;
 		}
 
-		/**
-		 * Allows the client to be put into pipeline mode. 
-		 * 
-		 * @param int $size the size of the batches to use
-		 */ 
-		function pipeline($size) {
-			$this->pipelining = true;
-			$this->pipeline_amount = $size;
-		}
-
-		/**
-		 * Flushes any remaining commands that were buffered for pipelining mode.
-		 */ 
-		function flush() {
-			if( !$this->pipelining )
-				throw new CannotFlushDirectConnectionException("{$this->address}:{$this->port}");
-			if( $this->pipeline_count > 0 ) {
-				fwrite($this->socket, $this->pipeline);
-				$this->pipeline = '';
-				$this->pipeline_count = 0;
-			}
-		}
 
 		/**
 		 * Open a connection.
@@ -94,6 +63,15 @@
 				throw new CouldNotCloseException("{$this->address}:{$this->port}");
 			$this->connected = false;
 		}
+	}
+
+	/**
+	 * Basic command building logic.
+	 *
+	 * @package Redis
+	 */
+	abstract class CommandBuilder extends Connection {
+		private $_cache = array();
 
 		/**
 		 * __call implements a generic builder interface to send command to the redis server
@@ -102,8 +80,6 @@
 		 * @param array $arguments additional arguments to the command
 		 */
 		function __call($command, $arguments) {
-			if( !$this->connected )
-				throw new NotConnectedException("{$this->address}:{$this->port}");
 			$command = strtoupper($command);
 			$command = "{$command}";
 			if( !class_exists($command) )
@@ -111,20 +87,17 @@
 			if( !isset($this->_cache[$command]) )
 				$this->_cache[$command] = new $command();
 			$this->_cache[$command]->validate($arguments);
-			if( $this->pipelining ) {
-				// pipelined mode
-				$this->pipeline .= $this->_cache[$command]->build($arguments);
-				$this->pipeline_count += 1;
-				if( $this->pipeline_count == $this->pipeline_amount ) {
-					fwrite($this->socket, $this->pipeline);
-					$this->pipeline = '';
-					$this->pipeline_count = 0;
-				}
-			} else {
-				// normal, direct mode
-				fwrite($this->socket, $this->_cache[$command]->build($arguments));
-				return $this->read($this->_cache[$command]);
-			}
+			return $this->send($this->_cache[$command], $arguments);
+		}
+
+		/**
+		 * Send an unpipelined command (normal, direct mode).
+		 */ 
+		function send($command, $arguments) { 
+			if( !$this->connected )
+				throw new NotConnectedException("{$this->address}:{$this->port}");
+			fwrite($this->socket, $command->build($arguments));
+			return $this->read($command);
 		}
 
 		/**
@@ -136,7 +109,7 @@
 		 * @throws RedisServerException if the client recieves an error reply from the redis server
 		 * @throws RuntimeException if the client recieved a response that was not understood
 		 */
-		private function read($command) {
+		protected function read($command, $output = true) {
 			if( !$this->connected )
 				throw new NotConnectedException("{$this->address}:{$this->port}");
 			// normal, direct mode
@@ -146,12 +119,12 @@
 			switch($type) {
 				case '+':
 					// status reply
-					if( method_exists($command, 'output') )
+					if( method_exists($command, 'output') && $output )
 						return $command->output($line);
 					return ($line == 'OK');
 				case ':':
 					// integer reply
-					if( method_exists($command, 'output') )
+					if( method_exists($command, 'output') && $output )
 						return $command->output($line);
 					return intval($line);
 				case '$':
@@ -160,15 +133,17 @@
 					if( $count == -1 )
 						return null;
 					$line = fgets($this->socket, $count + 3);
-					if( method_exists($command, 'output') )
+					if( method_exists($command, 'output') && $output)
 						return $command->output(substr($line, 0, strlen($line) - 2));
 					return substr($line, 0, strlen($line) - 2);
 				case '*':
 					// multi bulk reply
 					$count = intval($line);
 					for($i = 0; $i < $count; $i++) {
-						$result[] = $this->read($command);
+						$result[] = $this->read($command, false);
 					}
+					if( method_exists($command, 'output') && $output )
+						return $command->output($result);
 					return $result;					
 				case '-':
 					// error reply
@@ -176,5 +151,82 @@
 				default:
 					throw new RuntimeException("received bad reply: '{$type}{$line}'");
 			}
+		}
+	}
+
+	/**
+	 * A pipelining wrapper for the RedisClient.
+	 *
+	 * @package Redis
+	 */
+	class Pipeline extends CommandBuilder {
+		private $pipelining = false;
+		private $pipeline = '';
+		private $pipeline_count = 0;
+		private $pipeline_amount = 0;
+		private $client = null;
+
+		/**
+		 * Basic constructor.
+		 *
+		 * @param int $size the size of the batches to be sent
+		 * @param RedisClient $client the underlying un-pipelined connection
+		 */
+		function __construct($size, $client) {
+			$this->pipelining = true;
+			$this->pipeline_amount = $size;
+			$this->client = $client;
+		}
+
+		/**
+		 * Flushes any remaining commands that were buffered for pipelining mode.
+		 */ 
+		function flush() {
+			if( !$this->pipelining )
+				throw new CannotFlushDirectConnectionException("{$this->address}:{$this->port}");
+			if( $this->pipeline_count > 0 ) {
+				fwrite($this->client->socket, $this->pipeline);
+				$this->pipeline = '';
+				$this->pipeline_count = 0;
+			}
+		}
+
+		/**
+		 * Send an pipelined command 
+		 */ 
+		function send($command, $arguments) {
+			if( !$this->client->connected )
+				throw new NotConnectedException("{$this->client->address}:{$this->client->port}");
+			if( !$this->pipelining )
+				throw new RuntimeException('cannot send pipelined commands on normal connection');
+			$this->pipeline .= $command->build($arguments);
+			$this->pipeline_count += 1;
+			if( $this->pipeline_count == $this->pipeline_amount ) {
+				fwrite($this->client->socket, $this->pipeline);
+				$this->pipeline = '';
+				$this->pipeline_count = 0;
+			}
+			return true;
+		}
+	}
+	
+	class Cluster extends CommandBuilder {
+	}
+
+	/**
+	 * This class acts as a single connection to a redis instance.
+	 *
+	 * @package Redis
+	 */
+	class RedisClient extends CommandBuilder {
+		/**
+		 * Allows the client to be put into pipeline mode. 
+		 * 
+		 * @param int $size the size of the batches to use
+		 * @returns a Pipeline instance that can be used to send commands
+		 */ 
+		function pipeline($size) {
+			 $pipeline = new Pipeline($size, $this);
+			 return $pipeline;
 		}
 	}

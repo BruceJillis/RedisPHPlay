@@ -46,6 +46,16 @@
 		}
 
 		/**
+		 * Validate if a count ($actual) is larger then or equal to $expected.
+		 *
+		 * @throws SmallerThenException if the actual amount is larger then the expected amount
+		 */
+		final function validateLargerThenEqual($actual, $expected) {
+			if( $actual < $expected )
+				throw new SmallerThenException($this->name, $actual, $expected);
+		}
+
+		/**
 		 * Validate if a count ($actual) is equal to $expected.
 		 *
 		 * @throws NotEqualToException if the actual amount is larger then the expected amount

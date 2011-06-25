@@ -8,8 +8,10 @@
 	require '..\library\RedisPHPlay.php';
 
 	$redis = new RedisManager();
-	$client1 = $redis->connect('127.0.0.1', 6379);
-	$client1->auth('test');
+	$cluster = $redis->cluster();
+	$cluster->connect('127.0.0.1', 6380, 'test');
+
+	die();
 	$client2 = $redis->connect('127.0.0.1', 6380);
 	$client2->auth('test');
 	$client3 = $redis->connect('127.0.0.1', 6381);

@@ -38,4 +38,8 @@
 			}
 			return $this->clients[$key];
 		}
+
+		function cluster() {			 
+			return $this;
+		}
 	}

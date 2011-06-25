@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sun, 19 Jun 2011 16:22:34 +0000">
+<meta name="when" content="Sat, 25 Jun 2011 12:53:58 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -64,7 +64,27 @@ Detail: <a href="#detail_global">Global</a>
 </tr>
 <tr>
 <td class="type"> mixed</td>
+<td class="description"><p class="name"><a href="#client2">client2</a></p></td>
+</tr>
+<tr>
+<td class="type"> mixed</td>
+<td class="description"><p class="name"><a href="#client3">client3</a></p></td>
+</tr>
+<tr>
+<td class="type"> mixed</td>
+<td class="description"><p class="name"><a href="#cluster">cluster</a></p></td>
+</tr>
+<tr>
+<td class="type"> mixed</td>
 <td class="description"><p class="name"><a href="#i">i</a></p></td>
+</tr>
+<tr>
+<td class="type"> mixed</td>
+<td class="description"><p class="name"><a href="#pipeline">pipeline</a></p></td>
+</tr>
+<tr>
+<td class="type"> mixed</td>
+<td class="description"><p class="name"><a href="#range">range</a></p></td>
 </tr>
 <tr>
 <td class="type"> mixed</td>
@@ -93,7 +113,7 @@ Detail: <a href="#detail_global">Global</a>
 <a href="../source/examples/pipelining.php.html#line14" class="location">examples\pipelining.php at line 14</a>
 
 <h3 id="batch">batch</h3>
-<code class="signature">public  mixed <strong>batch</strong> = 5000</code>
+<code class="signature">public  mixed <strong>batch</strong> = 1000</code>
 <div class="details">
 </div>
 
@@ -117,10 +137,55 @@ Detail: <a href="#detail_global">Global</a>
 
 <hr>
 
-<a href="../source/examples/pipelining.php.html#line23" class="location">examples\pipelining.php at line 23</a>
+<a href="../source/examples/sharding.php.html#line15" class="location">examples\sharding.php at line 15</a>
+
+<h3 id="client2">client2</h3>
+<code class="signature">public  mixed <strong>client2</strong> = $redis-&gt;connect('127.0.0.1'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/examples/sharding.php.html#line17" class="location">examples\sharding.php at line 17</a>
+
+<h3 id="client3">client3</h3>
+<code class="signature">public  mixed <strong>client3</strong> = $redis-&gt;connect('127.0.0.1'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/examples/sharding.php.html#line11" class="location">examples\sharding.php at line 11</a>
+
+<h3 id="cluster">cluster</h3>
+<code class="signature">public  mixed <strong>cluster</strong> = $redis-&gt;cluster</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/examples/pipelining.php.html#line22" class="location">examples\pipelining.php at line 22</a>
 
 <h3 id="i">i</h3>
 <code class="signature">public  mixed <strong>i</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/examples/pipelining.php.html#line26" class="location">examples\pipelining.php at line 26</a>
+
+<h3 id="pipeline">pipeline</h3>
+<code class="signature">public  mixed <strong>pipeline</strong> = $client-&gt;pipeline($batch</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/examples/sharding.php.html#line61" class="location">examples\sharding.php at line 61</a>
+
+<h3 id="range">range</h3>
+<code class="signature">public  mixed <strong>range</strong> = $redis-&gt;partitioning</code>
 <div class="details">
 </div>
 
@@ -147,7 +212,7 @@ Detail: <a href="#detail_global">Global</a>
 <a href="../source/examples/pipelining.php.html#line15" class="location">examples\pipelining.php at line 15</a>
 
 <h3 id="times">times</h3>
-<code class="signature">public  mixed <strong>times</strong> = 3.5</code>
+<code class="signature">public  mixed <strong>times</strong> = 2</code>
 <div class="details">
 </div>
 

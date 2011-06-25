@@ -209,4 +209,5 @@
 			$client->close();
 			$this->assertFalse($client->connected());
 		}
+
 	}

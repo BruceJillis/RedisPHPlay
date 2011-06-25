@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sun, 19 Jun 2011 16:22:33 +0000">
+<meta name="when" content="Sat, 25 Jun 2011 12:53:54 +0000">
 
 <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
 <link rel="start" href="../../overview-summary.html">
@@ -107,6 +107,10 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 </tr>
 <tr>
 <td class="type">final  void</td>
+<td class="description"><p class="name"><a href="#validateLargerThenEqual()">validateLargerThenEqual</a>(mixed actual, mixed expected)</p><p class="description">Validate if a count ($actual) is larger then or equal to $expected.</p></td>
+</tr>
+<tr>
+<td class="type">final  void</td>
 <td class="description"><p class="name"><a href="#validateString()">validateString</a>(mixed value)</p><p class="description">Validate if a value is a string</p></td>
 </tr>
 <tr>
@@ -119,7 +123,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 <a href="../../source/library/rediscommand.php.html#line9" class="location">library\RedisCommand.php at line 9</a>
 
 <h3 id="name">name</h3>
-<code class="signature">protected  mixed <strong>$name</strong> = 30</code>
+<code class="signature">protected  mixed <strong>$name</strong></code>
 <div class="details">
 </div>
 
@@ -170,7 +174,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/library/rediscommand.php.html#line115" class="location">library\RedisCommand.php at line 115</a>
+<a href="../../source/library/rediscommand.php.html#line125" class="location">library\RedisCommand.php at line 125</a>
 
 <h3 id="validateEnumerate()">validateEnumerate</h3>
 <code class="signature">public final  void <strong>validateEnumerate</strong>(mixed value, mixed values)</code>
@@ -183,7 +187,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/library/rediscommand.php.html#line53" class="location">library\RedisCommand.php at line 53</a>
+<a href="../../source/library/rediscommand.php.html#line63" class="location">library\RedisCommand.php at line 63</a>
 
 <h3 id="validateEquals()">validateEquals</h3>
 <code class="signature">public final  void <strong>validateEquals</strong>(mixed actual, mixed expected)</code>
@@ -196,7 +200,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/library/rediscommand.php.html#line105" class="location">library\RedisCommand.php at line 105</a>
+<a href="../../source/library/rediscommand.php.html#line115" class="location">library\RedisCommand.php at line 115</a>
 
 <h3 id="validateGlobStylePattern()">validateGlobStylePattern</h3>
 <code class="signature">public final  void <strong>validateGlobStylePattern</strong>(mixed value)</code>
@@ -209,7 +213,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/library/rediscommand.php.html#line75" class="location">library\RedisCommand.php at line 75</a>
+<a href="../../source/library/rediscommand.php.html#line85" class="location">library\RedisCommand.php at line 85</a>
 
 <h3 id="validateInt()">validateInt</h3>
 <code class="signature">public final  void <strong>validateInt</strong>(mixed value)</code>
@@ -222,7 +226,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/library/rediscommand.php.html#line63" class="location">library\RedisCommand.php at line 63</a>
+<a href="../../source/library/rediscommand.php.html#line73" class="location">library\RedisCommand.php at line 73</a>
 
 <h3 id="validateKey()">validateKey</h3>
 <code class="signature">public final  void <strong>validateKey</strong>(mixed key)</code>
@@ -248,7 +252,20 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/library/rediscommand.php.html#line85" class="location">library\RedisCommand.php at line 85</a>
+<a href="../../source/library/rediscommand.php.html#line53" class="location">library\RedisCommand.php at line 53</a>
+
+<h3 id="validateLargerThenEqual()">validateLargerThenEqual</h3>
+<code class="signature">public final  void <strong>validateLargerThenEqual</strong>(mixed actual, mixed expected)</code>
+<div class="details">
+<p>Validate if a count ($actual) is larger then or equal to $expected.</p><dl>
+<dt>Throws:</dt>
+<dd><a href="../../redis/exceptions/validation/smallerthenexception.html">SmallerThenException</a> - if the actual amount is larger then the expected amount</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/library/rediscommand.php.html#line95" class="location">library\RedisCommand.php at line 95</a>
 
 <h3 id="validateString()">validateString</h3>
 <code class="signature">public final  void <strong>validateString</strong>(mixed value)</code>
@@ -261,7 +278,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/library/rediscommand.php.html#line95" class="location">library\RedisCommand.php at line 95</a>
+<a href="../../source/library/rediscommand.php.html#line105" class="location">library\RedisCommand.php at line 105</a>
 
 <h3 id="validateTimestamp()">validateTimestamp</h3>
 <code class="signature">public final  void <strong>validateTimestamp</strong>(mixed value)</code>

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sun, 19 Jun 2011 16:22:43 +0000">
+<meta name="when" content="Sat, 25 Jun 2011 12:54:11 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -84,78 +84,88 @@
 <a name="line46"></a>		<span style="color: #009900;">&#125;</span>
 <a name="line47"></a>&nbsp;
 <a name="line48"></a>		<span style="color: #009933; font-style: italic;">/**
-<a name="line49"></a>		 * Validate if a count ($actual) is equal to $expected.
+<a name="line49"></a>		 * Validate if a count ($actual) is larger then or equal to $expected.
 <a name="line50"></a>		 *
-<a name="line51"></a>		 * @throws NotEqualToException if the actual amount is larger then the expected amount
+<a name="line51"></a>		 * @throws SmallerThenException if the actual amount is larger then the expected amount
 <a name="line52"></a>		 */</span>
-<a name="line53"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateEquals<span style="color: #009900;">&#40;</span><span style="color: #000088;">$actual</span><span style="color: #339933;">,</span> <span style="color: #000088;">$expected</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line54"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #000088;">$actual</span> <span style="color: #339933;">!=</span> <span style="color: #000088;">$expected</span> <span style="color: #009900;">&#41;</span>
-<a name="line55"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotEqualToException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$actual</span><span style="color: #339933;">,</span> <span style="color: #000088;">$expected</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line53"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateLargerThenEqual<span style="color: #009900;">&#40;</span><span style="color: #000088;">$actual</span><span style="color: #339933;">,</span> <span style="color: #000088;">$expected</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line54"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #000088;">$actual</span> <span style="color: #339933;">&lt;</span> <span style="color: #000088;">$expected</span> <span style="color: #009900;">&#41;</span>
+<a name="line55"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> SmallerThenException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$actual</span><span style="color: #339933;">,</span> <span style="color: #000088;">$expected</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
 <a name="line56"></a>		<span style="color: #009900;">&#125;</span>
 <a name="line57"></a>&nbsp;
 <a name="line58"></a>		<span style="color: #009933; font-style: italic;">/**
-<a name="line59"></a>		 * Validate if a key contains invalid characters
+<a name="line59"></a>		 * Validate if a count ($actual) is equal to $expected.
 <a name="line60"></a>		 *
-<a name="line61"></a>		 * @throws InvalidKeyException if the key contains valid characters
+<a name="line61"></a>		 * @throws NotEqualToException if the actual amount is larger then the expected amount
 <a name="line62"></a>		 */</span>
-<a name="line63"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateKey<span style="color: #009900;">&#40;</span><span style="color: #000088;">$key</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line64"></a>			<span style="color: #000088;">$matches</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line65"></a>			<a href="http://www.php.net/preg_match"><span style="color: #990000;">preg_match</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'/\w+/i'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$key</span><span style="color: #339933;">,</span> <span style="color: #000088;">$matches</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line66"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #000088;">$matches</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #000088;">$key</span> <span style="color: #009900;">&#41;</span>
-<a name="line67"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> InvalidKeyException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$key</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line68"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line69"></a>&nbsp;
-<a name="line70"></a>		<span style="color: #009933; font-style: italic;">/**
-<a name="line71"></a>		 * Validate if a value is an int
-<a name="line72"></a>		 *
-<a name="line73"></a>		 * @throws NotAnIntException if the value is not an int
-<a name="line74"></a>		 */</span>
-<a name="line75"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateInt<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line76"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/is_int"><span style="color: #990000;">is_int</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
-<a name="line77"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotAnIntException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line63"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateEquals<span style="color: #009900;">&#40;</span><span style="color: #000088;">$actual</span><span style="color: #339933;">,</span> <span style="color: #000088;">$expected</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line64"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #000088;">$actual</span> <span style="color: #339933;">!=</span> <span style="color: #000088;">$expected</span> <span style="color: #009900;">&#41;</span>
+<a name="line65"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotEqualToException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$actual</span><span style="color: #339933;">,</span> <span style="color: #000088;">$expected</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line66"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line67"></a>&nbsp;
+<a name="line68"></a>		<span style="color: #009933; font-style: italic;">/**
+<a name="line69"></a>		 * Validate if a key contains invalid characters
+<a name="line70"></a>		 *
+<a name="line71"></a>		 * @throws InvalidKeyException if the key contains valid characters
+<a name="line72"></a>		 */</span>
+<a name="line73"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateKey<span style="color: #009900;">&#40;</span><span style="color: #000088;">$key</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line74"></a>			<span style="color: #000088;">$matches</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line75"></a>			<a href="http://www.php.net/preg_match"><span style="color: #990000;">preg_match</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'/\w+/i'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$key</span><span style="color: #339933;">,</span> <span style="color: #000088;">$matches</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line76"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #000088;">$matches</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #000088;">$key</span> <span style="color: #009900;">&#41;</span>
+<a name="line77"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> InvalidKeyException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$key</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
 <a name="line78"></a>		<span style="color: #009900;">&#125;</span>
 <a name="line79"></a>&nbsp;
 <a name="line80"></a>		<span style="color: #009933; font-style: italic;">/**
-<a name="line81"></a>		 * Validate if a value is a string
+<a name="line81"></a>		 * Validate if a value is an int
 <a name="line82"></a>		 *
-<a name="line83"></a>		 * @throws NotAnIntException if the value is not a string
+<a name="line83"></a>		 * @throws NotAnIntException if the value is not an int
 <a name="line84"></a>		 */</span>
-<a name="line85"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateString<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line86"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/is_string"><span style="color: #990000;">is_string</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
-<a name="line87"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotAnStringException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line85"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateInt<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line86"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/is_int"><span style="color: #990000;">is_int</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
+<a name="line87"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotAnIntException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
 <a name="line88"></a>		<span style="color: #009900;">&#125;</span>
 <a name="line89"></a>&nbsp;
 <a name="line90"></a>		<span style="color: #009933; font-style: italic;">/**
-<a name="line91"></a>		 * Validate if a value is an timestamp
+<a name="line91"></a>		 * Validate if a value is a string
 <a name="line92"></a>		 *
-<a name="line93"></a>		 * @throws NotATimestampException if the value is not a valid timestamp
+<a name="line93"></a>		 * @throws NotAnIntException if the value is not a string
 <a name="line94"></a>		 */</span>
-<a name="line95"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateTimestamp<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line96"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/is_int"><span style="color: #990000;">is_int</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
-<a name="line97"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotATimestampException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line95"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateString<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line96"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/is_string"><span style="color: #990000;">is_string</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
+<a name="line97"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotAnStringException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
 <a name="line98"></a>		<span style="color: #009900;">&#125;</span>
 <a name="line99"></a>&nbsp;
 <a name="line100"></a>		<span style="color: #009933; font-style: italic;">/**
-<a name="line101"></a>		 * Validate if a value is an glob-style pattern
+<a name="line101"></a>		 * Validate if a value is an timestamp
 <a name="line102"></a>		 *
 <a name="line103"></a>		 * @throws NotATimestampException if the value is not a valid timestamp
 <a name="line104"></a>		 */</span>
-<a name="line105"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateGlobStylePattern<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line106"></a>			<span style="color: #666666; font-style: italic;">// todo make reg exp</span>
-<a name="line107"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/is_string"><span style="color: #990000;">is_string</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
-<a name="line108"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotAGlobStylePatternException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line109"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line105"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateTimestamp<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line106"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/is_int"><span style="color: #990000;">is_int</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
+<a name="line107"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotATimestampException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line108"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line109"></a>&nbsp;
 <a name="line110"></a>		<span style="color: #009933; font-style: italic;">/**
 <a name="line111"></a>		 * Validate if a value is an glob-style pattern
 <a name="line112"></a>		 *
 <a name="line113"></a>		 * @throws NotATimestampException if the value is not a valid timestamp
 <a name="line114"></a>		 */</span>
-<a name="line115"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateEnumerate<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #339933;">,</span> <span style="color: #000088;">$values</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line115"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateGlobStylePattern<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
 <a name="line116"></a>			<span style="color: #666666; font-style: italic;">// todo make reg exp</span>
-<a name="line117"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/in_array"><span style="color: #990000;">in_array</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #339933;">,</span> <span style="color: #000088;">$values</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
-<a name="line118"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotInEnumerationException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #339933;">,</span> <span style="color: #000088;">$values</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line117"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/is_string"><span style="color: #990000;">is_string</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
+<a name="line118"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotAGlobStylePatternException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
 <a name="line119"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line120"></a>	<span style="color: #009900;">&#125;</span></pre>
+<a name="line120"></a>		<span style="color: #009933; font-style: italic;">/**
+<a name="line121"></a>		 * Validate if a value is an glob-style pattern
+<a name="line122"></a>		 *
+<a name="line123"></a>		 * @throws NotATimestampException if the value is not a valid timestamp
+<a name="line124"></a>		 */</span>
+<a name="line125"></a>		final <span style="color: #000000; font-weight: bold;">function</span> validateEnumerate<span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #339933;">,</span> <span style="color: #000088;">$values</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line126"></a>			<span style="color: #666666; font-style: italic;">// todo make reg exp</span>
+<a name="line127"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/in_array"><span style="color: #990000;">in_array</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$value</span><span style="color: #339933;">,</span> <span style="color: #000088;">$values</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span>
+<a name="line128"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> NotInEnumerationException<span style="color: #009900;">&#40;</span><span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">name</span><span style="color: #339933;">,</span> <span style="color: #000088;">$value</span><span style="color: #339933;">,</span> <span style="color: #000088;">$values</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line129"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line130"></a>	<span style="color: #009900;">&#125;</span></pre>
 <div class="header">
 <h1>PHP Redis Fast</h1>
 <ul>

@@ -91,30 +91,7 @@
 			$client->close();
 			$this->assertFalse($client->connected());
 		}
-		
-		/*
-		// Testing key command GETBIT
-		public function testGetBit() {
-			$client = $this->connect();	
-			$this->assertTrue($client->SET('foo', 2*2*2*2)); // 2^4
-			$this->assertEquals($client->GET('foo'), 16);
-			$this->assertEquals($client->GETBIT('foo', 0), 0);
-			$this->assertEquals($client->GETBIT('foo', 1), 1);
-			$this->assertEquals($client->GETBIT('foo', 2), 1);
-			$client->close();
-			$this->assertFalse($client->connected());
-		}
 
-		// Testing key command GETRANGE
-		public function testGetRange() {
-			$client = $this->connect();	
-			$this->assertTrue($client->SET('foo', '2*2*2*2')); 
-			$this->assertEquals($client->GETRANGE('foo', 1, 5), '*2*2*');
-			$client->close();
-			$this->assertFalse($client->connected());
-		}
-
-		*/
 		/**
 		 * Testing key command INCR
 		 */		
@@ -177,6 +154,18 @@
 		}
 
 		/**
+		 * test MSETNX
+		 */
+		function testMSetNX() {
+			$client = $this->connect();
+			$client->del('a', 'b');
+			$client->MSETNX('a', 1, 'b', 2);
+			$client->MSETNX('a', 'z', 'b', 'x');
+			$this->assertEquals('1', $client->GET('a'));
+			$this->assertEquals('2', $client->GET('b'));
+		}
+
+		/**
 		 * test STRLEN
 		 */
 		function testStrlen() {
@@ -187,4 +176,36 @@
 			$this->assertEquals(6, $client->strlen('foo'));
 		}
 
+		/**
+		 * Testing key command SETEX
+		 */		
+		public function testSetEx() {
+			$client = $this->connect();
+			$client->DEL('a');
+			$this->assertFalse($client->EXISTS('a'));
+			$this->assertTrue($client->SETEX('a', 10, 3));
+			$this->assertTrue($client->EXISTS('a'));
+			$client->EXPIRE('a', 2);
+			$this->assertTrue($client->EXISTS('a'));
+			sleep(1);
+			$this->assertTrue($client->EXISTS('a'));
+			sleep(2);
+			$this->assertFalse($client->EXISTS('a'));
+			$client->close();
+			$this->assertFalse($client->connected());
+		}
+
+		/**
+		 * Testing key command SETNX
+		 */		
+		public function testSetNx() {
+			$client = $this->connect();
+			$client->DEL('a');
+			$this->assertFalse($client->EXISTS('a'));
+			$this->assertTrue($client->SETNX('a', 'hello'));
+			$this->assertTrue($client->EXISTS('a'));
+			$this->assertFalse($client->SETNX('a', 'world'));
+			$this->assertEquals('hello', $client->GET('a'));
+			$client->close();
+		}
 	}
