@@ -10,11 +10,8 @@
 		
 		/**
 		 * Basic constructor. 
-		 * 
-		 * Sets the time_limit to 0.
 		 */
-		function __construct() {
-			set_time_limit(0);
+		function __construct() {			
 		}
 
 		/**

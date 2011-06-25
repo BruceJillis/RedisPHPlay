@@ -29,7 +29,6 @@
 			return $this->connected;
 		}
 
-
 		/**
 		 * Open a connection.
 		 *
@@ -62,6 +61,13 @@
 			if( !fclose($this->socket) )
 				throw new CouldNotCloseException("{$this->address}:{$this->port}");
 			$this->connected = false;
+		}
+
+		protected static function copy($instance) {
+			$this->address = $instance->address;
+			$this->port = $instance->port;
+			$this->timeout = $instance->timeout;
+			$this->connected = $instance->connected;
 		}
 	}
 
@@ -97,7 +103,10 @@
 			if( !$this->connected )
 				throw new NotConnectedException("{$this->address}:{$this->port}");
 			fwrite($this->socket, $command->build($arguments));
-			return $this->read($command);
+			if( !$command->persistent )
+				return $this->read($command);
+			else
+				return new RedisChannel($command, $arguments, $this);
 		}
 
 		/**
@@ -109,7 +118,7 @@
 		 * @throws RedisServerException if the client recieves an error reply from the redis server
 		 * @throws RuntimeException if the client recieved a response that was not understood
 		 */
-		protected function read($command, $output = true) {
+		function read($command, $output = true) {
 			if( !$this->connected )
 				throw new NotConnectedException("{$this->address}:{$this->port}");
 			// normal, direct mode
@@ -151,6 +160,11 @@
 				default:
 					throw new RuntimeException("received bad reply: '{$type}{$line}'");
 			}
+		}
+
+		protected static function copy($instance) {
+			parent::copy($instance);
+			$this->_cache = $instance->_cache;
 		}
 	}
 
@@ -229,4 +243,35 @@
 			 $pipeline = new Pipeline($size, $this);
 			 return $pipeline;
 		}
+	}
+
+	/**
+	 * This class retrieves messages for the persistent commands.
+	 *
+	 * @package Redis
+	 */
+	class RedisChannel extends CommandBuilder {
+		function __construct($command, $argumens, $client) {
+			set_time_limit(0);
+			$this->command = $command;
+			$this->client = $client;
+		}
+
+		public function wait() {
+			return $this->client->read();
+		}
+
+		/**
+		 * override __call to disallow non-subscribed mode calls as per the documentation of SUBSCRIBE.
+		 *
+		 * @param string $command the spelling of the command to be sent
+		 * @param array $arguments additional arguments to the command
+		 */
+		function __call($command, $arguments) {
+			if( !in_array(strtoupper($command), array('SUBSCRIBE', 'PSUBSCRIBE', 'UNSUBSCRIBE', 'PUNSUBSCRIBE')) ) {
+				throw new RuntimeException('Command not allowed in subscribed mode.');
+			}
+			return parent::__call($command, $arguments);
+		}
+
 	}

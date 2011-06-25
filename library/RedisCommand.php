@@ -7,6 +7,7 @@
 	 */
 	abstract class RedisCommand {
 		protected $name;
+		public $persistent = false;
 
 		function __construct() {
 			$this->name = get_class($this);
@@ -72,7 +73,7 @@
 		 */
 		final function validateKey($key) {
 			$matches = array();
-			preg_match('/\w+/i', $key, $matches);
+			preg_match('/[\w|\d|:]+/i', $key, $matches);
 			if( $matches[0] != $key )
 				throw new InvalidKeyException($this->name, $key);
 		}
