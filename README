@@ -35,18 +35,18 @@ Contents
    examples/
       contains a number of examples that show how to work with the library and 
       redis in general.
-			* basic.php
-				 - examples of basic operations 
-			* pipelining.php
-				 - benchmark showing the speedup of pipelining
-			* sharding.php
-				 - (WIP) examples showing the sharding/replication functionality of the library
-			* twitter.php
-				 - (TODO) simple example showing how you could store twitter messages using RedisPHPlay				
-			* shardedcounter.php
-				 - (TODO) how to implement a highly robust, sharded counter 
-					- http://code.google.com/intl/nl-NL/appengine/articles/sharding_counters.html 
-					- https://sites.google.com/site/io/building-scalable-web-applications-with-google-app-engine
+         * basic.php
+             - examples of basic operations 
+         * pipelining.php
+             - benchmark showing the speedup of pipelining
+         * sharding.php
+             - (WIP) examples showing the sharding/replication functionality of the library
+         * twitter.php
+             - (TODO) simple example showing how you could store twitter messages using RedisPHPlay            
+         * shardedcounter.php
+             - (TODO) how to implement a highly robust, sharded counter 
+               - http://code.google.com/intl/nl-NL/appengine/articles/sharding_counters.html 
+               - https://sites.google.com/site/io/building-scalable-web-applications-with-google-app-engine
    library/
       the main code of RedisPHPlay. include RedisPHPlay.php to get started.
    tests/
