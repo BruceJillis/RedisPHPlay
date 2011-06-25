@@ -1,0 +1,3 @@
+[submodule "library/benchmark"]
+	path = library/benchmark
+	url = git://github.com/BruceJillis/Benchmark.git

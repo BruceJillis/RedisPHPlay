@@ -6,7 +6,7 @@
 	 * @package Redis\Examples
 	 */
 	require '..\library\RedisPHPlay.php';
-	require '..\library\Benchmark.php';
+	require '..\library\benchmark\Benchmark.php';
 	
 	$benchmark = new Benchmark();
 	$benchmark->start('total');
