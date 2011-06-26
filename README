@@ -74,7 +74,7 @@ Completion
    |  Lists          |     0% |     0% |     0% |
    |  Sets           |     0% |     0% |     0% |
    |  Sorted Sets    |     0% |     0% |     0% |
-   |  Pub/Sub        |   100% |     5% |     0% |
+   |  Pub/Sub        |   100% |   100% |     0% |
    |  Transactions   |     0% |     0% |     0% |
    |  Connection     |   100% |   100% |    86% |
    |  Server         |     0% |     0% |     0% |
