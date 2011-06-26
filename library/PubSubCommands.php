@@ -17,10 +17,6 @@
 		function validate(&$arguments) {
 			$this->validateLargerThenEqual(count($arguments), 1);
 		}
-
-		function output($line) {
-			print_r($line);
-		}
 	}
 	
 	/**

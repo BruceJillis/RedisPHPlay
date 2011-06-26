@@ -52,5 +52,5 @@
 	
 	// start streaming
 	$count = 0;
-	$sc = new TwitterConsumer('user101111', 'simpel123', Phirehose::METHOD_SAMPLE);
+	$sc = new TwitterConsumer('user101111', '', Phirehose::METHOD_SAMPLE);
 	$sc->consume();

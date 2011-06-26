@@ -20,6 +20,14 @@
 		}
 	}
 	/**
+	 * Thrown when a channel socket times out.
+	 * 
+	 * @package Redis\Exceptions
+	 */
+	class RedisChannelTimeoutException extends RedisException {
+	}
+
+	/**
 	 * Thrown when redis replies with an error reply
 	 * 
 	 * @package Redis\Exceptions

@@ -1,0 +1,85 @@
+form, input {
+	padding: 0; margin: 0;
+}
+
+html, body {
+	font-weight: normal;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	color: black;
+	margin: 0;
+	padding: 0;
+	line-height: 1.6em;
+	width: 100%;
+	height: 100%;
+}
+
+#tab-container {
+	width: 100%;
+	height: 100%;
+	background: #E3EFFA;
+}
+
+#tab-container #tab-container-nav {
+	border: 1px solid #C8D1DB;
+	padding: 3px;
+	margin: 0;
+	height: 27px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+#tab-container #tab-container-nav li {
+	border: 1px solid #C8D1DB;
+	padding: 2px;
+	float: left;
+	cursor: default;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;	
+	white-space: nowrap;
+	margin-left: 3px;
+}
+
+#tab-container #tab-container-nav li:hover, #tab-container #tab-container-nav li.activeli {
+	background-color: white;
+}
+
+#tab-container #tab-container-nav li a {
+	text-decoration: none;
+}
+
+#tab-container .tab {
+	color: black;
+	overflow: auto;
+	font-size: 0.8em;
+	background: #F0F7FF;
+	position: absolute;
+	top: 35px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#tab-container .tab .line {
+	width: 100%;
+	display: block;
+	float: left;
+	color: black;
+	font-size: 13px;
+	font-family: Consolas, "Lucida Console", monospace, Verdana, sans-serif, "sans serif";
+}
+
+#tab-container .tab .line .timestamp {
+	float: left;
+}
+
+#tab-container .tab .line .text {
+	float: left;
+	margin-left: 5px;
+}
+
+#tab-container input {
+	position: absolute; bottom: 0; left: 0; right: 0;
+}

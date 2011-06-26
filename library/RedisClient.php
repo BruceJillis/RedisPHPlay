@@ -2,6 +2,7 @@
 	define('CRLF', "\r\n");
 	
 	class Connection {
+		protected $socket = null;
 		protected $address = null;
 		protected $port = null;
 		protected $timeout = 30;
@@ -63,11 +64,14 @@
 			$this->connected = false;
 		}
 
-		protected static function copy($instance) {
-			$this->address = $instance->address;
-			$this->port = $instance->port;
-			$this->timeout = $instance->timeout;
-			$this->connected = $instance->connected;
+		function internals() {
+			return array(
+				$this->address,
+				$this->port,
+				$this->timeout,
+				$this->socket,
+				$this->connected
+			);
 		}
 	}
 
@@ -77,7 +81,7 @@
 	 * @package Redis
 	 */
 	abstract class CommandBuilder extends Connection {
-		private $_cache = array();
+		private static $_cache = array();
 
 		/**
 		 * __call implements a generic builder interface to send command to the redis server
@@ -90,10 +94,10 @@
 			$command = "{$command}";
 			if( !class_exists($command) )
 				throw new CommandNotFoundException($command);
-			if( !isset($this->_cache[$command]) )
-				$this->_cache[$command] = new $command();
-			$this->_cache[$command]->validate($arguments);
-			return $this->send($this->_cache[$command], $arguments);
+			if( !isset(CommandBuilder::$_cache[$command]) )
+				CommandBuilder::$_cache[$command] = new $command();
+			CommandBuilder::$_cache[$command]->validate($arguments);
+			return $this->send(CommandBuilder::$_cache[$command], $arguments);
 		}
 
 		/**
@@ -118,7 +122,7 @@
 		 * @throws RedisServerException if the client recieves an error reply from the redis server
 		 * @throws RuntimeException if the client recieved a response that was not understood
 		 */
-		function read($command, $output = true) {
+		protected function read($command, $output = true) {
 			if( !$this->connected )
 				throw new NotConnectedException("{$this->address}:{$this->port}");
 			// normal, direct mode
@@ -157,14 +161,11 @@
 				case '-':
 					// error reply
 					throw new RedisServerException($line);
+				case false:
+					throw new RuntimeException("timeout");
 				default:
 					throw new RuntimeException("received bad reply: '{$type}{$line}'");
 			}
-		}
-
-		protected static function copy($instance) {
-			parent::copy($instance);
-			$this->_cache = $instance->_cache;
 		}
 	}
 
@@ -251,14 +252,39 @@
 	 * @package Redis
 	 */
 	class RedisChannel extends CommandBuilder {
-		function __construct($command, $argumens, $client) {
+		function __construct($command, $arguments, $client) {
 			set_time_limit(0);
-			$this->command = $command;
 			$this->client = $client;
+			$this->command = $command;
+			list(
+				$this->address,
+				$this->port,
+				$this->timeout,
+				$this->socket,
+				$this->connected
+			) = $client->internals();
+			$line = $this->read($this->command);
+			/* assume its correct for now
+			array_shift($line);
+			$line = array_chunk($line, 2);
+			$result = array();
+			foreach($line as $_line) {
+				$result[$_line[0]] = $_line[1];
+			}
+			*/
 		}
 
 		public function wait() {
-			return $this->client->read();
+			while($this->connected()) {
+				try {
+					return $this->read($this->command, -1);
+				} catch( RedisChannelTimeoutException $e ) {
+					// ok restart 
+				} catch( Exception $e ) {
+					// something went wrong, close connection
+					$this->close();
+				}
+			}
 		}
 
 		/**

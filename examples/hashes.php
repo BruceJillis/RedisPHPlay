@@ -17,3 +17,7 @@
 	printf("HMSET a = 1, b = 2 (= 0) -> %d\n", $client->HMSET('foo', 'a', 1, 'b', 2));
 	printf("HGETALL foo (= array(a=1, b=2)) -> %s\n", print_r($client->HGETALL('foo'), 1));
 	printf("\n");
+
+	$client->HMSET('foo', array(
+		'a' => 1
+	));

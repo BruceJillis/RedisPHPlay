@@ -17,9 +17,11 @@
 	$client->auth('test');
 	if( !isset($_GET['send']) ) {
 		$channel = $client->SUBSCRIBE('tweets');
-		while( $message == $channel->wait() ) {
+		$message = $channel->wait();
+		while( $message ) {
 			print_r($message);
 			ob_flush();
+			$message = $channel->wait();
 		}
 	} else {
 		$rnd = intval(rand(0, 1000));
