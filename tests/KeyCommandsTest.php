@@ -90,7 +90,7 @@
 		public function testRandomKey() {
 			$client = $this->connect();	
 			$this->assertEquals($client->SET('a', 10), true);
-			$this->assertEquals('a', $client->RANDOMKEY());
+			$this->assertTrue($client->RANDOMKEY() != '');
 			$client->close();
 			$this->assertFalse($client->connected());
 		}
@@ -124,9 +124,9 @@
 			$keys = $client->KEYS('?');
 			$this->assertTrue(is_array($keys));
 			$this->assertEquals(3, count($keys));
-			$this->assertEquals('a', $keys[0]);
-			$this->assertEquals('b', $keys[1]);
-			$this->assertEquals('c', $keys[2]);
+			$this->assertTrue(in_array('a', array_values($keys)));
+			$this->assertTrue(in_array('b', array_values($keys)));
+			$this->assertTrue(in_array('c', array_values($keys)));
 			$this->assertEquals($client->DEL('a', 'b', 'c'), 3);
 			$client->close();
 			$this->assertFalse($client->connected());

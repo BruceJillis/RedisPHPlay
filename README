@@ -37,12 +37,18 @@ Contents
       redis in general.
          * basic.php
              - examples of basic operations 
+         * hashes.php
+             - examples of basic hash operations 
          * pipelining.php
              - benchmark showing the speedup of pipelining
+         * pubsub.php
+             - a simple example showing Pub/Sub functionality.
+         * chat/
+             - a basic irc like chat server based on ajax long polling using jquery and redis pub / sub. supports joining channels via (/join #<channel>) and sending messages.
          * sharding.php
              - (WIP) examples showing the sharding/replication functionality of the library
-         * twitter.php
-             - (TODO) simple example showing how you could store twitter messages using RedisPHPlay            
+         * twitter/
+             - (WIP) simple example showing how you could store twitter messages using RedisPHPlay            
          * shardedcounter.php
              - (TODO) how to implement a highly robust, sharded counter 
                - http://code.google.com/intl/nl-NL/appengine/articles/sharding_counters.html 
@@ -68,14 +74,14 @@ Completion
    |  Lists          |     0% |     0% |     0% |
    |  Sets           |     0% |     0% |     0% |
    |  Sorted Sets    |     0% |     0% |     0% |
-   |  Pub/Sub        |     0% |     0% |     0% |
+   |  Pub/Sub        |   100% |     5% |     0% |
    |  Transactions   |     0% |     0% |     0% |
    |  Connection     |   100% |   100% |    86% |
    |  Server         |     0% |     0% |     0% |
    ----------------------------------------------
-   | Pipelining      |    90% |     0% |     0% |
-   | Partitioning    |     0% |     0% |     0% |
-   | Replication     |     0% |     0% |     0% |
+   | Pipelining      |    90% |    10% |     0% |
+   | Partitioning    |    10% |     5% |     0% |
+   | Replication     |    10% |     5% |     0% |
    ----------------------------------------------
    (39 tests, 276 assertions)
 
