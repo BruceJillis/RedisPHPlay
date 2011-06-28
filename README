@@ -39,6 +39,8 @@ Contents
              - examples of basic operations 
          * hashes.php
              - examples of basic hash operations 
+         * lists.php
+             - examples of basic list operations 
          * pipelining.php
              - benchmark showing the speedup of pipelining
          * pubsub.php
@@ -71,10 +73,10 @@ Completion
    |  Keys           |   100% |   100% |    95% |
    |  Strings        |   100% |   100% |   100% |
    |  Hashes         |   100% |   100% |   100% |
-   |  Lists          |     0% |     0% |     0% |
+   |  Lists          |   100% |   100% |    76% |
    |  Sets           |     0% |     0% |     0% |
    |  Sorted Sets    |     0% |     0% |     0% |
-   |  Pub/Sub        |   100% |   100% |     0% |
+   |  Pub/Sub        |   100% |   100% |    10% |
    |  Transactions   |     0% |     0% |     0% |
    |  Connection     |   100% |   100% |    86% |
    |  Server         |     0% |     0% |     0% |
@@ -83,7 +85,7 @@ Completion
    | Partitioning    |    10% |     5% |     0% |
    | Replication     |    10% |     5% |     0% |
    ----------------------------------------------
-   (39 tests, 276 assertions)
+   (49 tests, 345 assertions)
 
 Example
 =======

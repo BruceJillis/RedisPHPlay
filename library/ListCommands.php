@@ -32,10 +32,21 @@
 	 * the second element being the value of the popped element.
 	 * @package Redis\Commands\Lists
 	 */
-	class BLPOP extends RedisCommand {
+	class BRPOP extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateLargerThen(count($arguments), 1);
 			// todo: validation
+		}
+
+		function output($array) {
+			if( $array == null )
+				return null;
+			$array = array_chunk($array, 2);
+			$result = array();
+			foreach($array as $value) {
+				$result[$value[0]] = $value[1];
+			}
+			return $result;
 		}
 	}
 
@@ -93,7 +104,7 @@
 	 * @return int Integer reply: the length of the list after the insert operation, or -1 when the value pivot was not found.
 	 * @package Redis\Commands\Lists
 	 */
-	class LINDEX extends RedisCommand {
+	class LINSERT extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 2);
 			$this->validateKey($arguments[0]);
@@ -192,6 +203,10 @@
 			$this->validateInt($arguments[1]);
 			$this->validateInt($arguments[2]);
 		}
+
+		function output($list) {
+			return $list;
+		}
 	}
 
 	/**
@@ -249,7 +264,7 @@
 	 * @return boolean Status code reply
 	 * @package Redis\Commands\Lists
 	 */
-	class LSET extends RedisCommand {
+	class LTRIM extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 3);
 			$this->validateKey($arguments[0]);
@@ -289,8 +304,9 @@
 	 */
 	class RPOPLPUSH extends RedisCommand {
 		function validate(&$arguments) {
-			$this->validateEquals(count($arguments), 1);
+			$this->validateEquals(count($arguments), 2);
 			$this->validateKey($arguments[0]);
+			$this->validateKey($arguments[1]);
 		}
 	}
 

@@ -152,8 +152,13 @@
 				case '*':
 					// multi bulk reply
 					$count = intval($line);
+					$result = null;
 					for($i = 0; $i < $count; $i++) {
 						$result[] = $this->read($command, false);
+					}
+					if( $result == null ) {
+						// a timeout occured
+						// $result = array();
 					}
 					if( method_exists($command, 'output') && $output )
 						return $command->output($result);
