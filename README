@@ -46,7 +46,8 @@ Contents
          * pubsub.php
              - a simple example showing Pub/Sub functionality.
          * chat/
-             - a basic irc like chat server based on ajax long polling using jquery and redis pub / sub. supports joining channels via (/join #<channel>) and sending messages.
+             - a basic irc like chat server based on ajax long polling via jquery, html5's sessionStorage and redis pub/sub. Supports 
+				 joining channels via (/join #<channel>) and sending messages. Tested in chrome, firefox.
          * sharding.php
              - (WIP) examples showing the sharding/replication functionality of the library
          * twitter/
