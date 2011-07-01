@@ -9,7 +9,6 @@
 	require '..\library\benchmark\Benchmark.php';
 	
 	$benchmark = new Benchmark();
-	$benchmark->start('total');
 	
 	$batch = 1000; // batch command per 100
 	$times = 2; // send $times * $batch commands
@@ -29,7 +28,5 @@
 		$pipeline->SET('a_' . $i, $i);
 	$pipeline->flush(); // make sure any leftover commands are sent
 	$benchmark->stop('pipeline');
-
-	$benchmark->stop('total');
 
 	$benchmark->display();
