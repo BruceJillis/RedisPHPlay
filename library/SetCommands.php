@@ -13,7 +13,7 @@
 	 */
 	class SADD extends RedisCommand {
 		function validate(&$arguments) {
-			$this->validateLargerThenEquals(count($arguments), 2);
+			$this->validateLargerThenEqual(count($arguments), 2);
 			$this->validateKey($arguments[0]);
 		}
 	}
@@ -68,7 +68,7 @@
 	 */
 	class SDIFFSTORE extends RedisCommand {
 		function validate(&$arguments) {
-			$this->validateLargerThenEquals(count($arguments), 2);
+			$this->validateLargerThenEqual(count($arguments), 2);
 			$this->validateKey($argument[0]);
 			$this->validateKey($argument[1]);
 		}
@@ -107,7 +107,7 @@
 	 */
 	class SINTERSTORE extends RedisCommand {
 		function validate(&$arguments) {
-			$this->validateLargerThenEquals(count($arguments), 2);
+			$this->validateLargerThenEqual(count($arguments), 2);
 			$this->validateKey($argument[0]);
 			for($i = 1; $i < count($argument); $i++)
 				$this->validateKey($argument[$i]);
@@ -144,7 +144,7 @@
 	 * @return array Multi-bulk reply: all elements of the set.
 	 * @package Redis\Commands\Sets
 	 */
-	class SISMEMBER extends RedisCommand {
+	class SMEMBERS extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 1);
 			$this->validateKey($arguments[0]);
@@ -165,7 +165,7 @@
 	 * @return int Integer reply, specifically: 1 if the element is moved. 0 if the element is not a member of source and no operation was performed.
 	 * @package Redis\Commands\Sets
 	 */
-	class SISMEMBER extends RedisCommand {
+	class SMOVE extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 3);
 			$this->validateKey($arguments[0]);
@@ -244,7 +244,7 @@
 	 */
 	class SUNION extends RedisCommand {
 		function validate(&$arguments) {
-			$this->validateLargerThenEquals(count($arguments), 1);
+			$this->validateLargerThenEqual(count($arguments), 1);
 			foreach($arguments as $argument)
 				$this->validateKey($argument);
 		}
@@ -263,7 +263,7 @@
 	 */
 	class SUNIONSTORE extends RedisCommand {
 		function validate(&$arguments) {
-			$this->validateLargerThenEquals(count($arguments), 2);
+			$this->validateLargerThenEqual(count($arguments), 2);
 			foreach($arguments as $argument)
 				$this->validateKey($argument);
 		}

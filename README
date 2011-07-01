@@ -75,7 +75,7 @@ Completion
    |  Strings        |   100% |   100% |   100% |
    |  Hashes         |   100% |   100% |   100% |
    |  Lists          |   100% |   100% |    76% |
-   |  Sets           |     0% |     0% |     0% |
+   |  Sets           |   100% |   100% |    18% |
    |  Sorted Sets    |     0% |     0% |     0% |
    |  Pub/Sub        |   100% |   100% |    10% |
    |  Transactions   |     0% |     0% |     0% |
