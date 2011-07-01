@@ -82,6 +82,9 @@ function writeline(name, message) {
 var PollChannel = function(chatii, name) {
 	$('ul', chatii.container()).append($('<li><a href="#'+name+'">'+name+'</a></li>'));
 	$('#input-container', chatii.container()).before($('<div class="tab" id="'+name+'"></div>'));
+	$('#' + name).click(function() {
+		$('#input-container input')[0].focus();
+	});
 
 	var interface = {
 		write: function(message) {
@@ -111,7 +114,10 @@ var PollChannel = function(chatii, name) {
 var Channel = function(chatii, name) {
 	$('ul', chatii.container()).append($('<li><a href="#'+name+'">'+name+'</a></li>'));
 	$('#input-container', chatii.container()).before($('<div class="tab" id="'+name+'"></div>'));
-
+	$('#' + name).click(function() {
+		$('#input-container input')[0].focus();
+	});
+	
 	var interface = {
 		write: function(message) {
 			writeline(name, message);
@@ -162,6 +168,7 @@ var Chatii = function(container) {
 			writeline('status', "&nbsp;&nbsp;&nbsp; all other text is sent as a message to the currently active channel");
 			writeline('status', '');
 			writeline('status', '<em><strong>*note*</strong> this, the #status window is not meant for messaging and does not support it</em>');
+			writeline('status', '<em><strong>*note*</strong> this chat system relies on sessionStorage and therefore each browser window will get a new username</em>');
 			$('input', '#keyboard-input').focus();
 		},
 		// register channel under name and reload the tabs 
