@@ -96,3 +96,13 @@
 			parent::__construct("'{$name}' $value is not a member of $values.", 2007);
 		}
 	}
+	/**
+	 * Thrown if a value is expected from a list of fixed values but is different
+	 * 
+	 * @package Redis\Exceptions\Validation
+	 */
+	class InvalidArgumentException extends ValidationException {
+		function __construct($message) {
+			parent::__construct($message, 2008);
+		}
+	}

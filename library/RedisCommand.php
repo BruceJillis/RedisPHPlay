@@ -118,6 +118,7 @@
 			if( !is_string($value) )
 				throw new NotAGlobStylePatternException($this->name, $value);
 		}
+
 		/**
 		 * Validate if a value is an glob-style pattern
 		 *
@@ -127,5 +128,15 @@
 			// todo make reg exp
 			if( !in_array($value, $values) )
 				throw new NotInEnumerationException($this->name, $value, $values);
+		}
+
+		/**
+		 * Validate if a value is an glob-style pattern
+		 *
+		 * @throws NotATimestampException if the value is not a valid timestamp
+		 */
+		final function validateEnumerate($value) {
+			if( !is_float($value) || !is_int($value) )
+				throw new InvalidArgumentException("not an int, or a float");
 		}
 	}
