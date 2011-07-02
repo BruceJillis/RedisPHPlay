@@ -64,6 +64,7 @@
 	 *
 	 * @since: 1.3.8
 	 * @returns int Integer reply: the number of clients that received the message.
+	 * @package Redis\Commands\PubSub
 	 */
 	class PUBLISH extends RedisCommand {
 		function validate(&$arguments) {

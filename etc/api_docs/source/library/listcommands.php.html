@@ -1,0 +1,420 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sat, 02 Jul 2011 20:04:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>library\ListCommands.php (API Documentation: PHP Redis Fast)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source\library\listcommands.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>library\ListCommands.php</h1>
+<hr>
+
+<a name="line1"></a><pre class="php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<a name="line2"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line3"></a>	 * BLPOP key [key ...] timeout ~ Remove and get the first element in a list, or block until one is available
+<a name="line4"></a>	 * 
+<a name="line5"></a>	 * BLPOP is a blocking list pop primitive. It is the blocking version of LPOP because it blocks the connection when there are no elements to pop from any of the given lists. An element is popped from the head of the 
+<a name="line6"></a>	 * first list that is non-empty, with the given keys being checked in the order that they are given.
+<a name="line7"></a>	 * 
+<a name="line8"></a>	 * Time complexity: O(1)
+<a name="line9"></a>	 * 
+<a name="line10"></a>	 * @since: 1.3.1
+<a name="line11"></a>	 * @return array Multi-bulk reply: specifically: A nil multi-bulk when no element could be popped and the timeout expired. A two-element multi-bulk with the first element being the name of the key where an element 
+<a name="line12"></a>	 * was popped and the second element being the value of the popped element.
+<a name="line13"></a>	 * @package Redis\Commands\Lists
+<a name="line14"></a>	 */</span>
+<a name="line15"></a>	<span style="color: #000000; font-weight: bold;">class</span> BLPOP <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line16"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line17"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line18"></a>			<span style="color: #666666; font-style: italic;">// todo: validation</span>
+<a name="line19"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line20"></a>&nbsp;
+<a name="line21"></a>		<span style="color: #000000; font-weight: bold;">function</span> output<span style="color: #009900;">&#40;</span><span style="color: #000088;">$array</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line22"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #000088;">$array</span> <span style="color: #339933;">==</span> <span style="color: #009900; font-weight: bold;">null</span> <span style="color: #009900;">&#41;</span>
+<a name="line23"></a>				<span style="color: #b1b100;">return</span> <span style="color: #009900; font-weight: bold;">null</span><span style="color: #339933;">;</span>
+<a name="line24"></a>			<span style="color: #000088;">$array</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array_chunk"><span style="color: #990000;">array_chunk</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$array</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line25"></a>			<span style="color: #000088;">$result</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line26"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$array</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line27"></a>				<span style="color: #000088;">$result</span><span style="color: #009900;">&#91;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+<a name="line28"></a>			<span style="color: #009900;">&#125;</span>
+<a name="line29"></a>			<span style="color: #b1b100;">return</span> <span style="color: #000088;">$result</span><span style="color: #339933;">;</span>
+<a name="line30"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line31"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line32"></a>&nbsp;
+<a name="line33"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line34"></a>	 * BRPOP key [key ...] timeout ~ Remove and get the last element in a list, or block until one is available
+<a name="line35"></a>	 * 
+<a name="line36"></a>	 * BRPOP is a blocking list pop primitive. It is the blocking version of RPOP because it blocks the connection when there are no elements to pop from any of the given lists. An element is popped from the tail of the first list 
+<a name="line37"></a>	 * that is non-empty, with the given keys being checked in the order that they are given.See BLPOP for the exact semantics. BRPOP is identical to BLPOP, apart from popping from the tail of a list instead of the head of a list.
+<a name="line38"></a>	 * 
+<a name="line39"></a>	 * Time complexity: O(1)
+<a name="line40"></a>	 * 
+<a name="line41"></a>	 * @since: 1.3.1
+<a name="line42"></a>	 * @return array Multi-bulk reply: specifically: A nil multi-bulk when no element could be popped and the timeout expired. A two-element multi-bulk with the first element being the name of the key where an element was popped and 
+<a name="line43"></a>	 * the second element being the value of the popped element.
+<a name="line44"></a>	 * @package Redis\Commands\Lists
+<a name="line45"></a>	 */</span>
+<a name="line46"></a>	<span style="color: #000000; font-weight: bold;">class</span> BRPOP <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line47"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line48"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line49"></a>			<span style="color: #666666; font-style: italic;">// todo: validation</span>
+<a name="line50"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line51"></a>&nbsp;
+<a name="line52"></a>		<span style="color: #000000; font-weight: bold;">function</span> output<span style="color: #009900;">&#40;</span><span style="color: #000088;">$array</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line53"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #000088;">$array</span> <span style="color: #339933;">==</span> <span style="color: #009900; font-weight: bold;">null</span> <span style="color: #009900;">&#41;</span>
+<a name="line54"></a>				<span style="color: #b1b100;">return</span> <span style="color: #009900; font-weight: bold;">null</span><span style="color: #339933;">;</span>
+<a name="line55"></a>			<span style="color: #000088;">$array</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array_chunk"><span style="color: #990000;">array_chunk</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$array</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line56"></a>			<span style="color: #000088;">$result</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line57"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$array</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line58"></a>				<span style="color: #000088;">$result</span><span style="color: #009900;">&#91;</span><span style="color: #000088;">$value</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$value</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+<a name="line59"></a>			<span style="color: #009900;">&#125;</span>
+<a name="line60"></a>			<span style="color: #b1b100;">return</span> <span style="color: #000088;">$result</span><span style="color: #339933;">;</span>
+<a name="line61"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line62"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line63"></a>&nbsp;
+<a name="line64"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line65"></a>	 * BRPOPLPUSH source destination timeout ~ Pop a value from a list, push it to another list and return it; or block until one is available
+<a name="line66"></a>	 * 
+<a name="line67"></a>	 * BRPOPLPUSH is the blocking variant of RPOPLPUSH. When source contains elements, this command behaves exactly like RPOPLPUSH. When source is empty, Redis will block the connection until another client pushes to it or until 
+<a name="line68"></a>	 * timeout is reached. A timeout of zero can be used to block indefinitely. See RPOPLPUSH for more information.
+<a name="line69"></a>	 * 
+<a name="line70"></a>	 * Time complexity: O(1)
+<a name="line71"></a>	 * 
+<a name="line72"></a>	 * @since: 2.1.7
+<a name="line73"></a>	 * @return array Bulk reply: the element being popped from source and pushed to destination. If timeout is reached, a Null multi-bulk reply is returned.
+<a name="line74"></a>	 * @package Redis\Commands\Lists
+<a name="line75"></a>	 */</span>
+<a name="line76"></a>	<span style="color: #000000; font-weight: bold;">class</span> BRPOPLPUSH <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line77"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line78"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line79"></a>			<span style="color: #666666; font-style: italic;">// todo: validation</span>
+<a name="line80"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line81"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line82"></a>&nbsp;
+<a name="line83"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line84"></a>	 * LINDEX key index ~ Get an element from a list by its index
+<a name="line85"></a>	 * 
+<a name="line86"></a>	 * Returns the element at index index in the list stored at key. The index is zero-based, so 0 means the first element, 1 the second element and so on. Negative indices can be used to designate elements starting at the tail of the list. 
+<a name="line87"></a>	 * Here, -1 means the last element, -2 means the penultimate and so forth.
+<a name="line88"></a>	 * When the value at key is not a list, an error is returned.
+<a name="line89"></a>	 * 
+<a name="line90"></a>	 * Time complexity: O(N) where N is the number of elements to traverse to get to the element at index. This makes asking for the first or the last element of the list O(1).
+<a name="line91"></a>	 * 
+<a name="line92"></a>	 * @since: 0.07
+<a name="line93"></a>	 * @return array Bulk reply: the requested element, or nil when index is out of range.
+<a name="line94"></a>	 * @package Redis\Commands\Lists
+<a name="line95"></a>	 */</span>
+<a name="line96"></a>	<span style="color: #000000; font-weight: bold;">class</span> LINDEX <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line97"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line98"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line99"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line100"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line101"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line102"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line103"></a>&nbsp;
+<a name="line104"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line105"></a>	 * LINSERT key BEFORE|AFTER pivot value ~ Insert an element before or after another element in a list
+<a name="line106"></a>	 * 
+<a name="line107"></a>	 * Inserts value in the list stored at key either before or after the reference value pivot.
+<a name="line108"></a>	 * When key does not exist, it is considered an empty list and no operation is performed.
+<a name="line109"></a>	 * An error is returned when key exists but does not hold a list value.
+<a name="line110"></a>	 * 
+<a name="line111"></a>	 * Time complexity: O(N) where N is the number of elements to traverse before seeing the value pivot. This means that inserting somewhere on the left end on the list (head) can be considered O(1) and inserting somewhere 
+<a name="line112"></a>	 * on the right end (tail) is O(N).
+<a name="line113"></a>	 * 
+<a name="line114"></a>	 * @since: 2.1.1
+<a name="line115"></a>	 * @return int Integer reply: the length of the list after the insert operation, or -1 when the value pivot was not found.
+<a name="line116"></a>	 * @package Redis\Commands\Lists
+<a name="line117"></a>	 */</span>
+<a name="line118"></a>	<span style="color: #000000; font-weight: bold;">class</span> LINSERT <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line119"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line120"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">4</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line121"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line122"></a>			<span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/strtoupper"><span style="color: #990000;">strtoupper</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line123"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEnumerate</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'BEFORE'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'AFTER'</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line124"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line125"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line126"></a>&nbsp;
+<a name="line127"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line128"></a>	 * LLEN key ~ Get the length of a list
+<a name="line129"></a>	 * 
+<a name="line130"></a>	 * Returns the length of the list stored at key. If key does not exist, it is interpreted as an empty list and 0 is returned. An error is returned when the value stored at key is not a list.
+<a name="line131"></a>	 * 
+<a name="line132"></a>	 * Time complexity: O(1)
+<a name="line133"></a>	 * 
+<a name="line134"></a>	 * @since: 0.07
+<a name="line135"></a>	 * @return int array Bulk reply: the value of the first element, or nil when key does not exist.
+<a name="line136"></a>	 * @package Redis\Commands\Lists
+<a name="line137"></a>	 */</span>
+<a name="line138"></a>	<span style="color: #000000; font-weight: bold;">class</span> LLEN <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line139"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line140"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line141"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line142"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line143"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line144"></a>&nbsp;
+<a name="line145"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line146"></a>	 * LPOP key ~ Remove and get the first element in a list
+<a name="line147"></a>	 * 
+<a name="line148"></a>	 * Removes and returns the first element of the list stored at key.
+<a name="line149"></a>	 * 
+<a name="line150"></a>	 * Time complexity: O(1)
+<a name="line151"></a>	 * 
+<a name="line152"></a>	 * @since: 0.07
+<a name="line153"></a>	 * @return array Bulk reply: the value of the first element, or nil when key does not exist.
+<a name="line154"></a>	 * @package Redis\Commands\Lists
+<a name="line155"></a>	 */</span>
+<a name="line156"></a>	<span style="color: #000000; font-weight: bold;">class</span> LPOP <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line157"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line158"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line159"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line160"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line161"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line162"></a>&nbsp;
+<a name="line163"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line164"></a>	 * LPUSH key value ~ Prepend a value to a list
+<a name="line165"></a>	 * 
+<a name="line166"></a>	 * Inserts value at the head of the list stored at key. If key does not exist, it is created as empty list before performing the push operation. When key holds a value that is not a list, an error is returned.
+<a name="line167"></a>	 * 
+<a name="line168"></a>	 * Time complexity: O(1)
+<a name="line169"></a>	 * 
+<a name="line170"></a>	 * @since: 0.07
+<a name="line171"></a>	 * @return int Integer reply: the length of the list after the push operation.
+<a name="line172"></a>	 * @package Redis\Commands\Lists
+<a name="line173"></a>	 */</span>
+<a name="line174"></a>	<span style="color: #000000; font-weight: bold;">class</span> LPUSH <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line175"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line176"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line177"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line178"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line179"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line180"></a>&nbsp;
+<a name="line181"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line182"></a>	 * LPUSHX key value ~ Prepend a value to a list, only if the list exists
+<a name="line183"></a>	 * 
+<a name="line184"></a>	 * Inserts value at the head of the list stored at key, only if key already exists and holds a list. In contrary to LPUSH, no operation will be performed when key does not yet exist.
+<a name="line185"></a>	 * 
+<a name="line186"></a>	 * Time complexity: O(1)
+<a name="line187"></a>	 * 
+<a name="line188"></a>	 * @since: 2.1.1
+<a name="line189"></a>	 * @return int Integer reply: the length of the list after the push operation.
+<a name="line190"></a>	 * @package Redis\Commands\Lists
+<a name="line191"></a>	 */</span>
+<a name="line192"></a>	<span style="color: #000000; font-weight: bold;">class</span> LPUSHX <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line193"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line194"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line195"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line196"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line197"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line198"></a>&nbsp;
+<a name="line199"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line200"></a>	 * LRANGE key start stop ~ Get a range of elements from a list
+<a name="line201"></a>	 * 
+<a name="line202"></a>	 * Returns the specified elements of the list stored at key. The offsets start and end are zero-based indexes, with 0 being the first element of the list (the head of the list), 1 being the next element and so on.
+<a name="line203"></a>	 * These offsets can also be negative numbers indicating offsets starting at the end of the list. For example, -1 is the last element of the list, -2 the penultimate, and so on.
+<a name="line204"></a>	 * 
+<a name="line205"></a>	 * Time complexity: O(S+N) where S is the start offset and N is the number of elements in the specified range.
+<a name="line206"></a>	 * 
+<a name="line207"></a>	 * @since: 0.07
+<a name="line208"></a>	 * @return array Multi-bulk reply: list of elements in the specified range.
+<a name="line209"></a>	 * @package Redis\Commands\Lists
+<a name="line210"></a>	 */</span>
+<a name="line211"></a>	<span style="color: #000000; font-weight: bold;">class</span> LRANGE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line212"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line213"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line214"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line215"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line216"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line217"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line218"></a>&nbsp;
+<a name="line219"></a>		<span style="color: #000000; font-weight: bold;">function</span> output<span style="color: #009900;">&#40;</span><span style="color: #000088;">$list</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line220"></a>			<span style="color: #b1b100;">return</span> <span style="color: #000088;">$list</span><span style="color: #339933;">;</span>
+<a name="line221"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line222"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line223"></a>&nbsp;
+<a name="line224"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line225"></a>	 * LREM key count value ~ Remove elements from a list
+<a name="line226"></a>	 * 
+<a name="line227"></a>	 * Removes the first count occurrences of elements equal to value from the list stored at key. The count argument influences the operation in the following ways:
+<a name="line228"></a>	 * count &gt; 0: Remove elements equal to value moving from head to tail.
+<a name="line229"></a>	 * count &lt; 0: Remove elements equal to value moving from tail to head.
+<a name="line230"></a>	 * count = 0: Remove all elements equal to value.
+<a name="line231"></a>	 * For example, LREM list -2 &quot;hello&quot; will remove the last two occurrences of &quot;hello&quot; in the list stored at list.
+<a name="line232"></a>	 * Note that non-existing keys are treated like empty lists, so when key does not exist, the command will always return 0.
+<a name="line233"></a>	 * 
+<a name="line234"></a>	 * Time complexity: O(N) where N is the length of the list.
+<a name="line235"></a>	 * 
+<a name="line236"></a>	 * @since: 0.07
+<a name="line237"></a>	 * @return int Integer reply: the number of removed elements.
+<a name="line238"></a>	 * @package Redis\Commands\Lists
+<a name="line239"></a>	 */</span>
+<a name="line240"></a>	<span style="color: #000000; font-weight: bold;">class</span> LREM <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line241"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line242"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line243"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line244"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line245"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line246"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line247"></a>&nbsp;
+<a name="line248"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line249"></a>	 * LSET key index value ~ Set the value of an element in a list by its index
+<a name="line250"></a>	 * 
+<a name="line251"></a>	 * Sets the list element at index to value. For more information on the index argument, see LINDEX.
+<a name="line252"></a>	 * An error is returned for out of range indexes.
+<a name="line253"></a>	 * 
+<a name="line254"></a>	 * Time complexity: O(N) where N is the length of the list. Setting either the first or the last element of the list is O(1).
+<a name="line255"></a>	 * 
+<a name="line256"></a>	 * @since: 0.07
+<a name="line257"></a>	 * @return boolean Status code reply
+<a name="line258"></a>	 * @package Redis\Commands\Lists
+<a name="line259"></a>	 */</span>
+<a name="line260"></a>	<span style="color: #000000; font-weight: bold;">class</span> LSET <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line261"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line262"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line263"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line264"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line265"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line266"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line267"></a>&nbsp;
+<a name="line268"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line269"></a>	 * LTRIM key start stop ~ Trim a list to the specified range
+<a name="line270"></a>	 * 
+<a name="line271"></a>	 * Trim an existing list so that it will contain only the specified range of elements specified. Both start and stop are zero-based indexes, where 0 is the first element of the list (the head), 1 the next element and so on.
+<a name="line272"></a>	 * 
+<a name="line273"></a>	 * Time complexity: O(N) where N is the number of elements to be removed by the operation.
+<a name="line274"></a>	 * 
+<a name="line275"></a>	 * @since: 0.07
+<a name="line276"></a>	 * @return boolean Status code reply
+<a name="line277"></a>	 * @package Redis\Commands\Lists
+<a name="line278"></a>	 */</span>
+<a name="line279"></a>	<span style="color: #000000; font-weight: bold;">class</span> <a href="http://www.php.net/ltrim"><span style="color: #990000;">LTRIM</span></a> <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line280"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line281"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line282"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line283"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line284"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateInt</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line285"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line286"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line287"></a>&nbsp;
+<a name="line288"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line289"></a>	 * RPOP key ~ Remove and get the last element in a list
+<a name="line290"></a>	 * 
+<a name="line291"></a>	 * Removes and returns the last element of the list stored at key.
+<a name="line292"></a>	 * 
+<a name="line293"></a>	 * Time complexity: O(1)
+<a name="line294"></a>	 * 
+<a name="line295"></a>	 * @since: 0.07
+<a name="line296"></a>	 * @return array Bulk reply: the value of the last element, or nil when key does not exist.
+<a name="line297"></a>	 * @package Redis\Commands\Lists
+<a name="line298"></a>	 */</span>
+<a name="line299"></a>	<span style="color: #000000; font-weight: bold;">class</span> RPOP <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line300"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line301"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line302"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line303"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line304"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line305"></a>&nbsp;
+<a name="line306"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line307"></a>	 * RPOPLPUSH source destination ~ Remove the last element in a list, append it to another list and return it
+<a name="line308"></a>	 * 
+<a name="line309"></a>	 * Atomically returns and removes the last element (tail) of the list stored at source, and pushes the element at the first element (head) of the list stored at destination.
+<a name="line310"></a>	 * 
+<a name="line311"></a>	 * Time complexity: O(1)
+<a name="line312"></a>	 * 
+<a name="line313"></a>	 * @since: 1.1
+<a name="line314"></a>	 * @return array Bulk reply: the element being popped and pushed.
+<a name="line315"></a>	 * @package Redis\Commands\Lists
+<a name="line316"></a>	 */</span>
+<a name="line317"></a>	<span style="color: #000000; font-weight: bold;">class</span> RPOPLPUSH <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line318"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line319"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line320"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line321"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line322"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line323"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line324"></a>&nbsp;
+<a name="line325"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line326"></a>	 * RPUSH key value ~ Append a value to a list
+<a name="line327"></a>	 * 
+<a name="line328"></a>	 * Inserts value at the tail of the list stored at key. If key does not exist, it is created as empty list before performing the push operation. When key holds a value that is not a list, an error is returned.
+<a name="line329"></a>	 * 
+<a name="line330"></a>	 * Time complexity: O(1)
+<a name="line331"></a>	 * 
+<a name="line332"></a>	 * @since: 0.07
+<a name="line333"></a>	 * @return int Integer reply: the length of the list after the push operation.
+<a name="line334"></a>	 * @package Redis\Commands\Lists
+<a name="line335"></a>	 */</span>
+<a name="line336"></a>	<span style="color: #000000; font-weight: bold;">class</span> RPUSH <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line337"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line338"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line339"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line340"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line341"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line342"></a>&nbsp;
+<a name="line343"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line344"></a>	 * RPUSHX key value ~ Append a value to a list, only if the list exists
+<a name="line345"></a>	 * 
+<a name="line346"></a>	 * Inserts value at the tail of the list stored at key, only if key already exists and holds a list. In contrary to RPUSH, no operation will be performed when key does not yet exist.
+<a name="line347"></a>	 * 
+<a name="line348"></a>	 * Time complexity: O(1)
+<a name="line349"></a>	 * 
+<a name="line350"></a>	 * @since: 2.1.1
+<a name="line351"></a>	 * @return int Integer reply: the length of the list after the push operation.
+<a name="line352"></a>	 * @package Redis\Commands\Lists
+<a name="line353"></a>	 */</span>
+<a name="line354"></a>	<span style="color: #000000; font-weight: bold;">class</span> RPUSHX <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line355"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line356"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line357"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line358"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line359"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line360"></a>&nbsp;</pre>
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source\library\listcommands.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

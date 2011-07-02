@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sat, 02 Jul 2011 20:04:01 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>examples\twitter\twitter.php (API Documentation: PHP Redis Fast)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source\examples\twitter\twitter.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>examples\twitter\twitter.php</h1>
+<hr>
+
+<a name="line1"></a><pre class="php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<a name="line2"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line3"></a>	 * A more involved example on the twitter firehose.
+<a name="line4"></a>	 * 
+<a name="line5"></a>	 * @package Redis\Examples
+<a name="line6"></a>	 */</span>
+<a name="line7"></a>	<span style="color: #b1b100;">require</span> <span style="color: #0000ff;">'..\..\library\RedisPHPlay.php'</span><span style="color: #339933;">;</span>
+<a name="line8"></a>	<span style="color: #b1b100;">require</span> <span style="color: #0000ff;">'..\..\library\phirehose\lib\Phirehose.php'</span><span style="color: #339933;">;</span>
+<a name="line9"></a>&nbsp;
+<a name="line10"></a>	<span style="color: #000088;">$redis</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> RedisManager<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line11"></a>	<span style="color: #000088;">$client</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$redis</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">connect</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'127.0.0.1'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">6379</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line12"></a>	<span style="color: #000088;">$client</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">auth</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'test'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line13"></a>&nbsp;
+<a name="line14"></a>	<span style="color: #000000; font-weight: bold;">class</span> TwitterConsumer <span style="color: #000000; font-weight: bold;">extends</span> Phirehose <span style="color: #009900;">&#123;</span>
+<a name="line15"></a>	  <span style="color: #009933; font-style: italic;">/**
+<a name="line16"></a>	   * Enqueue each status
+<a name="line17"></a>	   *
+<a name="line18"></a>	   * @param string $status
+<a name="line19"></a>	   */</span>
+<a name="line20"></a>		<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> enqueueStatus<span style="color: #009900;">&#40;</span><span style="color: #000088;">$status</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line21"></a>			<span style="color: #000000; font-weight: bold;">global</span> <span style="color: #000088;">$client</span><span style="color: #339933;">,</span> <span style="color: #000088;">$count</span><span style="color: #339933;">;</span>
+<a name="line22"></a>			<span style="color: #000088;">$data</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/json_decode"><span style="color: #990000;">json_decode</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$status</span><span style="color: #339933;">,</span> <span style="color: #009900; font-weight: bold;">true</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line23"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <a href="http://www.php.net/is_array"><span style="color: #990000;">is_array</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$data</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line24"></a>				<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/isset"><span style="color: #990000;">isset</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$data</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'text'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line25"></a>					<span style="color: #666666; font-style: italic;">// deleted</span>
+<a name="line26"></a>				<span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span>
+<a name="line27"></a>					<span style="color: #000088;">$key</span> <span style="color: #339933;">=</span> <span style="color: #0000ff;">&quot;tweet:<span style="color: #006699; font-weight: bold;">{$data['user']['id_str']}</span>:<span style="color: #006699; font-weight: bold;">{$data['id_str']}</span>&quot;</span><span style="color: #339933;">;</span>
+<a name="line28"></a>					<span style="color: #b1b100;">echo</span> <span style="color: #000088;">$key</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;, &quot;</span><span style="color: #339933;">;</span>
+<a name="line29"></a>					<span style="color: #000088;">$client</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">HMSET</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$key</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'text'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$data</span><span style="color: #009900;">&#91;</span><span style="color: #0000ff;">'text'</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line30"></a>					<span style="color: #000088;">$client</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">PUBLISH</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'tweets'</span><span style="color: #339933;">,</span> <span style="color: #000088;">$key</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line31"></a>				<span style="color: #009900;">&#125;</span>
+<a name="line32"></a>			<span style="color: #009900;">&#125;</span>
+<a name="line33"></a>			<span style="color: #000088;">$count</span><span style="color: #339933;">++;</span>
+<a name="line34"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #000088;">$count</span> <span style="color: #339933;">&gt;=</span> <span style="color: #cc66cc;">100</span> <span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line35"></a>				<span style="color: #000088;">$count</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">0</span><span style="color: #339933;">;</span>
+<a name="line36"></a>				<a href="http://www.php.net/ob_flush"><span style="color: #990000;">ob_flush</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line37"></a>			<span style="color: #009900;">&#125;</span>
+<a name="line38"></a>&nbsp;
+<a name="line39"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line40"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line41"></a>&nbsp;
+<a name="line42"></a>	<a href="http://www.php.net/set_time_limit"><span style="color: #990000;">set_time_limit</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line43"></a>	<a href="http://www.php.net/header"><span style="color: #990000;">header</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'Content-Type: text/plain'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line44"></a>&nbsp;
+<a name="line45"></a>	<a href="http://www.php.net/ini_set"><span style="color: #990000;">ini_set</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'implicit_flush'</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line46"></a>	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #000088;">$i</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">0</span><span style="color: #339933;">;</span> <span style="color: #000088;">$i</span> <span style="color: #339933;">&lt;</span> <a href="http://www.php.net/ob_get_level"><span style="color: #990000;">ob_get_level</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #000088;">$i</span><span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> <a href="http://www.php.net/ob_end_flush"><span style="color: #990000;">ob_end_flush</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #009900;">&#125;</span>
+<a name="line47"></a>	<a href="http://www.php.net/ob_implicit_flush"><span style="color: #990000;">ob_implicit_flush</span></a><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line48"></a>	<a href="http://www.php.net/ob_start"><span style="color: #990000;">ob_start</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line49"></a>&nbsp;
+<a name="line50"></a>	<span style="color: #b1b100;">echo</span> <a href="http://www.php.net/str_repeat"><span style="color: #990000;">str_repeat</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">' '</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1024</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line51"></a>	<a href="http://www.php.net/ob_flush"><span style="color: #990000;">ob_flush</span></a><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line52"></a>&nbsp;
+<a name="line53"></a>	<span style="color: #666666; font-style: italic;">// start streaming</span>
+<a name="line54"></a>	<span style="color: #000088;">$count</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">0</span><span style="color: #339933;">;</span>
+<a name="line55"></a>	<span style="color: #000088;">$sc</span> <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> TwitterConsumer<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'user101111'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">''</span><span style="color: #339933;">,</span> Phirehose<span style="color: #339933;">::</span><span style="color: #004000;">METHOD_SAMPLE</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line56"></a>	<span style="color: #000088;">$sc</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">consume</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre>
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source\examples\twitter\twitter.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

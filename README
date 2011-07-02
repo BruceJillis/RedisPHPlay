@@ -9,7 +9,7 @@ Goals
    * fully documented
    * copious examples
    * fully unit-tested
-   * translates as much as possible to native PHP datatype:
+   * translates as much as possible to native PHP datatypes:
       * status reply    boolean
       * error reply     exception
       * integer reply   integer

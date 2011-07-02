@@ -1,0 +1,935 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sat, 02 Jul 2011 20:03:14 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>Phirehose (API Documentation: PHP Redis Fast)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li><a href="../redis/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../redis/package-tree.html">Tree</a></li>
+<li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../redis\phirehose.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">Redis\Phirehose</div>
+<a href="../source/library/phirehose/lib/phirehose.php.html#line12" class="location">library\phirehose\lib\Phirehose.php at line 12</a>
+
+<h1>Class Phirehose</h1>
+
+<pre class="tree"><strong>Phirehose</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public abstract  class <strong>Phirehose</strong></p>
+
+<div class="comment" id="overview_description"><p>A class that makes it easy to connect to and consume the Twitter stream via the Streaming API.</p><p>Note: This is beta software - Please read the following carefully before using:
+- http://code.google.com/p/phirehose/wiki/Introduction
+- http://apiwiki.twitter.com/Streaming-API-Documentation</p></div>
+
+<dl>
+<dt>Author:</dt>
+<dd>Fenn Bailey <fenn.bailey@gmail.com></dd>
+<dt>Version:</dt>
+<dd>0.2.4 ($Id$)</dd>
+</dl>
+<hr>
+
+<table id="summary_field">
+<tr><th colspan="2">Constant Summary</th></tr>
+<tr>
+<td class="type">final static  int</td>
+<td class="description"><p class="name"><a href="#EARTH_RADIUS_KM">EARTH_RADIUS_KM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  int</td>
+<td class="description"><p class="name"><a href="#FILTER_CHECK_MIN">FILTER_CHECK_MIN</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  int</td>
+<td class="description"><p class="name"><a href="#FILTER_UPD_MIN">FILTER_UPD_MIN</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#FORMAT_JSON">FORMAT_JSON</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#FORMAT_XML">FORMAT_XML</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  int</td>
+<td class="description"><p class="name"><a href="#HTTP_BACKOFF">HTTP_BACKOFF</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  int</td>
+<td class="description"><p class="name"><a href="#HTTP_BACKOFF_MAX">HTTP_BACKOFF_MAX</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#METHOD_FILTER">METHOD_FILTER</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#METHOD_FIREHOSE">METHOD_FIREHOSE</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#METHOD_RETWEET">METHOD_RETWEET</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#METHOD_SAMPLE">METHOD_SAMPLE</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  int</td>
+<td class="description"><p class="name"><a href="#TCP_BACKOFF">TCP_BACKOFF</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  int</td>
+<td class="description"><p class="name"><a href="#TCP_BACKOFF_MAX">TCP_BACKOFF_MAX</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#URL_BASE">URL_BASE</a></p><p class="description">Class constants</p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#USER_AGENT">USER_AGENT</a></p></td>
+</tr>
+</table>
+
+<table id="summary_field">
+<tr><th colspan="2">Field Summary</th></tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#avgPeriod">$avgPeriod</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#buff">$buff</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#conn">$conn</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#connectFailuresMax">$connectFailuresMax</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#connectTimeout">$connectTimeout</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#count">$count</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#fdrPool">$fdrPool</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#filterChanged">$filterChanged</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#followIds">$followIds</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#format">$format</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#idleReconnectTimeout">$idleReconnectTimeout</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#lastErrorMsg">$lastErrorMsg</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#lastErrorNo">$lastErrorNo</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#locationBoxes">$locationBoxes</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#method">$method</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#password">$password</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#readTimeout">$readTimeout</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#reconnect">$reconnect</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#statusRate">$statusRate</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#status_length_base">$status_length_base</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#trackWords">$trackWords</a></p></td>
+</tr>
+<tr>
+<td class="type">protected  mixed</td>
+<td class="description"><p class="name"><a href="#username">$username</a></p><p class="description">Member Attribs</p></td>
+</tr>
+</table>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#__construct()">__construct</a>(string username, string password, string method, string format)</p><p class="description">Create a new Phirehose object attached to the appropriate twitter stream method.
+</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#checkFilterPredicates()">checkFilterPredicates</a>()</p><p class="description">Method called as frequently as practical (every 5+ seconds) that is responsible for checking if filter predicates
+(ie: track words or follow IDs) have changed. </p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#connect()">connect</a>()</p><p class="description">Connects to the stream URL using the configured method.</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#consume()">consume</a>(boolean reconnect)</p><p class="description">Connects to the stream API and consumes the stream. </p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#disconnect()">disconnect</a>()</p><p class="description">Performs forcible disconnect from stream (if connected) and cleanup.</p></td>
+</tr>
+<tr>
+<td class="type">abstract  void</td>
+<td class="description"><p class="name"><a href="#enqueueStatus()">enqueueStatus</a>(string status)</p><p class="description">This is the one and only method that must be implemented additionally. </p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#getAuthorizationHeader()">getAuthorizationHeader</a>()</p><p class="description">We must perform manual host resolution here as Twitter's IP regularly rotates (ie: DNS TTL of 60 seconds) and
+PHP appears to cache it the result if in a long running process (as per Phirehose).</p></td>
+</tr>
+<tr>
+<td class="type"> array</td>
+<td class="description"><p class="name"><a href="#getFollow()">getFollow</a>()</p><p class="description">Returns an array of followed Twitter userIds (integers)</p></td>
+</tr>
+<tr>
+<td class="type"> string</td>
+<td class="description"><p class="name"><a href="#getLastErrorMsg()">getLastErrorMsg</a>()</p><p class="description">Returns the last error message (TCP or HTTP) that occured with the streaming API or client. </p></td>
+</tr>
+<tr>
+<td class="type"> string</td>
+<td class="description"><p class="name"><a href="#getLastErrorNo()">getLastErrorNo</a>()</p><p class="description">Returns the last error number that occured with the streaming API or client. </p></td>
+</tr>
+<tr>
+<td class="type"> array</td>
+<td class="description"><p class="name"><a href="#getLocations()">getLocations</a>()</p><p class="description">Returns an array of 4 element arrays that denote the monitored location bounding boxes for tweets using the
+Geotagging API.</p></td>
+</tr>
+<tr>
+<td class="type"> array</td>
+<td class="description"><p class="name"><a href="#getTrack()">getTrack</a>()</p><p class="description">Returns an array of keywords being tracked</p></td>
+</tr>
+<tr>
+<td class="type"> NULL</td>
+<td class="description"><p class="name"><a href="#heartbeat()">heartbeat</a>(array data)</p><p class="description">Reports a periodic heartbeat. </p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#log()">log</a>(mixed message, string messages)</p><p class="description">Basic log function that outputs logging to the standard error_log() handler. </p></td>
+</tr>
+<tr>
+<td class="type">private  void</td>
+<td class="description"><p class="name"><a href="#reconnect()">reconnect</a>()</p><p class="description">Reconnects as quickly as possible. </p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#setCount()">setCount</a>(integer count)</p><p class="description">Sets the number of previous statuses to stream before transitioning to the live stream. </p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#setFollow()">setFollow</a>(array userIds)</p><p class="description">Returns public statuses from or in reply to a set of users. </p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#setLocations()">setLocations</a>(array boundingBoxes)</p><p class="description">Specifies a set of bounding boxes to track as an array of 4 element lon/lat pairs denoting ,
+. </p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#setLocationsByCircle()">setLocationsByCircle</a>(array locations)</p><p class="description">Convenience method that sets location bounding boxes by an array of lon/lat/radius sets, rather than manually
+specified bounding boxes. </p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#setTrack()">setTrack</a>(array trackWords)</p><p class="description">Specifies keywords to track. </p></td>
+</tr>
+</table>
+
+<h2 id="detail_field">Constant Detail</h2>
+<a href="../source/library/phirehose/lib/phirehose.php.html#line32" class="location">library\phirehose\lib\Phirehose.php at line 32</a>
+
+<h3 id="EARTH_RADIUS_KM">EARTH_RADIUS_KM</h3>
+<code class="signature">public final static  int <strong>EARTH_RADIUS_KM</strong> = 6371</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line26" class="location">library\phirehose\lib\Phirehose.php at line 26</a>
+
+<h3 id="FILTER_CHECK_MIN">FILTER_CHECK_MIN</h3>
+<code class="signature">public final static  int <strong>FILTER_CHECK_MIN</strong> = 5</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line27" class="location">library\phirehose\lib\Phirehose.php at line 27</a>
+
+<h3 id="FILTER_UPD_MIN">FILTER_UPD_MIN</h3>
+<code class="signature">public final static  int <strong>FILTER_UPD_MIN</strong> = 120</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line19" class="location">library\phirehose\lib\Phirehose.php at line 19</a>
+
+<h3 id="FORMAT_JSON">FORMAT_JSON</h3>
+<code class="signature">public final static  str <strong>FORMAT_JSON</strong> = 'json'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line20" class="location">library\phirehose\lib\Phirehose.php at line 20</a>
+
+<h3 id="FORMAT_XML">FORMAT_XML</h3>
+<code class="signature">public final static  str <strong>FORMAT_XML</strong> = 'xml'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line30" class="location">library\phirehose\lib\Phirehose.php at line 30</a>
+
+<h3 id="HTTP_BACKOFF">HTTP_BACKOFF</h3>
+<code class="signature">public final static  int <strong>HTTP_BACKOFF</strong> = 10</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line31" class="location">library\phirehose\lib\Phirehose.php at line 31</a>
+
+<h3 id="HTTP_BACKOFF_MAX">HTTP_BACKOFF_MAX</h3>
+<code class="signature">public final static  int <strong>HTTP_BACKOFF_MAX</strong> = 240</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line21" class="location">library\phirehose\lib\Phirehose.php at line 21</a>
+
+<h3 id="METHOD_FILTER">METHOD_FILTER</h3>
+<code class="signature">public final static  str <strong>METHOD_FILTER</strong> = 'filter'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line24" class="location">library\phirehose\lib\Phirehose.php at line 24</a>
+
+<h3 id="METHOD_FIREHOSE">METHOD_FIREHOSE</h3>
+<code class="signature">public final static  str <strong>METHOD_FIREHOSE</strong> = 'firehose'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line23" class="location">library\phirehose\lib\Phirehose.php at line 23</a>
+
+<h3 id="METHOD_RETWEET">METHOD_RETWEET</h3>
+<code class="signature">public final static  str <strong>METHOD_RETWEET</strong> = 'retweet'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line22" class="location">library\phirehose\lib\Phirehose.php at line 22</a>
+
+<h3 id="METHOD_SAMPLE">METHOD_SAMPLE</h3>
+<code class="signature">public final static  str <strong>METHOD_SAMPLE</strong> = 'sample'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line28" class="location">library\phirehose\lib\Phirehose.php at line 28</a>
+
+<h3 id="TCP_BACKOFF">TCP_BACKOFF</h3>
+<code class="signature">public final static  int <strong>TCP_BACKOFF</strong> = 1</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line29" class="location">library\phirehose\lib\Phirehose.php at line 29</a>
+
+<h3 id="TCP_BACKOFF_MAX">TCP_BACKOFF_MAX</h3>
+<code class="signature">public final static  int <strong>TCP_BACKOFF_MAX</strong> = 16</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line18" class="location">library\phirehose\lib\Phirehose.php at line 18</a>
+
+<h3 id="URL_BASE">URL_BASE</h3>
+<code class="signature">public final static  str <strong>URL_BASE</strong> = 'http://stream.twitter.com/1/statuses/'</code>
+<div class="details">
+<p>Class constants</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line25" class="location">library\phirehose\lib\Phirehose.php at line 25</a>
+
+<h3 id="USER_AGENT">USER_AGENT</h3>
+<code class="signature">public final static  str <strong>USER_AGENT</strong> = 'Phirehose/0.2.4 +http://code.google.com/p/phirehose/'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<h2 id="detail_field">Field Detail</h2>
+<a href="../source/library/phirehose/lib/phirehose.php.html#line60" class="location">library\phirehose\lib\Phirehose.php at line 60</a>
+
+<h3 id="avgPeriod">avgPeriod</h3>
+<code class="signature">protected  mixed <strong>$avgPeriod</strong> = 60</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line48" class="location">library\phirehose\lib\Phirehose.php at line 48</a>
+
+<h3 id="buff">buff</h3>
+<code class="signature">protected  mixed <strong>$buff</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line46" class="location">library\phirehose\lib\Phirehose.php at line 46</a>
+
+<h3 id="conn">conn</h3>
+<code class="signature">protected  mixed <strong>$conn</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line56" class="location">library\phirehose\lib\Phirehose.php at line 56</a>
+
+<h3 id="connectFailuresMax">connectFailuresMax</h3>
+<code class="signature">protected  mixed <strong>$connectFailuresMax</strong> = 20</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line57" class="location">library\phirehose\lib\Phirehose.php at line 57</a>
+
+<h3 id="connectTimeout">connectTimeout</h3>
+<code class="signature">protected  mixed <strong>$connectTimeout</strong> = 5</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line42" class="location">library\phirehose\lib\Phirehose.php at line 42</a>
+
+<h3 id="count">count</h3>
+<code class="signature">protected  mixed <strong>$count</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line47" class="location">library\phirehose\lib\Phirehose.php at line 47</a>
+
+<h3 id="fdrPool">fdrPool</h3>
+<code class="signature">protected  mixed <strong>$fdrPool</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line50" class="location">library\phirehose\lib\Phirehose.php at line 50</a>
+
+<h3 id="filterChanged">filterChanged</h3>
+<code class="signature">protected  mixed <strong>$filterChanged</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line43" class="location">library\phirehose\lib\Phirehose.php at line 43</a>
+
+<h3 id="followIds">followIds</h3>
+<code class="signature">protected  mixed <strong>$followIds</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line41" class="location">library\phirehose\lib\Phirehose.php at line 41</a>
+
+<h3 id="format">format</h3>
+<code class="signature">protected  mixed <strong>$format</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line59" class="location">library\phirehose\lib\Phirehose.php at line 59</a>
+
+<h3 id="idleReconnectTimeout">idleReconnectTimeout</h3>
+<code class="signature">protected  mixed <strong>$idleReconnectTimeout</strong> = 90</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line54" class="location">library\phirehose\lib\Phirehose.php at line 54</a>
+
+<h3 id="lastErrorMsg">lastErrorMsg</h3>
+<code class="signature">protected  mixed <strong>$lastErrorMsg</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line53" class="location">library\phirehose\lib\Phirehose.php at line 53</a>
+
+<h3 id="lastErrorNo">lastErrorNo</h3>
+<code class="signature">protected  mixed <strong>$lastErrorNo</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line45" class="location">library\phirehose\lib\Phirehose.php at line 45</a>
+
+<h3 id="locationBoxes">locationBoxes</h3>
+<code class="signature">protected  mixed <strong>$locationBoxes</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line40" class="location">library\phirehose\lib\Phirehose.php at line 40</a>
+
+<h3 id="method">method</h3>
+<code class="signature">protected  mixed <strong>$method</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line39" class="location">library\phirehose\lib\Phirehose.php at line 39</a>
+
+<h3 id="password">password</h3>
+<code class="signature">protected  mixed <strong>$password</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line58" class="location">library\phirehose\lib\Phirehose.php at line 58</a>
+
+<h3 id="readTimeout">readTimeout</h3>
+<code class="signature">protected  mixed <strong>$readTimeout</strong> = 5</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line51" class="location">library\phirehose\lib\Phirehose.php at line 51</a>
+
+<h3 id="reconnect">reconnect</h3>
+<code class="signature">protected  mixed <strong>$reconnect</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line52" class="location">library\phirehose\lib\Phirehose.php at line 52</a>
+
+<h3 id="statusRate">statusRate</h3>
+<code class="signature">protected  mixed <strong>$statusRate</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line61" class="location">library\phirehose\lib\Phirehose.php at line 61</a>
+
+<h3 id="status_length_base">status_length_base</h3>
+<code class="signature">protected  mixed <strong>$status_length_base</strong> = 10</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line44" class="location">library\phirehose\lib\Phirehose.php at line 44</a>
+
+<h3 id="trackWords">trackWords</h3>
+<code class="signature">protected  mixed <strong>$trackWords</strong></code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line38" class="location">library\phirehose\lib\Phirehose.php at line 38</a>
+
+<h3 id="username">username</h3>
+<code class="signature">protected  mixed <strong>$username</strong></code>
+<div class="details">
+<p>Member Attribs</p></div>
+
+<hr>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../source/library/phirehose/lib/phirehose.php.html#line75" class="location">library\phirehose\lib\Phirehose.php at line 75</a>
+
+<h3 id="__construct()">__construct</h3>
+<code class="signature">public  void <strong>__construct</strong>(string username, string password, string method, string format)</code>
+<div class="details">
+<p>Create a new Phirehose object attached to the appropriate twitter stream method.
+Methods are: METHOD_FIREHOSE, METHOD_RETWEET, METHOD_SAMPLE, METHOD_FILTER
+Formats are: FORMAT_JSON, FORMAT_XML</p><dl>
+<dt>See Also:</dt>
+<dd>Phirehose::METHOD_SAMPLE</dd>
+<dd>Phirehose::FORMAT_JSON</dd>
+<dt>Parameters:</dt>
+<dd>username - Any twitter username</dd>
+<dd>password - Any twitter password</dd>
+<dd></dd>
+<dd></dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line612" class="location">library\phirehose\lib\Phirehose.php at line 612</a>
+
+<h3 id="checkFilterPredicates()">checkFilterPredicates</h3>
+<code class="signature">protected  void <strong>checkFilterPredicates</strong>()</code>
+<div class="details">
+<p>Method called as frequently as practical (every 5+ seconds) that is responsible for checking if filter predicates
+(ie: track words or follow IDs) have changed. If they have, they should be set using the setTrack() and setFollow()
+methods respectively within the overridden implementation.</p><p>Note that even if predicates are changed every 5 seconds, an actual reconnect will not happen more frequently than
+every 2 minutes (as per Twitter Streaming API documentation).</p><p>Note also that this method is called upon every connect attempt, so if your predicates are causing connection
+errors, they should be checked here and corrected.</p><p>This should be implemented/overridden in any subclass implementing the FILTER method.</p><dl>
+<dt>See Also:</dt>
+<dd><a href="../redis/phirehose.html#setTrack()">setTrack()</a></dd>
+<dd><a href="../redis/phirehose.html#setFollow()">setFollow()</a></dd>
+<dd>Phirehose::METHOD_FILTER</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line409" class="location">library\phirehose\lib\Phirehose.php at line 409</a>
+
+<h3 id="connect()">connect</h3>
+<code class="signature">protected  void <strong>connect</strong>()</code>
+<div class="details">
+<p>Connects to the stream URL using the configured method.</p><dl>
+<dt>Throws:</dt>
+<dd>ErrorException</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line268" class="location">library\phirehose\lib\Phirehose.php at line 268</a>
+
+<h3 id="consume()">consume</h3>
+<code class="signature">public  void <strong>consume</strong>(boolean reconnect)</code>
+<div class="details">
+<p>Connects to the stream API and consumes the stream. Each status update in the stream will cause a call to the
+handleStatus() method.</p><dl>
+<dt>See Also:</dt>
+<dd>handleStatus()</dd>
+<dt>Parameters:</dt>
+<dd>reconnect - Reconnects as per recommended</dd>
+<dt>Throws:</dt>
+<dd>ErrorException</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line632" class="location">library\phirehose\lib\Phirehose.php at line 632</a>
+
+<h3 id="disconnect()">disconnect</h3>
+<code class="signature">protected  void <strong>disconnect</strong>()</code>
+<div class="details">
+<p>Performs forcible disconnect from stream (if connected) and cleanup.</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line660" class="location">library\phirehose\lib\Phirehose.php at line 660</a>
+
+<h3 id="enqueueStatus()">enqueueStatus</h3>
+<code class="signature">public abstract  void <strong>enqueueStatus</strong>(string status)</code>
+<div class="details">
+<p>This is the one and only method that must be implemented additionally. As per the streaming API documentation,
+statuses should NOT be processed within the same process that is performing collection</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line589" class="location">library\phirehose\lib\Phirehose.php at line 589</a>
+
+<h3 id="getAuthorizationHeader()">getAuthorizationHeader</h3>
+<code class="signature">protected  void <strong>getAuthorizationHeader</strong>()</code>
+<div class="details">
+<p>We must perform manual host resolution here as Twitter's IP regularly rotates (ie: DNS TTL of 60 seconds) and
+PHP appears to cache it the result if in a long running process (as per Phirehose).</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line106" class="location">library\phirehose\lib\Phirehose.php at line 106</a>
+
+<h3 id="getFollow()">getFollow</h3>
+<code class="signature">public  array <strong>getFollow</strong>()</code>
+<div class="details">
+<p>Returns an array of followed Twitter userIds (integers)</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line386" class="location">library\phirehose\lib\Phirehose.php at line 386</a>
+
+<h3 id="getLastErrorMsg()">getLastErrorMsg</h3>
+<code class="signature">public  string <strong>getLastErrorMsg</strong>()</code>
+<div class="details">
+<p>Returns the last error message (TCP or HTTP) that occured with the streaming API or client. State is cleared upon
+successful reconnect</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line399" class="location">library\phirehose\lib\Phirehose.php at line 399</a>
+
+<h3 id="getLastErrorNo()">getLastErrorNo</h3>
+<code class="signature">public  string <strong>getLastErrorNo</strong>()</code>
+<div class="details">
+<p>Returns the last error number that occured with the streaming API or client. Numbers correspond to either the
+fsockopen() error states (in the case of TCP errors) or HTTP error codes from Twitter (in the case of HTTP errors).</p><p>State is cleared upon successful reconnect.</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line192" class="location">library\phirehose\lib\Phirehose.php at line 192</a>
+
+<h3 id="getLocations()">getLocations</h3>
+<code class="signature">public  array <strong>getLocations</strong>()</code>
+<div class="details">
+<p>Returns an array of 4 element arrays that denote the monitored location bounding boxes for tweets using the
+Geotagging API.</p><dl>
+<dt>See Also:</dt>
+<dd><a href="../redis/phirehose.html#setLocations()">setLocations()</a></dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line135" class="location">library\phirehose\lib\Phirehose.php at line 135</a>
+
+<h3 id="getTrack()">getTrack</h3>
+<code class="signature">public  array <strong>getTrack</strong>()</code>
+<div class="details">
+<p>Returns an array of keywords being tracked</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line668" class="location">library\phirehose\lib\Phirehose.php at line 668</a>
+
+<h3 id="heartbeat()">heartbeat</h3>
+<code class="signature">public  NULL <strong>heartbeat</strong>(array data)</code>
+<div class="details">
+<p>Reports a periodic heartbeat. Keep execution time minimal.</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line624" class="location">library\phirehose\lib\Phirehose.php at line 624</a>
+
+<h3 id="log()">log</h3>
+<code class="signature">protected  void <strong>log</strong>(mixed message, string messages)</code>
+<div class="details">
+<p>Basic log function that outputs logging to the standard error_log() handler. This should generally be overridden
+to suit the application environment.</p><dl>
+<dt>See Also:</dt>
+<dd>error_log()</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line646" class="location">library\phirehose\lib\Phirehose.php at line 646</a>
+
+<h3 id="reconnect()">reconnect</h3>
+<code class="signature">private  void <strong>reconnect</strong>()</code>
+<div class="details">
+<p>Reconnects as quickly as possible. Should be called whenever a reconnect is required rather that connect/disconnect
+to preserve streams reconnect state</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line255" class="location">library\phirehose\lib\Phirehose.php at line 255</a>
+
+<h3 id="setCount()">setCount</h3>
+<code class="signature">public  void <strong>setCount</strong>(integer count)</code>
+<div class="details">
+<p>Sets the number of previous statuses to stream before transitioning to the live stream. Applies only to firehose
+and filter + track methods. This is generally used internally and should not be needed by client applications.
+Applies to: METHOD_FILTER, METHOD_FIREHOSE</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line91" class="location">library\phirehose\lib\Phirehose.php at line 91</a>
+
+<h3 id="setFollow()">setFollow</h3>
+<code class="signature">public  void <strong>setFollow</strong>(array userIds)</code>
+<div class="details">
+<p>Returns public statuses from or in reply to a set of users. Mentions ("Hello @user!") and implicit replies
+("@user Hello!" created without pressing the reply button) are not matched. It is up to you to find the integer
+IDs of each twitter user.
+Applies to: METHOD_FILTER</p><dl>
+<dt>Parameters:</dt>
+<dd>userIds - Array of Twitter integer userIDs</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line161" class="location">library\phirehose\lib\Phirehose.php at line 161</a>
+
+<h3 id="setLocations()">setLocations</h3>
+<code class="signature">public  void <strong>setLocations</strong>(array boundingBoxes)</code>
+<div class="details">
+<p>Specifies a set of bounding boxes to track as an array of 4 element lon/lat pairs denoting <south-west point>,
+<north-east point>. Only tweets that are both created using the Geotagging API and are placed from within a tracked
+bounding box will be included in the stream. The user's location field is not used to filter tweets. Bounding boxes
+are logical ORs and must be less than or equal to 1 degree per side. A locations parameter may be combined with
+track parameters, but note that all terms are logically ORd.</p><p>NOTE: The argument order is Longitude/Latitude (to match the Twitter API and GeoJSON specifications).</p><p>Applies to: METHOD_FILTER</p><p>See: http://apiwiki.twitter.com/Streaming-API-Documentation#locations</p><p>Eg:
+setLocations(array(
+array(-122.75, 36.8, -121.75, 37.8), // San Francisco
+array(-74, 40, -73, 41),             // New York
+));</p></div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line221" class="location">library\phirehose\lib\Phirehose.php at line 221</a>
+
+<h3 id="setLocationsByCircle()">setLocationsByCircle</h3>
+<code class="signature">public  void <strong>setLocationsByCircle</strong>(array locations)</code>
+<div class="details">
+<p>Convenience method that sets location bounding boxes by an array of lon/lat/radius sets, rather than manually
+specified bounding boxes. Each array element should contain 3 element subarray containing a latitude, longitude and
+radius. Radius is specified in kilometers and is approximate (as boxes are square).</p><p>NOTE: The argument order is Longitude/Latitude (to match the Twitter API and GeoJSON specifications).</p><p>Eg:
+setLocationsByCircle(array(
+array(144.9631, -37.8142, 30), // Melbourne, 3km radius
+array(-0.1262, 51.5001, 25),   // London 10km radius
+));</p><dl>
+<dt>See Also:</dt>
+<dd><a href="../redis/phirehose.html#setLocations()">setLocations()</a></dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../source/library/phirehose/lib/phirehose.php.html#line120" class="location">library\phirehose\lib\Phirehose.php at line 120</a>
+
+<h3 id="setTrack()">setTrack</h3>
+<code class="signature">public  void <strong>setTrack</strong>(array trackWords)</code>
+<div class="details">
+<p>Specifies keywords to track. Track keywords are case-insensitive logical ORs. Terms are exact-matched, ignoring
+punctuation. Phrases, keywords with spaces, are not supported. Queries are subject to Track Limitations.
+Applies to: METHOD_FILTER</p><p>See: http://apiwiki.twitter.com/Streaming-API-Documentation#TrackLimiting</p></div>
+
+<hr>
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li><a href="../redis/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../redis/package-tree.html">Tree</a></li>
+<li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../redis\phirehose.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

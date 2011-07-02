@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sat, 25 Jun 2011 12:54:12 +0000">
+<meta name="when" content="Sat, 02 Jul 2011 20:04:17 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -58,70 +58,78 @@
 <a name="line20"></a>		<span style="color: #009900;">&#125;</span>
 <a name="line21"></a>	<span style="color: #009900;">&#125;</span>
 <a name="line22"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line23"></a>	 * Thrown when redis replies with an error reply
+<a name="line23"></a>	 * Thrown when a channel socket times out.
 <a name="line24"></a>	 * 
 <a name="line25"></a>	 * @package Redis\Exceptions
 <a name="line26"></a>	 */</span>
-<a name="line27"></a>	<span style="color: #000000; font-weight: bold;">class</span> RedisServerException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
-<a name="line28"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line29"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;redis error reply: <span style="color: #006699; font-weight: bold;">$line</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1001</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line30"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line31"></a>	<span style="color: #009900;">&#125;</span>
-<a name="line32"></a>&nbsp;
-<a name="line33"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line34"></a>	 * Thrown if a connection is openend when it has already is connected.
-<a name="line35"></a>	 * 
-<a name="line36"></a>	 * @package Redis\Exceptions
-<a name="line37"></a>	 */</span>
-<a name="line38"></a>	<span style="color: #000000; font-weight: bold;">class</span> AlreadyConnectedException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
-<a name="line39"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$server</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line40"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;already connected to <span style="color: #006699; font-weight: bold;">{$server}</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1002</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line41"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line42"></a>	<span style="color: #009900;">&#125;</span>
-<a name="line43"></a>&nbsp;
-<a name="line44"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line45"></a>	 * Thrown if a connection is closed that is not open
-<a name="line46"></a>	 * 
-<a name="line47"></a>	 * @package Redis\Exceptions
-<a name="line48"></a>	 */</span>
-<a name="line49"></a>	<span style="color: #000000; font-weight: bold;">class</span> NotConnectedException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
-<a name="line50"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$server</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line51"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;closing an unopened connection to <span style="color: #006699; font-weight: bold;">{$server}</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1003</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line52"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line53"></a>	<span style="color: #009900;">&#125;</span>
-<a name="line54"></a>&nbsp;
-<a name="line55"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line56"></a>	 * Thrown if a connection cannot be closed
-<a name="line57"></a>	 * 
-<a name="line58"></a>	 * @package Redis\Exceptions
-<a name="line59"></a>	 */</span>
-<a name="line60"></a>	<span style="color: #000000; font-weight: bold;">class</span> CouldNotCloseException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
-<a name="line61"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$server</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line62"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;error during closing of connection to <span style="color: #006699; font-weight: bold;">{$server}</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1004</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line63"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line64"></a>	<span style="color: #009900;">&#125;</span>
-<a name="line65"></a>&nbsp;
-<a name="line66"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line67"></a>	 * Thrown if a direct (not pipelined) connection is flushed
-<a name="line68"></a>	 * 
-<a name="line69"></a>	 * @package Redis\Exceptions
-<a name="line70"></a>	 */</span>
-<a name="line71"></a>	<span style="color: #000000; font-weight: bold;">class</span> CannotFlushDirectConnectionException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
-<a name="line72"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$server</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line73"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;trying to flush direct (not pipelined) connection to <span style="color: #006699; font-weight: bold;">{$server}</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1005</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line74"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line75"></a>	<span style="color: #009900;">&#125;</span>
-<a name="line76"></a>&nbsp;
-<a name="line77"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line78"></a>	 * Thrown if a command isn't found
-<a name="line79"></a>	 * 
-<a name="line80"></a>	 * @package Redis\Exceptions
-<a name="line81"></a>	 */</span>
-<a name="line82"></a>	<span style="color: #000000; font-weight: bold;">class</span> CommandNotFoundException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
-<a name="line83"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line84"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;command '<span style="color: #006699; font-weight: bold;">{$name}</span>' not found&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">100</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line85"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line86"></a>	<span style="color: #009900;">&#125;</span></pre>
+<a name="line27"></a>	<span style="color: #000000; font-weight: bold;">class</span> RedisChannelTimeoutException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
+<a name="line28"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line29"></a>&nbsp;
+<a name="line30"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line31"></a>	 * Thrown when redis replies with an error reply
+<a name="line32"></a>	 * 
+<a name="line33"></a>	 * @package Redis\Exceptions
+<a name="line34"></a>	 */</span>
+<a name="line35"></a>	<span style="color: #000000; font-weight: bold;">class</span> RedisServerException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
+<a name="line36"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line37"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;redis error reply: <span style="color: #006699; font-weight: bold;">$line</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1001</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line38"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line39"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line40"></a>&nbsp;
+<a name="line41"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line42"></a>	 * Thrown if a connection is openend when it has already is connected.
+<a name="line43"></a>	 * 
+<a name="line44"></a>	 * @package Redis\Exceptions
+<a name="line45"></a>	 */</span>
+<a name="line46"></a>	<span style="color: #000000; font-weight: bold;">class</span> AlreadyConnectedException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
+<a name="line47"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$server</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line48"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;already connected to <span style="color: #006699; font-weight: bold;">{$server}</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1002</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line49"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line50"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line51"></a>&nbsp;
+<a name="line52"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line53"></a>	 * Thrown if a connection is closed that is not open
+<a name="line54"></a>	 * 
+<a name="line55"></a>	 * @package Redis\Exceptions
+<a name="line56"></a>	 */</span>
+<a name="line57"></a>	<span style="color: #000000; font-weight: bold;">class</span> NotConnectedException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
+<a name="line58"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$server</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line59"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;closing an unopened connection to <span style="color: #006699; font-weight: bold;">{$server}</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1003</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line60"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line61"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line62"></a>&nbsp;
+<a name="line63"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line64"></a>	 * Thrown if a connection cannot be closed
+<a name="line65"></a>	 * 
+<a name="line66"></a>	 * @package Redis\Exceptions
+<a name="line67"></a>	 */</span>
+<a name="line68"></a>	<span style="color: #000000; font-weight: bold;">class</span> CouldNotCloseException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
+<a name="line69"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$server</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line70"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;error during closing of connection to <span style="color: #006699; font-weight: bold;">{$server}</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1004</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line71"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line72"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line73"></a>&nbsp;
+<a name="line74"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line75"></a>	 * Thrown if a direct (not pipelined) connection is flushed
+<a name="line76"></a>	 * 
+<a name="line77"></a>	 * @package Redis\Exceptions
+<a name="line78"></a>	 */</span>
+<a name="line79"></a>	<span style="color: #000000; font-weight: bold;">class</span> CannotFlushDirectConnectionException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
+<a name="line80"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$server</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line81"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;trying to flush direct (not pipelined) connection to <span style="color: #006699; font-weight: bold;">{$server}</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1005</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line82"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line83"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line84"></a>&nbsp;
+<a name="line85"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line86"></a>	 * Thrown if a command isn't found
+<a name="line87"></a>	 * 
+<a name="line88"></a>	 * @package Redis\Exceptions
+<a name="line89"></a>	 */</span>
+<a name="line90"></a>	<span style="color: #000000; font-weight: bold;">class</span> CommandNotFoundException <span style="color: #000000; font-weight: bold;">extends</span> RedisException <span style="color: #009900;">&#123;</span>
+<a name="line91"></a>		<span style="color: #000000; font-weight: bold;">function</span> __construct<span style="color: #009900;">&#40;</span><span style="color: #000088;">$name</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line92"></a>			parent<span style="color: #339933;">::</span>__construct<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;command '<span style="color: #006699; font-weight: bold;">{$name}</span>' not found&quot;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">100</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line93"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line94"></a>	<span style="color: #009900;">&#125;</span></pre>
 <div class="header">
 <h1>PHP Redis Fast</h1>
 <ul>

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sat, 25 Jun 2011 12:53:54 +0000">
+<meta name="when" content="Sat, 02 Jul 2011 20:03:15 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -41,7 +41,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 <hr>
 
 <div class="qualifiedName">Redis\Pipeline</div>
-<a href="../source/library/redisclient.php.html#line162" class="location">library\RedisClient.php at line 162</a>
+<a href="../source/library/redisclient.php.html#line187" class="location">library\RedisClient.php at line 187</a>
 
 <h1>Class Pipeline</h1>
 
@@ -87,7 +87,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <table class="inherit">
 <tr><th colspan="2">Fields inherited from Redis\Connection</th></tr>
-<tr><td><a href="../redis/connection.html#address">address</a>, <a href="../redis/connection.html#connected">connected</a>, <a href="../redis/connection.html#port">port</a>, <a href="../redis/connection.html#timeout">timeout</a></td></tr></table>
+<tr><td><a href="../redis/connection.html#address">address</a>, <a href="../redis/connection.html#connected">connected</a>, <a href="../redis/connection.html#port">port</a>, <a href="../redis/connection.html#socket">socket</a>, <a href="../redis/connection.html#timeout">timeout</a></td></tr></table>
 
 <table id="summary_method">
 <tr><th colspan="2">Method Summary</th></tr>
@@ -111,10 +111,10 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <table class="inherit">
 <tr><th colspan="2">Methods inherited from Redis\Connection</th></tr>
-<tr><td><a href="../redis/connection.html#__construct()">__construct</a>, <a href="../redis/connection.html#close()">close</a>, <a href="../redis/connection.html#connected()">connected</a>, <a href="../redis/connection.html#open()">open</a></td></tr></table>
+<tr><td><a href="../redis/connection.html#__construct()">__construct</a>, <a href="../redis/connection.html#close()">close</a>, <a href="../redis/connection.html#connected()">connected</a>, <a href="../redis/connection.html#internals()">internals</a>, <a href="../redis/connection.html#open()">open</a></td></tr></table>
 
 <h2 id="detail_field">Field Detail</h2>
-<a href="../source/library/redisclient.php.html#line167" class="location">library\RedisClient.php at line 167</a>
+<a href="../source/library/redisclient.php.html#line192" class="location">library\RedisClient.php at line 192</a>
 
 <h3 id="client">client</h3>
 <code class="signature">private  mixed <strong>$client</strong> = null</code>
@@ -123,7 +123,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../source/library/redisclient.php.html#line164" class="location">library\RedisClient.php at line 164</a>
+<a href="../source/library/redisclient.php.html#line189" class="location">library\RedisClient.php at line 189</a>
 
 <h3 id="pipeline">pipeline</h3>
 <code class="signature">private  mixed <strong>$pipeline</strong> = ''</code>
@@ -132,7 +132,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../source/library/redisclient.php.html#line166" class="location">library\RedisClient.php at line 166</a>
+<a href="../source/library/redisclient.php.html#line191" class="location">library\RedisClient.php at line 191</a>
 
 <h3 id="pipeline_amount">pipeline_amount</h3>
 <code class="signature">private  mixed <strong>$pipeline_amount</strong> = 0</code>
@@ -141,7 +141,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../source/library/redisclient.php.html#line165" class="location">library\RedisClient.php at line 165</a>
+<a href="../source/library/redisclient.php.html#line190" class="location">library\RedisClient.php at line 190</a>
 
 <h3 id="pipeline_count">pipeline_count</h3>
 <code class="signature">private  mixed <strong>$pipeline_count</strong> = 0</code>
@@ -150,7 +150,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../source/library/redisclient.php.html#line163" class="location">library\RedisClient.php at line 163</a>
+<a href="../source/library/redisclient.php.html#line188" class="location">library\RedisClient.php at line 188</a>
 
 <h3 id="pipelining">pipelining</h3>
 <code class="signature">private  mixed <strong>$pipelining</strong> = false</code>
@@ -160,7 +160,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 <hr>
 
 <h2 id="detail_method">Method Detail</h2>
-<a href="../source/library/redisclient.php.html#line175" class="location">library\RedisClient.php at line 175</a>
+<a href="../source/library/redisclient.php.html#line200" class="location">library\RedisClient.php at line 200</a>
 
 <h3 id="__construct()">__construct</h3>
 <code class="signature">public  void <strong>__construct</strong>(int size, <a href="../redis/redisclient.html">RedisClient</a> client, string address, string port, int timeout)</code>
@@ -174,7 +174,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../source/library/redisclient.php.html#line184" class="location">library\RedisClient.php at line 184</a>
+<a href="../source/library/redisclient.php.html#line209" class="location">library\RedisClient.php at line 209</a>
 
 <h3 id="flush()">flush</h3>
 <code class="signature">public  void <strong>flush</strong>()</code>
@@ -183,7 +183,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../source/library/redisclient.php.html#line197" class="location">library\RedisClient.php at line 197</a>
+<a href="../source/library/redisclient.php.html#line222" class="location">library\RedisClient.php at line 222</a>
 
 <h3 id="send()">send</h3>
 <code class="signature">public  void <strong>send</strong>(mixed command, mixed arguments)</code>

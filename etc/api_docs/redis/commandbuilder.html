@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sat, 25 Jun 2011 12:53:53 +0000">
+<meta name="when" content="Sat, 02 Jul 2011 20:03:12 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -41,7 +41,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 <hr>
 
 <div class="qualifiedName">Redis\CommandBuilder</div>
-<a href="../source/library/redisclient.php.html#line73" class="location">library\RedisClient.php at line 73</a>
+<a href="../source/library/redisclient.php.html#line83" class="location">library\RedisClient.php at line 83</a>
 
 <h1>Class CommandBuilder</h1>
 
@@ -60,14 +60,14 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 <table id="summary_field">
 <tr><th colspan="2">Field Summary</th></tr>
 <tr>
-<td class="type">private  mixed</td>
+<td class="type">private static  mixed</td>
 <td class="description"><p class="name"><a href="#_cache">$_cache</a></p></td>
 </tr>
 </table>
 
 <table class="inherit">
 <tr><th colspan="2">Fields inherited from Redis\Connection</th></tr>
-<tr><td><a href="../redis/connection.html#address">address</a>, <a href="../redis/connection.html#connected">connected</a>, <a href="../redis/connection.html#port">port</a>, <a href="../redis/connection.html#timeout">timeout</a></td></tr></table>
+<tr><td><a href="../redis/connection.html#address">address</a>, <a href="../redis/connection.html#connected">connected</a>, <a href="../redis/connection.html#port">port</a>, <a href="../redis/connection.html#socket">socket</a>, <a href="../redis/connection.html#timeout">timeout</a></td></tr></table>
 
 <table id="summary_method">
 <tr><th colspan="2">Method Summary</th></tr>
@@ -87,20 +87,20 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <table class="inherit">
 <tr><th colspan="2">Methods inherited from Redis\Connection</th></tr>
-<tr><td><a href="../redis/connection.html#__construct()">__construct</a>, <a href="../redis/connection.html#close()">close</a>, <a href="../redis/connection.html#connected()">connected</a>, <a href="../redis/connection.html#open()">open</a></td></tr></table>
+<tr><td><a href="../redis/connection.html#__construct()">__construct</a>, <a href="../redis/connection.html#close()">close</a>, <a href="../redis/connection.html#connected()">connected</a>, <a href="../redis/connection.html#internals()">internals</a>, <a href="../redis/connection.html#open()">open</a></td></tr></table>
 
 <h2 id="detail_field">Field Detail</h2>
-<a href="../source/library/redisclient.php.html#line74" class="location">library\RedisClient.php at line 74</a>
+<a href="../source/library/redisclient.php.html#line84" class="location">library\RedisClient.php at line 84</a>
 
 <h3 id="_cache">_cache</h3>
-<code class="signature">private  mixed <strong>$_cache</strong> = array()</code>
+<code class="signature">private static  mixed <strong>$_cache</strong> = array()</code>
 <div class="details">
 </div>
 
 <hr>
 
 <h2 id="detail_method">Method Detail</h2>
-<a href="../source/library/redisclient.php.html#line82" class="location">library\RedisClient.php at line 82</a>
+<a href="../source/library/redisclient.php.html#line92" class="location">library\RedisClient.php at line 92</a>
 
 <h3 id="__call()">__call</h3>
 <code class="signature">private  void <strong>__call</strong>(string command, array arguments)</code>
@@ -114,7 +114,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../source/library/redisclient.php.html#line112" class="location">library\RedisClient.php at line 112</a>
+<a href="../source/library/redisclient.php.html#line130" class="location">library\RedisClient.php at line 130</a>
 
 <h3 id="read()">read</h3>
 <code class="signature">protected  void <strong>read</strong>(object command, bool output)</code>
@@ -133,7 +133,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../source/library/redisclient.php.html#line96" class="location">library\RedisClient.php at line 96</a>
+<a href="../source/library/redisclient.php.html#line106" class="location">library\RedisClient.php at line 106</a>
 
 <h3 id="send()">send</h3>
 <code class="signature">public  void <strong>send</strong>(mixed command, mixed arguments)</code>

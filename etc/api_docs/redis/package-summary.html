@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sat, 25 Jun 2011 12:53:52 +0000">
+<meta name="when" content="Sat, 02 Jul 2011 20:03:06 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -44,28 +44,79 @@
 <tr><td class="name"><a href="../redis/commandbuilder.html">CommandBuilder</a></td><td class="description">Basic command building logic.</td></tr>
 <tr><td class="name"><a href="../redis/connection.html">Connection</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="../redis/distributor.html">Distributor</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="../redis/dynamictrackconsumer.html">DynamicTrackConsumer</a></td><td class="description">Example of how to update filter predicates using Phirehose</td></tr>
+<tr><td class="name"><a href="../redis/filtertrackconsumer.html">FilterTrackConsumer</a></td><td class="description">Example of using Phirehose to display a live filtered stream using track words</td></tr>
+<tr><td class="name"><a href="../redis/ghettoqueuecollector.html">GhettoQueueCollector</a></td><td class="description">Example of using Phirehose to collect tweets to a "ghetto queue" (ie: simple, filesystem based queue). </td></tr>
+<tr><td class="name"><a href="../redis/ghettoqueueconsumer.html">GhettoQueueConsumer</a></td><td class="description">A simple example of how you could consume (ie: process) statuses collected by the ghetto-queue-collect.
+</td></tr>
 <tr><td class="name"><a href="../redis/hashringdistributor.html">HashRingDistributor</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="../redis/modulodistributor.html">ModuloDistributor</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="../redis/oauthphirehose.html">OauthPhirehose</a></td><td class="description">A class that makes it easy to connect to and consume the Twitter stream via the Streaming API.
+</td></tr>
+<tr><td class="name"><a href="../redis/publish.html">PUBLISH</a></td><td class="description">PUBLISH channel message ~ Post a message to a channelPosts a message to the given channel.
+</td></tr>
+<tr><td class="name"><a href="../redis/phirehose.html">Phirehose</a></td><td class="description">A class that makes it easy to connect to and consume the Twitter stream via the Streaming API.
+</td></tr>
+<tr><td class="name"><a href="../redis/phirehoseconnectlimitexceeded.html">PhirehoseConnectLimitExceeded</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="../redis/phirehosenetworkexception.html">PhirehoseNetworkException</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="../redis/pipeline.html">Pipeline</a></td><td class="description">A pipelining wrapper for the RedisClient.</td></tr>
+<tr><td class="name"><a href="../redis/redischannel.html">RedisChannel</a></td><td class="description">This class retrieves messages for the persistent commands.</td></tr>
 <tr><td class="name"><a href="../redis/redisclient.html">RedisClient</a></td><td class="description">This class acts as a single connection to a redis instance.</td></tr>
 <tr><td class="name"><a href="../redis/redismanager.html">RedisManager</a></td><td class="description">RedisManager acts as a facade for the PHP-Redis-Fast library. </td></tr>
+<tr><td class="name"><a href="../redis/sampleconsumer.html">SampleConsumer</a></td><td class="description">Example of using Phirehose to display the 'sample' twitter stream.</td></tr>
+<tr><td class="name"><a href="../redis/twitterconsumer.html">TwitterConsumer</a></td><td class="description">A class that makes it easy to connect to and consume the Twitter stream via the Streaming API.
+</td></tr>
+</table>
+
+<table class="title">
+<tr><th colspan="2" class="title">Exception Summary</th></tr>
+<tr><td class="name"><a href="../redis/phirehoseexception.html">PhirehoseException</a></td><td class="description"></td></tr>
+</table>
+
+<table class="title">
+<tr><th colspan="2" class="title">Function Summary</th></tr>
+<tr><td class="name"><a href="package-functions.html#eratosthenes">eratosthenes</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-functions.html#respond">respond</a></td><td class="description"></td></tr>
 </table>
 
 <table class="title">
 <tr><th colspan="2" class="title">Global Summary</th></tr>
 <tr><td class="name"><a href="package-globals.html#CRLF">CRLF</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#OAUTH_SECRET">OAUTH_SECRET</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#OAUTH_TOKEN">OAUTH_TOKEN</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#TWITTER_CONSUMER_KEY">TWITTER_CONSUMER_KEY</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#TWITTER_CONSUMER_SECRET">TWITTER_CONSUMER_SECRET</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#_GET">_GET</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#_REQUEST">_REQUEST</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#_response">_response</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#batch">batch</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#benchmark">benchmark</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#bm">bm</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#channel">channel</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#client">client</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#client2">client2</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#client3">client3</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#cluster">cluster</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#count">count</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#data">data</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#e">e</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#found">found</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#gqc">gqc</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#i">i</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#j">j</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#message">message</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#name">name</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#pattern">pattern</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#patterns">patterns</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#pipeline">pipeline</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#range">range</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#redis">redis</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#result">result</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#rnd">rnd</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#sc">sc</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#time">time</a></td><td class="description"></td></tr>
 <tr><td class="name"><a href="package-globals.html#times">times</a></td><td class="description"></td></tr>
+<tr><td class="name"><a href="package-globals.html#username">username</a></td><td class="description"></td></tr>
 </table>
 
 <hr>

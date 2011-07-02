@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sat, 02 Jul 2011 20:04:25 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>library\SetCommands.php (API Documentation: PHP Redis Fast)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source\library\setcommands.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>library\SetCommands.php</h1>
+<hr>
+
+<a name="line1"></a><pre class="php" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&lt;?php</span>
+<a name="line2"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line3"></a>	 * SADD key member [member ...] ~ Add a member to a set
+<a name="line4"></a>	 * 
+<a name="line5"></a>	 * Add member to the set stored at key. If member is already a member of this set, no operation is performed. If key does not exist, a new set is created with member as its sole member.
+<a name="line6"></a>	 * An error is returned when the value stored at key is not a set.
+<a name="line7"></a>	 * 
+<a name="line8"></a>	 * Time complexity: O(1)
+<a name="line9"></a>	 * 
+<a name="line10"></a>	 * @since: 0.07 up until Redis 2.3, SADD accepted a single member.
+<a name="line11"></a>	 * @return int Integer reply: the number of elements actually added to the set.
+<a name="line12"></a>	 * @package Redis\Commands\Sets
+<a name="line13"></a>	 */</span>
+<a name="line14"></a>	<span style="color: #000000; font-weight: bold;">class</span> SADD <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line15"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line16"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThenEqual</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line17"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line18"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line19"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line20"></a>&nbsp;
+<a name="line21"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line22"></a>	 * SCARD key ~ Get the number of members in a set
+<a name="line23"></a>	 * 
+<a name="line24"></a>	 * Returns the set cardinality (number of elements) of the set stored at key.
+<a name="line25"></a>	 * 
+<a name="line26"></a>	 * Time complexity: O(1)
+<a name="line27"></a>	 * 
+<a name="line28"></a>	 * @since: 0.07 
+<a name="line29"></a>	 * @return int Integer reply: the cardinality (number of elements) of the set, or 0 if key does not exist.
+<a name="line30"></a>	 * @package Redis\Commands\Sets
+<a name="line31"></a>	 */</span>
+<a name="line32"></a>	<span style="color: #000000; font-weight: bold;">class</span> SCARD <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line33"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line34"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line35"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line36"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line37"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line38"></a>&nbsp;
+<a name="line39"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line40"></a>	 * SDIFF key [key ...] ~ Subtract multiple sets
+<a name="line41"></a>	 * 
+<a name="line42"></a>	 * Returns the members of the set resulting from the difference between the first set and all the successive sets. Keys that do not exist are considered to be empty sets.
+<a name="line43"></a>	 * 
+<a name="line44"></a>	 * Time complexity: O(N) where N is the total number of elements in all given sets.
+<a name="line45"></a>	 * 
+<a name="line46"></a>	 * @since: 0.100
+<a name="line47"></a>	 * @return array Multi-bulk reply: list with members of the resulting set.
+<a name="line48"></a>	 * @package Redis\Commands\Sets
+<a name="line49"></a>	 */</span>
+<a name="line50"></a>	<span style="color: #000000; font-weight: bold;">class</span> SDIFF <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line51"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line52"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line53"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span>
+<a name="line54"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line55"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line56"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line57"></a>&nbsp;
+<a name="line58"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line59"></a>	 * SDIFFSTORE destination key [key ...] ~ Subtract multiple sets and store the resulting set in a key
+<a name="line60"></a>	 * 
+<a name="line61"></a>	 * This command is equal to SDIFF, but instead of returning the resulting set, it is stored in destination. If destination already exists, it is overwritten.
+<a name="line62"></a>	 * 
+<a name="line63"></a>	 * Time complexity: O(N) where N is the total number of elements in all given sets.
+<a name="line64"></a>	 * 
+<a name="line65"></a>	 * @since: 0.100
+<a name="line66"></a>	 * @return int Integer reply: the number of elements in the resulting set.
+<a name="line67"></a>	 * @package Redis\Commands\Sets
+<a name="line68"></a>	 */</span>
+<a name="line69"></a>	<span style="color: #000000; font-weight: bold;">class</span> SDIFFSTORE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line70"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line71"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThenEqual</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line72"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line73"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line74"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line75"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line76"></a>&nbsp;
+<a name="line77"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line78"></a>	 * SINTER key [key ...] ~ Intersect multiple sets
+<a name="line79"></a>	 * 
+<a name="line80"></a>	 * Returns the members of the set resulting from the intersection of all the given sets. Keys that do not exist are considered to be empty sets. With one of the keys being an empty set, the resulting set 
+<a name="line81"></a>	 * is also empty (since set intersection with an empty set always results in an empty set).
+<a name="line82"></a>	 * 
+<a name="line83"></a>	 * Time complexity: O(N*M) worst case where N is the cardinality of the smallest set and M is the number of sets.
+<a name="line84"></a>	 * 
+<a name="line85"></a>	 * @since: 0.07
+<a name="line86"></a>	 * @return array Multi-bulk reply: list with members of the resulting set.
+<a name="line87"></a>	 * @package Redis\Commands\Sets
+<a name="line88"></a>	 */</span>
+<a name="line89"></a>	<span style="color: #000000; font-weight: bold;">class</span> SINTER <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line90"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line91"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThen</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line92"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span>
+<a name="line93"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line94"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line95"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line96"></a>&nbsp;
+<a name="line97"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line98"></a>	 * SINTERSTORE destination key [key ...] ~ Intersect multiple sets and store the resulting set in a key
+<a name="line99"></a>	 * 
+<a name="line100"></a>	 * This command is equal to SINTER, but instead of returning the resulting set, it is stored in destination. If destination already exists, it is overwritten.
+<a name="line101"></a>	 * 
+<a name="line102"></a>	 * Time complexity: O(N*M) worst case where N is the cardinality of the smallest set and M is the number of sets.
+<a name="line103"></a>	 * 
+<a name="line104"></a>	 * @since: 0.100
+<a name="line105"></a>	 * @return int Integer reply: the number of elements in the resulting set.
+<a name="line106"></a>	 * @package Redis\Commands\Sets
+<a name="line107"></a>	 */</span>
+<a name="line108"></a>	<span style="color: #000000; font-weight: bold;">class</span> SINTERSTORE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line109"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line110"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThenEqual</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line111"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line112"></a>			<span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$i</span> <span style="color: #339933;">=</span> <span style="color: #cc66cc;">1</span><span style="color: #339933;">;</span> <span style="color: #000088;">$i</span> <span style="color: #339933;">&lt;</span> <a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #000088;">$i</span><span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+<a name="line113"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #000088;">$i</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line114"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line115"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line116"></a>&nbsp;
+<a name="line117"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line118"></a>	 * SISMEMBER key member ~ Determine if a given value is a member of a set
+<a name="line119"></a>	 * 
+<a name="line120"></a>	 * Returns if member is a member of the set stored at key.
+<a name="line121"></a>	 * 
+<a name="line122"></a>	 * Time complexity: O(1)
+<a name="line123"></a>	 * 
+<a name="line124"></a>	 * @since: 0.07 
+<a name="line125"></a>	 * @return int Integer reply, specifically: 1 if the element is a member of the set. 0 if the element is not a member of the set, or if key does not exist.
+<a name="line126"></a>	 * @package Redis\Commands\Sets
+<a name="line127"></a>	 */</span>
+<a name="line128"></a>	<span style="color: #000000; font-weight: bold;">class</span> SISMEMBER <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line129"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line130"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line131"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line132"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line133"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line134"></a>&nbsp;
+<a name="line135"></a>		<span style="color: #000000; font-weight: bold;">function</span> output<span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line136"></a>			<span style="color: #b1b100;">return</span> <a href="http://www.php.net/intval"><span style="color: #990000;">intval</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">==</span> <span style="color: #cc66cc;">1</span><span style="color: #339933;">;</span>
+<a name="line137"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line138"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line139"></a>&nbsp;
+<a name="line140"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line141"></a>	 * SMEMBERS key ~ Get all the members in a set
+<a name="line142"></a>	 * 
+<a name="line143"></a>	 * Returns all the members of the set value stored at key. This has the same effect as running SINTER with one argument key.
+<a name="line144"></a>	 * 
+<a name="line145"></a>	 * Time complexity: O(N) where N is the set cardinality.
+<a name="line146"></a>	 * 
+<a name="line147"></a>	 * @since: 0.07 
+<a name="line148"></a>	 * @return array Multi-bulk reply: all elements of the set.
+<a name="line149"></a>	 * @package Redis\Commands\Sets
+<a name="line150"></a>	 */</span>
+<a name="line151"></a>	<span style="color: #000000; font-weight: bold;">class</span> SMEMBERS <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line152"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line153"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line154"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line155"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line156"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line157"></a>&nbsp;
+<a name="line158"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line159"></a>	 * SMOVE source destination member ~ Move a member from one set to another
+<a name="line160"></a>	 * 
+<a name="line161"></a>	 * Move member from the set at source to the set at destination. This operation is atomic. In every given moment the element will appear to be a member of source or destination for other clients.
+<a name="line162"></a>	 * If the source set does not exist or does not contain the specified element, no operation is performed and 0 is returned. Otherwise, the element is removed from the source set and added to the destination set. When the 
+<a name="line163"></a>	 * specified element already exists in the destination set, it is only removed from the source set.
+<a name="line164"></a>	 * An error is returned if source or destination does not hold a set value.
+<a name="line165"></a>	 * 
+<a name="line166"></a>	 * Time complexity: O(1)
+<a name="line167"></a>	 * 
+<a name="line168"></a>	 * @since: 0.091
+<a name="line169"></a>	 * @return int Integer reply, specifically: 1 if the element is moved. 0 if the element is not a member of source and no operation was performed.
+<a name="line170"></a>	 * @package Redis\Commands\Sets
+<a name="line171"></a>	 */</span>
+<a name="line172"></a>	<span style="color: #000000; font-weight: bold;">class</span> SMOVE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line173"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line174"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">3</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line175"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line176"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line177"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">2</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line178"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line179"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line180"></a>&nbsp;
+<a name="line181"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line182"></a>	 * SPOP key ~ Remove and return a random member from a set
+<a name="line183"></a>	 * 
+<a name="line184"></a>	 * Removes and returns a random element from the set value stored at key. This operation is similar to SRANDMEMBER, that returns a random element from a set but does not remove it.
+<a name="line185"></a>	 * 
+<a name="line186"></a>	 * Time complexity: O(1)
+<a name="line187"></a>	 * 
+<a name="line188"></a>	 * @since: 0.101
+<a name="line189"></a>	 * @return mixed Bulk reply: the removed element, or nil when key does not exist.
+<a name="line190"></a>	 * @package Redis\Commands\Sets
+<a name="line191"></a>	 */</span>
+<a name="line192"></a>	<span style="color: #000000; font-weight: bold;">class</span> SPOP <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line193"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line194"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line195"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line196"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line197"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line198"></a>&nbsp;
+<a name="line199"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line200"></a>	 * SRANDMEMBER key ~ Get a random member from a set
+<a name="line201"></a>	 * 
+<a name="line202"></a>	 * Return a random element from the set value stored at key.
+<a name="line203"></a>	 * This operation is similar to SPOP, however while SPOP also removes the randomly selected element from the set, SRANDMEMBER will just return a random element without altering the original set in any way.
+<a name="line204"></a>	 * 
+<a name="line205"></a>	 * Time complexity: O(1)
+<a name="line206"></a>	 * 
+<a name="line207"></a>	 * @since: 1.001
+<a name="line208"></a>	 * @return mixed Bulk reply: the removed element, or nil when key does not exist.
+<a name="line209"></a>	 * @package Redis\Commands\Sets
+<a name="line210"></a>	 */</span>
+<a name="line211"></a>	<span style="color: #000000; font-weight: bold;">class</span> SRANDMEMBER <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line212"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line213"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line214"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line215"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line216"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line217"></a>&nbsp;
+<a name="line218"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line219"></a>	 * SREM key member ~ Remove a member from a set
+<a name="line220"></a>	 * 
+<a name="line221"></a>	 * Return a random element from the set value stored at key.
+<a name="line222"></a>	 * This operation is similar to SPOP, however while SPOP also removes the randomly selected element from the set, SRANDMEMBER will just return a random element without altering the original set in any way.
+<a name="line223"></a>	 * 
+<a name="line224"></a>	 * Time complexity: O(1)
+<a name="line225"></a>	 * 
+<a name="line226"></a>	 * @since: 0.07
+<a name="line227"></a>	 * @return int Integer reply, specifically: 1 if the element was removed. 0 if the element was not a member of the set.
+<a name="line228"></a>	 * @package Redis\Commands\Sets
+<a name="line229"></a>	 */</span>
+<a name="line230"></a>	<span style="color: #000000; font-weight: bold;">class</span> SREM <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line231"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line232"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line233"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line234"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">1</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line235"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line236"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line237"></a>&nbsp;
+<a name="line238"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line239"></a>	 * SUNION key [key ...] ~ Add multiple sets
+<a name="line240"></a>	 * 
+<a name="line241"></a>	 * Return a random element from the set value stored at key.
+<a name="line242"></a>	 * 
+<a name="line243"></a>	 * Time complexity: O(N) where N is the total number of elements in all given sets.
+<a name="line244"></a>	 * 
+<a name="line245"></a>	 * @since: 0.091
+<a name="line246"></a>	 * @return array Multi-bulk reply: list with members of the resulting set.
+<a name="line247"></a>	 * @package Redis\Commands\Sets
+<a name="line248"></a>	 */</span>
+<a name="line249"></a>	<span style="color: #000000; font-weight: bold;">class</span> SUNION <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line250"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line251"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThenEqual</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line252"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span>
+<a name="line253"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line254"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line255"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line256"></a>&nbsp;
+<a name="line257"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line258"></a>	 * SUNIONSTORE destination key [key ...] ~ Add multiple sets and store the resulting set in a key
+<a name="line259"></a>	 * 
+<a name="line260"></a>	 * This command is equal to SUNION, but instead of returning the resulting set, it is stored in destination. If destination already exists, it is overwritten.
+<a name="line261"></a>	 * 
+<a name="line262"></a>	 * Time complexity: O(N) where N is the total number of elements in all given sets.
+<a name="line263"></a>	 * 
+<a name="line264"></a>	 * @since: 0.091
+<a name="line265"></a>	 * @return int Integer reply: the number of elements in the resulting set.
+<a name="line266"></a>	 * @package Redis\Commands\Sets
+<a name="line267"></a>	 */</span>
+<a name="line268"></a>	<span style="color: #000000; font-weight: bold;">class</span> SUNIONSTORE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line269"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line270"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateLargerThenEqual</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">2</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line271"></a>			<span style="color: #b1b100;">foreach</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span> <span style="color: #b1b100;">as</span> <span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span>
+<a name="line272"></a>				<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$argument</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line273"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line274"></a>	<span style="color: #009900;">&#125;</span></pre>
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source\library\setcommands.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

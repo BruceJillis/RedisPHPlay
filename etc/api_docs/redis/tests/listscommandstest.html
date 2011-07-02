@@ -1,0 +1,288 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sat, 02 Jul 2011 20:03:33 +0000">
+
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+<link rel="start" href="../../overview-summary.html">
+
+<title>ListsCommandsTest (API Documentation: PHP Redis Fast)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../redis/tests/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../../redis/tests/package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../redis\tests\listscommandstest.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">Redis\Tests\ListsCommandsTest</div>
+<a href="../../source/tests/listcommandstest.php.html#line9" class="location">tests\ListCommandsTest.php at line 9</a>
+
+<h1>Class ListsCommandsTest</h1>
+
+<pre class="tree">PHPUnit_Framework_TestCase<br> └─<strong>ListsCommandsTest</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public  class <strong>ListsCommandsTest</strong><br>extends PHPUnit_Framework_TestCase
+
+</p>
+
+<div class="comment" id="overview_description"><p>Test for the List commands (http://redis.io/commands#list).</p></div>
+
+<hr>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#connect()">connect</a>()</p><p class="description">this methods connects and AUTH's at the database</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#setUp()">setUp</a>()</p><p class="description">test setUp, create a RedisManager in $this->redis</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testBLPop()">testBLPop</a>()</p><p class="description">Test BLPOP</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testBRPop()">testBRPop</a>()</p><p class="description">Test BRPOP</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testLInsert()">testLInsert</a>()</p><p class="description">Test LINSERT</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testLPop()">testLPop</a>()</p><p class="description">Test the LPOP command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testLPushLLenLIndex()">testLPushLLenLIndex</a>()</p><p class="description">Test the LPUSH LLEN LINDEX command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testLPushX()">testLPushX</a>()</p><p class="description">Test the LPUSHX command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testLRANGE()">testLRANGE</a>()</p><p class="description">Test the LRANGE command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testLREM()">testLREM</a>()</p><p class="description">Test the LREM command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testLSet()">testLSet</a>()</p><p class="description">Test the LSET command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testLTrim()">testLTrim</a>()</p><p class="description">Test the LTRIM command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testRPopLPush()">testRPopLPush</a>()</p><p class="description">Test the RPOPLPUSH command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testRPushRPop()">testRPushRPop</a>()</p><p class="description">Test the RPush, RPop command</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#testRPushX()">testRPushX</a>()</p><p class="description">Test the RPUSHX command</p></td>
+</tr>
+</table>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../../source/tests/listcommandstest.php.html#line20" class="location">tests\ListCommandsTest.php at line 20</a>
+
+<h3 id="connect()">connect</h3>
+<code class="signature">public  void <strong>connect</strong>()</code>
+<div class="details">
+<p>this methods connects and AUTH's at the database</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line13" class="location">tests\ListCommandsTest.php at line 13</a>
+
+<h3 id="setUp()">setUp</h3>
+<code class="signature">public  void <strong>setUp</strong>()</code>
+<div class="details">
+<p>test setUp, create a RedisManager in $this->redis</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line47" class="location">tests\ListCommandsTest.php at line 47</a>
+
+<h3 id="testBLPop()">testBLPop</h3>
+<code class="signature">public  void <strong>testBLPop</strong>()</code>
+<div class="details">
+<p>Test BLPOP</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line67" class="location">tests\ListCommandsTest.php at line 67</a>
+
+<h3 id="testBRPop()">testBRPop</h3>
+<code class="signature">public  void <strong>testBRPop</strong>()</code>
+<div class="details">
+<p>Test BRPOP</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line122" class="location">tests\ListCommandsTest.php at line 122</a>
+
+<h3 id="testLInsert()">testLInsert</h3>
+<code class="signature">public  void <strong>testLInsert</strong>()</code>
+<div class="details">
+<p>Test LINSERT</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line87" class="location">tests\ListCommandsTest.php at line 87</a>
+
+<h3 id="testLPop()">testLPop</h3>
+<code class="signature">public  void <strong>testLPop</strong>()</code>
+<div class="details">
+<p>Test the LPOP command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line30" class="location">tests\ListCommandsTest.php at line 30</a>
+
+<h3 id="testLPushLLenLIndex()">testLPushLLenLIndex</h3>
+<code class="signature">public  void <strong>testLPushLLenLIndex</strong>()</code>
+<div class="details">
+<p>Test the LPUSH LLEN LINDEX command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line157" class="location">tests\ListCommandsTest.php at line 157</a>
+
+<h3 id="testLPushX()">testLPushX</h3>
+<code class="signature">public  void <strong>testLPushX</strong>()</code>
+<div class="details">
+<p>Test the LPUSHX command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line105" class="location">tests\ListCommandsTest.php at line 105</a>
+
+<h3 id="testLRANGE()">testLRANGE</h3>
+<code class="signature">public  void <strong>testLRANGE</strong>()</code>
+<div class="details">
+<p>Test the LRANGE command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line141" class="location">tests\ListCommandsTest.php at line 141</a>
+
+<h3 id="testLREM()">testLREM</h3>
+<code class="signature">public  void <strong>testLREM</strong>()</code>
+<div class="details">
+<p>Test the LREM command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line241" class="location">tests\ListCommandsTest.php at line 241</a>
+
+<h3 id="testLSet()">testLSet</h3>
+<code class="signature">public  void <strong>testLSet</strong>()</code>
+<div class="details">
+<p>Test the LSET command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line226" class="location">tests\ListCommandsTest.php at line 226</a>
+
+<h3 id="testLTrim()">testLTrim</h3>
+<code class="signature">public  void <strong>testLTrim</strong>()</code>
+<div class="details">
+<p>Test the LTRIM command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line205" class="location">tests\ListCommandsTest.php at line 205</a>
+
+<h3 id="testRPopLPush()">testRPopLPush</h3>
+<code class="signature">public  void <strong>testRPopLPush</strong>()</code>
+<div class="details">
+<p>Test the RPOPLPUSH command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line187" class="location">tests\ListCommandsTest.php at line 187</a>
+
+<h3 id="testRPushRPop()">testRPushRPop</h3>
+<code class="signature">public  void <strong>testRPushRPop</strong>()</code>
+<div class="details">
+<p>Test the RPush, RPop command</p></div>
+
+<hr>
+
+<a href="../../source/tests/listcommandstest.php.html#line172" class="location">tests\ListCommandsTest.php at line 172</a>
+
+<h3 id="testRPushX()">testRPushX</h3>
+<code class="signature">public  void <strong>testRPushX</strong>()</code>
+<div class="details">
+<p>Test the RPUSHX command</p></div>
+
+<hr>
+
+<div class="header">
+<h1>PHP Redis Fast</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../redis/tests/package-summary.html">Namespace</a></li>
+<li class="active">Class</li>
+<li><a href="../../redis/tests/package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../redis\tests\listscommandstest.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

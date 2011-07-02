@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sat, 25 Jun 2011 12:54:08 +0000">
+<meta name="when" content="Sat, 02 Jul 2011 20:04:07 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -276,56 +276,49 @@
 <a name="line238"></a>	 */</span>
 <a name="line239"></a>	<span style="color: #000000; font-weight: bold;">class</span> <a href="http://www.php.net/sort"><span style="color: #990000;">SORT</span></a> <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
 <a name="line240"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line241"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line242"></a>&nbsp;
-<a name="line243"></a>		<span style="color: #000000; font-weight: bold;">function</span> output<span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line244"></a>			<span style="color: #b1b100;">return</span> <a href="http://www.php.net/intval"><span style="color: #990000;">intval</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">==</span> <span style="color: #cc66cc;">1</span><span style="color: #339933;">;</span>
-<a name="line245"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line246"></a>	<span style="color: #009900;">&#125;</span>
-<a name="line247"></a>&nbsp;
-<a name="line248"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line249"></a>	 * TTL key ~ Get the time to live for a key
-<a name="line250"></a>	 * 
-<a name="line251"></a>	 * Returns the remaining time to live of a key that has a timeout. This introspection capability allows a Redis client to check how many seconds a given key will continue to be part of the dataset.
-<a name="line252"></a>	 * 
-<a name="line253"></a>	 * Time complexity: O(1)
-<a name="line254"></a>	 * 
-<a name="line255"></a>	 * @since: 0.0.7
-<a name="line256"></a>	 * @return int Integer reply: TTL in seconds or -1 when key does not exist or does not have a timeout.
-<a name="line257"></a>	 * @package Redis\Commands\Keys
-<a name="line258"></a>	 */</span>
-<a name="line259"></a>	<span style="color: #000000; font-weight: bold;">class</span> TTL <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
-<a name="line260"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line261"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line262"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line263"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line264"></a>	<span style="color: #009900;">&#125;</span>
-<a name="line265"></a>&nbsp;
-<a name="line266"></a>	<span style="color: #009933; font-style: italic;">/**
-<a name="line267"></a>	 * TYPE key ~ Determine the type stored at key
-<a name="line268"></a>	 * 
-<a name="line269"></a>	 * Returns the string representation of the type of the value stored at key. The different types that can be returned are: string, list, set, zset and hash.
-<a name="line270"></a>	 * 
-<a name="line271"></a>	 * Time complexity: O(1)
-<a name="line272"></a>	 * 
-<a name="line273"></a>	 * @since: 0.0.7
-<a name="line274"></a>	 * @return string Status code reply: type of key, or none when key does not exist.
-<a name="line275"></a>	 * @package Redis\Commands\Keys
-<a name="line276"></a>	 */</span>
-<a name="line277"></a>	<span style="color: #000000; font-weight: bold;">class</span> TYPE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
-<a name="line278"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line279"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line280"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line281"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line282"></a>&nbsp;
-<a name="line283"></a>		<span style="color: #000000; font-weight: bold;">function</span> output<span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line284"></a>			<span style="color: #000088;">$types</span> <span style="color: #339933;">=</span> <a href="http://www.php.net/array"><span style="color: #990000;">array</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">'string'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'list'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'set'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'zset'</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">'hash'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line285"></a>			<span style="color: #b1b100;">if</span><span style="color: #009900;">&#40;</span> <span style="color: #339933;">!</span><a href="http://www.php.net/in_array"><span style="color: #990000;">in_array</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #339933;">,</span> <span style="color: #000088;">$types</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
-<a name="line286"></a>				<span style="color: #b1b100;">throw</span> <span style="color: #000000; font-weight: bold;">new</span> RuntimeException<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Redis supplied an unknown type: '<span style="color: #006699; font-weight: bold;">{$line}</span>'&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
-<a name="line287"></a>			<span style="color: #009900;">&#125;</span>
-<a name="line288"></a>			<span style="color: #b1b100;">return</span> <span style="color: #000088;">$line</span><span style="color: #339933;">;</span>
-<a name="line289"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line290"></a>	<span style="color: #009900;">&#125;</span></pre>
+<a name="line241"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateLargerThenEqual</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line242"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line243"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line244"></a>&nbsp;
+<a name="line245"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line246"></a>	 * TTL key ~ Get the time to live for a key
+<a name="line247"></a>	 * 
+<a name="line248"></a>	 * Returns the remaining time to live of a key that has a timeout. This introspection capability allows a Redis client to check how many seconds a given key will continue to be part of the dataset.
+<a name="line249"></a>	 * 
+<a name="line250"></a>	 * Time complexity: O(1)
+<a name="line251"></a>	 * 
+<a name="line252"></a>	 * @since: 0.0.7
+<a name="line253"></a>	 * @return int Integer reply: TTL in seconds or -1 when key does not exist or does not have a timeout.
+<a name="line254"></a>	 * @package Redis\Commands\Keys
+<a name="line255"></a>	 */</span>
+<a name="line256"></a>	<span style="color: #000000; font-weight: bold;">class</span> TTL <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line257"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line258"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line259"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line260"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line261"></a>	<span style="color: #009900;">&#125;</span>
+<a name="line262"></a>&nbsp;
+<a name="line263"></a>	<span style="color: #009933; font-style: italic;">/**
+<a name="line264"></a>	 * TYPE key ~ Determine the type stored at key
+<a name="line265"></a>	 * 
+<a name="line266"></a>	 * Returns the string representation of the type of the value stored at key. The different types that can be returned are: string, list, set, zset and hash.
+<a name="line267"></a>	 * 
+<a name="line268"></a>	 * Time complexity: O(1)
+<a name="line269"></a>	 * 
+<a name="line270"></a>	 * @since: 0.0.7
+<a name="line271"></a>	 * @return string Status code reply: type of key, or none when key does not exist.
+<a name="line272"></a>	 * @package Redis\Commands\Keys
+<a name="line273"></a>	 */</span>
+<a name="line274"></a>	<span style="color: #000000; font-weight: bold;">class</span> TYPE <span style="color: #000000; font-weight: bold;">extends</span> RedisCommand <span style="color: #009900;">&#123;</span>
+<a name="line275"></a>		<span style="color: #000000; font-weight: bold;">function</span> validate<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line276"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateEquals</span><span style="color: #009900;">&#40;</span><a href="http://www.php.net/count"><span style="color: #990000;">count</span></a><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #cc66cc;">1</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line277"></a>			RedisCommand<span style="color: #339933;">::</span><span style="color: #004000;">validateKey</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$arguments</span><span style="color: #009900;">&#91;</span><span style="color: #cc66cc;">0</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line278"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line279"></a>&nbsp;
+<a name="line280"></a>		<span style="color: #000000; font-weight: bold;">function</span> output<span style="color: #009900;">&#40;</span><span style="color: #000088;">$line</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line281"></a>			<span style="color: #b1b100;">return</span> <span style="color: #000088;">$line</span><span style="color: #339933;">;</span>
+<a name="line282"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line283"></a>	<span style="color: #009900;">&#125;</span></pre>
 <div class="header">
 <h1>PHP Redis Fast</h1>
 <ul>

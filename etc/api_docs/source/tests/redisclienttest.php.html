@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sat, 25 Jun 2011 12:54:23 +0000">
+<meta name="when" content="Sat, 02 Jul 2011 20:05:06 +0000">
 
 <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 <link rel="start" href="../overview-summary.html">
@@ -82,7 +82,16 @@
 <a name="line44"></a>			<span style="color: #000088;">$client</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">close</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
 <a name="line45"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">assertFalse</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$client</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">connected</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
 <a name="line46"></a>		<span style="color: #009900;">&#125;</span>
-<a name="line47"></a>	<span style="color: #009900;">&#125;</span></pre>
+<a name="line47"></a>&nbsp;
+<a name="line48"></a>		<span style="color: #009933; font-style: italic;">/**
+<a name="line49"></a>		 * Testing QUIT
+<a name="line50"></a>		 */</span>		
+<a name="line51"></a>		<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">function</span> testQuit<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+<a name="line52"></a>			<span style="color: #000088;">$client</span> <span style="color: #339933;">=</span> <span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">connect</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line53"></a>			<span style="color: #000088;">$client</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">QUIT</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line54"></a>			<span style="color: #000088;">$this</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">assertFalse</span><span style="color: #009900;">&#40;</span><span style="color: #000088;">$client</span><span style="color: #339933;">-&gt;</span><span style="color: #004000;">connected</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<a name="line55"></a>		<span style="color: #009900;">&#125;</span>
+<a name="line56"></a>	<span style="color: #009900;">&#125;</span></pre>
 <div class="header">
 <h1>PHP Redis Fast</h1>
 <ul>
