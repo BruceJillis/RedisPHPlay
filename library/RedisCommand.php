@@ -136,7 +136,6 @@
 		 * @throws NotATimestampException if the value is not a valid timestamp
 		 */
 		final function validateNumber($value) {
-			echo $value;
 			if( !(is_float($value) || is_int($value)) )
 				throw new InvalidArgumentException("not an int, or a float");
 		}
