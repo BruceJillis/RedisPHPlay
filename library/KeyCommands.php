@@ -278,10 +278,6 @@
 		}
 
 		function output($line) {
-			$types = array('string', 'list', 'set', 'zset', 'hash');
-			if( !in_array($line, $types) ) {
-				throw new RuntimeException("Redis supplied an unknown type: '{$line}'");
-			}
 			return $line;
 		}
 	}

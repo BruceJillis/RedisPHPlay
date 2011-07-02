@@ -107,10 +107,15 @@
 			if( !$this->connected )
 				throw new NotConnectedException("{$this->address}:{$this->port}");
 			fwrite($this->socket, $command->build($arguments));
-			if( !$command->persistent )
-				return $this->read($command);
-			else
+			if( get_class($command) == 'QUIT' ) {
+				// add special handling for the QUIT command because no reading is allowed after it has been issued
+				$this->close();
+				return;
+			} else if( $command->persistent ) {
 				return new RedisChannel($command, $arguments, $this);
+			} else {
+				return $this->read($command);
+			}
 		}
 
 		/**
