@@ -16,7 +16,7 @@
 		function validate(&$arguments) {
 			$this->validateEquals(count($arguments), 3);
 			$this->validateKey($arguments[0]);
-			$this->validateNumber($arguments[0]);
+			$this->validateNumber($arguments[1]);
 		}
 	}
 
@@ -126,8 +126,10 @@
 			$this->validateKey($arguments[0]);
 			$this->validateInt($arguments[1]);
 			$this->validateInt($arguments[2]);
-			$arguments[3] = strtoupper($arguments[3]);
-			$this->validateEnumerate($arguments[3], array('WITHSCORES'));
+			if( isset($arguments[3]) ) {
+				$arguments[3] = strtoupper($arguments[3]);
+				$this->validateEnumerate($arguments[3], array('WITHSCORES'));
+			}
 		}
 	}
 
