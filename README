@@ -82,7 +82,7 @@ Completion
    |  Hashes         |   100% |   100% |   100% |
    |  Lists          |   100% |   100% |   100% |
    |  Sets           |   100% |   100% |   100% |
-   |  Sorted Sets    |   100% |   100% |     0% |
+   |  Sorted Sets    |   100% |   100% |    52% |
    |  Pub/Sub        |   100% |   100% |     0% |
    |  Transactions   |   100% |   100% |   100% |
    |  Connection     |   100% |   100% |   100% |
@@ -92,7 +92,7 @@ Completion
    | Partitioning    |    10% |     5% |     0% |
    | Replication     |    10% |     5% |     0% |
    ----------------------------------------------
-   (72 tests, 537 assertions)
+   (83 tests, 583 assertions)
       
 Example
 =======

@@ -27,7 +27,7 @@
             <h2>Class Coverage Distribution</h2>
             <canvas id="classCoverageDistribution" width="475" height="200"></canvas>
             <script>
-            var ccd = new RGraph.Bar('classCoverageDistribution', [22,0,0,0,0,0,0,0,1,0,2,86]);
+            var ccd = new RGraph.Bar('classCoverageDistribution', [44,0,0,0,0,0,0,2,1,0,2,94]);
             ccd.Set('chart.background.barcolor1', 'white');
             ccd.Set('chart.background.barcolor2', 'white');
             ccd.Set('chart.colors', ['blue']);
@@ -44,7 +44,7 @@
             <h2>Class Complexity</h2>
             <canvas id="classComplexity" width="475" height="200"></canvas>
             <script>
-            var cc = new RGraph.Scatter('classComplexity', [[100,1,"blue","AUTH"],[100,2,"blue","_ECHO"],[100,2,"blue","PING"],[100,1,"blue","QUIT"],[100,1,"blue","SELECT"],[100,1,"blue","HDEL"],[100,2,"blue","HEXISTS"],[100,1,"blue","HGET"],[100,3,"blue","HGETALL"],[100,1,"blue","HINCRBY"],[100,1,"blue","HKEYS"],[100,1,"blue","HLEN"],[100,1,"blue","HMGET"],[100,1,"blue","HMSET"],[100,1,"blue","HSET"],[100,1,"blue","HSETNX"],[100,1,"blue","HVALS"],[100,2,"blue","DEL"],[100,2,"blue","EXISTS"],[100,2,"blue","EXPIRE"],[100,2,"blue","EXPIREAT"],[100,1,"blue","KEYS"],[100,2,"blue","MOVE"],[100,2,"blue","PERSIST"],[100,2,"blue","RANDOMKEY"],[100,1,"blue","RENAME"],[100,1,"blue","RENAMENX"],[100,1,"blue","SORT"],[100,1,"blue","TTL"],[100,2,"blue","TYPE"],[100,4,"blue","BLPOP"],[100,4,"blue","BRPOP"],[0,1,"blue","BRPOPLPUSH"],[100,1,"blue","LINDEX"],[100,1,"blue","LINSERT"],[100,1,"blue","LLEN"],[100,1,"blue","LPOP"],[100,1,"blue","LPUSH"],[100,1,"blue","LPUSHX"],[100,2,"blue","LRANGE"],[100,1,"blue","LREM"],[100,1,"blue","LSET"],[100,1,"blue","LTRIM"],[100,1,"blue","RPOP"],[100,1,"blue","RPOPLPUSH"],[100,1,"blue","RPUSH"],[100,1,"blue","RPUSHX"],[0,1,"blue","PSUBSCRIBE"],[0,1,"blue","SUBSCRIBE"],[0,1,"blue","PUNSUBSCRIBE"],[0,1,"blue","PUBLISH"],[0,1,"blue","UNSUBSCRIBE"],[78.571428571429,4,"blue","Connection"],[100,1,"blue","CommandBuilder"],[0,3,"blue","Pipeline"],[100,0,"blue","Cluster"],[0,1,"blue","RedisClient"],[0,7,"blue","RedisChannel"],[91.666666666667,23,"blue","RedisCommand"],[100,0,"blue","RedisException"],[100,2,"blue","CouldNotConnectException"],[100,0,"blue","RedisChannelTimeoutException"],[0,1,"blue","RedisServerException"],[0,1,"blue","AlreadyConnectedException"],[0,1,"blue","NotConnectedException"],[0,1,"blue","CouldNotCloseException"],[0,1,"blue","CannotFlushDirectConnectionException"],[100,1,"blue","CommandNotFoundException"],[91.666666666667,2,"blue","RedisManager"],[100,0,"blue","ValidationException"],[0,1,"blue","SmallerThenException"],[0,1,"blue","InvalidKeyException"],[0,1,"blue","NotEqualToException"],[0,1,"blue","NotAnIntException"],[0,1,"blue","NotAnStringException"],[0,1,"blue","NotATimestampException"],[0,1,"blue","NotAGlobStylePatternException"],[0,1,"blue","NotInEnumerationException"],[100,1,"blue","SADD"],[100,1,"blue","SCARD"],[100,2,"blue","SDIFF"],[100,1,"blue","SDIFFSTORE"],[100,2,"blue","SINTER"],[100,2,"blue","SINTERSTORE"],[100,2,"blue","SISMEMBER"],[100,1,"blue","SMEMBERS"],[100,1,"blue","SMOVE"],[100,1,"blue","SPOP"],[100,1,"blue","SRANDMEMBER"],[100,1,"blue","SREM"],[100,2,"blue","SUNION"],[100,2,"blue","SUNIONSTORE"],[100,1,"blue","APPEND"],[100,1,"blue","DECR"],[100,1,"blue","DECRBY"],[100,2,"blue","GET"],[100,1,"blue","GETSET"],[100,1,"blue","INCR"],[100,1,"blue","INCRBY"],[100,2,"blue","MGET"],[100,2,"blue","MSET"],[100,2,"blue","MSETNX"],[100,1,"blue","SET"],[100,1,"blue","SETEX"],[100,2,"blue","SETNX"],[100,1,"blue","STRLEN"],[100,1,"blue","DISCARD"],[100,1,"blue","EXEC"],[100,1,"blue","MULTI"],[100,1,"blue","UNWATCH"],[100,2,"blue","WATCH"]]);
+            var cc = new RGraph.Scatter('classComplexity', [[100,1,"blue","AUTH"],[100,2,"blue","_ECHO"],[100,2,"blue","PING"],[100,1,"blue","QUIT"],[100,1,"blue","SELECT"],[100,1,"blue","HDEL"],[100,2,"blue","HEXISTS"],[100,1,"blue","HGET"],[100,3,"blue","HGETALL"],[100,1,"blue","HINCRBY"],[100,1,"blue","HKEYS"],[100,1,"blue","HLEN"],[100,1,"blue","HMGET"],[100,1,"blue","HMSET"],[100,1,"blue","HSET"],[100,1,"blue","HSETNX"],[100,1,"blue","HVALS"],[100,2,"blue","DEL"],[100,2,"blue","EXISTS"],[100,2,"blue","EXPIRE"],[100,2,"blue","EXPIREAT"],[100,1,"blue","KEYS"],[100,2,"blue","MOVE"],[100,2,"blue","PERSIST"],[100,2,"blue","RANDOMKEY"],[100,1,"blue","RENAME"],[100,1,"blue","RENAMENX"],[100,1,"blue","SORT"],[100,1,"blue","TTL"],[100,2,"blue","TYPE"],[100,4,"blue","BLPOP"],[100,4,"blue","BRPOP"],[0,1,"blue","BRPOPLPUSH"],[100,1,"blue","LINDEX"],[100,1,"blue","LINSERT"],[100,1,"blue","LLEN"],[100,1,"blue","LPOP"],[100,1,"blue","LPUSH"],[100,1,"blue","LPUSHX"],[100,2,"blue","LRANGE"],[100,1,"blue","LREM"],[100,1,"blue","LSET"],[100,1,"blue","LTRIM"],[100,1,"blue","RPOP"],[100,1,"blue","RPOPLPUSH"],[100,1,"blue","RPUSH"],[100,1,"blue","RPUSHX"],[0,1,"blue","PSUBSCRIBE"],[0,1,"blue","SUBSCRIBE"],[0,1,"blue","PUNSUBSCRIBE"],[0,1,"blue","PUBLISH"],[0,1,"blue","UNSUBSCRIBE"],[78.571428571429,4,"blue","Connection"],[100,1,"blue","CommandBuilder"],[0,3,"blue","Pipeline"],[100,0,"blue","Cluster"],[0,1,"blue","RedisClient"],[0,7,"blue","RedisChannel"],[92.307692307692,26,"blue","RedisCommand"],[100,0,"blue","RedisException"],[100,2,"blue","CouldNotConnectException"],[100,0,"blue","RedisChannelTimeoutException"],[0,1,"blue","RedisServerException"],[0,1,"blue","AlreadyConnectedException"],[0,1,"blue","NotConnectedException"],[0,1,"blue","CouldNotCloseException"],[0,1,"blue","CannotFlushDirectConnectionException"],[100,1,"blue","CommandNotFoundException"],[91.666666666667,2,"blue","RedisManager"],[100,0,"blue","ValidationException"],[0,1,"blue","SmallerThenException"],[0,1,"blue","InvalidKeyException"],[0,1,"blue","NotEqualToException"],[0,1,"blue","NotAnIntException"],[0,1,"blue","NotAnStringException"],[0,1,"blue","NotATimestampException"],[0,1,"blue","NotAGlobStylePatternException"],[0,1,"blue","NotInEnumerationException"],[0,1,"blue","BGREWRITEAOF"],[0,1,"blue","BGSAVE"],[0,1,"blue","CONFIG_GET"],[0,1,"blue","CONFIG_SET"],[0,1,"blue","CONFIG_RESETSTAT"],[0,1,"blue","DBSIZE"],[0,1,"blue","DEBUG_OBJECT"],[0,1,"blue","FLUSHALL"],[0,1,"blue","FLUSHDB"],[0,1,"blue","INFO"],[0,1,"blue","LASTSAVE"],[0,1,"blue","MONITOR"],[0,1,"blue","SAVE"],[0,1,"blue","SHUTDOWN"],[0,1,"blue","SLAVEOF"],[0,1,"blue","SLOWLOG"],[100,1,"blue","SADD"],[100,1,"blue","SCARD"],[100,2,"blue","SDIFF"],[100,1,"blue","SDIFFSTORE"],[100,2,"blue","SINTER"],[100,2,"blue","SINTERSTORE"],[100,2,"blue","SISMEMBER"],[100,1,"blue","SMEMBERS"],[100,1,"blue","SMOVE"],[100,1,"blue","SPOP"],[100,1,"blue","SRANDMEMBER"],[100,1,"blue","SREM"],[100,2,"blue","SUNION"],[100,2,"blue","SUNIONSTORE"],[100,1,"blue","ZADD"],[100,1,"blue","ZCARD"],[100,1,"blue","ZCOUNT"],[100,1,"blue","ZINCRBY"],[0,1,"blue","ZINTERSTORE"],[100,2,"blue","ZRANGE"],[66.666666666667,2,"blue","ZRANGEBYSCORE"],[100,1,"blue","ZRANK"],[100,1,"blue","ZREM"],[0,1,"blue","ZREMRANGEBYRANK"],[0,1,"blue","ZREMRANGEBYSCORE"],[66.666666666667,2,"blue","ZREVRANGE"],[0,1,"blue","ZREVRANGEBYSCORE"],[0,1,"blue","ZREVRANK"],[100,1,"blue","ZSCORE"],[0,1,"blue","ZUNIONSTORE"],[100,1,"blue","APPEND"],[100,1,"blue","DECR"],[100,1,"blue","DECRBY"],[100,2,"blue","GET"],[100,1,"blue","GETSET"],[100,1,"blue","INCR"],[100,1,"blue","INCRBY"],[100,2,"blue","MGET"],[100,2,"blue","MSET"],[100,2,"blue","MSETNX"],[100,1,"blue","SET"],[100,1,"blue","SETEX"],[100,2,"blue","SETNX"],[100,1,"blue","STRLEN"],[100,1,"blue","DISCARD"],[100,1,"blue","EXEC"],[100,1,"blue","MULTI"],[100,1,"blue","UNWATCH"],[100,2,"blue","WATCH"]]);
             cc.Set('chart.xmax', 100);
             cc.Set('chart.background.barcolor1', 'white');
             cc.Set('chart.background.barcolor2', 'white');
@@ -61,9 +61,11 @@
             <h2>Top Project Risks</h2>
             <ul>
               <li><a href="htdocs_RedisPHPlay_library_RedisClient.php.html#264">RedisChannel</a> (56)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisCommand.php.html#8">RedisCommand</a> (23)</li>
+              <li><a href="htdocs_RedisPHPlay_library_RedisCommand.php.html#8">RedisCommand</a> (26)</li>
               <li><a href="htdocs_RedisPHPlay_library_RedisClient.php.html#187">Pipeline</a> (12)</li>
               <li><a href="htdocs_RedisPHPlay_library_RedisClient.php.html#4">Connection</a> (4)</li>
+              <li><a href="htdocs_RedisPHPlay_library_SortedSetCommands.php.html#255">ZREVRANGE</a> (2)</li>
+              <li><a href="htdocs_RedisPHPlay_library_SortedSetCommands.php.html#152">ZRANGEBYSCORE</a> (2)</li>
 
             </ul>
           </td>
@@ -71,16 +73,16 @@
           <td valign="top">
             <h2>Least Tested Methods</h2>
             <ul>
-              <li><a href="htdocs_RedisPHPlay_library_RedisExceptions.php.html#80">CannotFlushDirectConnectionException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#17">SmallerThenException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisExceptions.php.html#69">CouldNotCloseException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisExceptions.php.html#58">NotConnectedException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisExceptions.php.html#47">AlreadyConnectedException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#28">InvalidKeyException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#39">NotEqualToException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#83">NotAGlobStylePatternException::__construct</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#104">DEBUG_OBJECT::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#91">DBSIZE::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#120">FLUSHALL::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#135">FLUSHDB::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#150">INFO::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#76">CONFIG_RESETSTAT::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#59">CONFIG_SET::validate</a> (0%)</li>
               <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#94">NotInEnumerationException::__construct</a> (0%)</li>
-              <li><a href="htdocs_RedisPHPlay_library_RedisValidationExceptions.php.html#72">NotATimestampException::__construct</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#12">BGREWRITEAOF::validate</a> (0%)</li>
+              <li><a href="htdocs_RedisPHPlay_library_ServerCommands.php.html#28">BGSAVE::validate</a> (0%)</li>
 
             </ul>
           </td>
@@ -92,7 +94,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.0.4</a> using <a href="http://www.php.net/" target="_top">PHP 5.3.5</a> and PHPUnit 3.5.13 at Sat Jul 2 16:04:13 CEST 2011.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.0.4</a> using <a href="http://www.php.net/" target="_top">PHP 5.3.5</a> and PHPUnit 3.5.13 at Sun Jul 3 1:49:07 CEST 2011.</td></tr>
     </table>
 
     <br/>

@@ -64,6 +64,24 @@
 		}
 
 		/**
+		 * Testing key command ZRANGE WITHSCORES
+		 */		
+		public function testZRangeWithScores() {
+			$client = $this->connect();	
+			$client->DEL('set');
+			$client->ZADD('set', 1, 'a');
+			$client->ZADD('set', 2, 'b');
+			$client->ZADD('set', 3, 'c');
+			$res = $client->ZRANGE('set', 0, -1, 'WITHSCORES');
+			$this->assertEquals('a', $res[0]);
+			$this->assertEquals(1, $res[1]);
+			$this->assertEquals('b', $res[2]);
+			$this->assertEquals(2, $res[3]);
+			$this->assertEquals('c', $res[4]);
+			$this->assertEquals(3, $res[5]);
+		}
+
+		/**
 		 * Testing key command ZINCRBY
 		 */		
 		public function testZIncrBy() {
@@ -123,5 +141,32 @@
 			$client->ZREM('set', 'b');
 			$client->ZREM('set', 'c');
 			$this->assertEquals(0, $client->ZCARD('set'));
+		}
+
+		/**
+		 * Testing key command ZSCORE
+		 */		
+		public function testZScore() {
+			$client = $this->connect();	
+			$client->DEL('set');
+			$client->ZADD('set', 1, 'a');
+			$client->ZADD('set', 2, 'b');
+			$client->ZADD('set', 3, 'c');
+			$this->assertEquals(1, $client->ZSCORE('set', 'a'));
+		}
+
+		/**
+		 * Testing key command ZREVRANGE
+		 */		
+		public function testZRevRange() {
+			$client = $this->connect();	
+			$client->DEL('set');
+			$client->ZADD('set', 1, 'a');
+			$client->ZADD('set', 2, 'b');
+			$client->ZADD('set', 3, 'c');
+			$res = $client->ZREVRANGE('set', 0, -1);
+			$this->assertEquals('c', $res[0]);
+			$this->assertEquals('b', $res[1]);
+			$this->assertEquals('a', $res[2]);
 		}
 	}

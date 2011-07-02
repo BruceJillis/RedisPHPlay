@@ -254,7 +254,7 @@
         </tr>
 
         <tr>
-          <td class="coverItem"><b><a href="#68">PUBLISH</a></b></td>
+          <td class="coverItem"><b><a href="#69">PUBLISH</a></b></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -286,7 +286,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#69">validate(&amp;$arguments)</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#70">validate(&amp;$arguments)</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -309,7 +309,7 @@
         </tr>
 
         <tr>
-          <td class="coverItem"><b><a href="#86">UNSUBSCRIBE</a></b></td>
+          <td class="coverItem"><b><a href="#87">UNSUBSCRIBE</a></b></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -341,7 +341,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#87">validate(&amp;$arguments)</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#88">validate(&amp;$arguments)</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -442,30 +442,31 @@
 <span class="lineNum" id="container64"><a name="64"></a><a href="#64" id="line64">      64</a> </span>                :      *                                                                                                                                                                                           
 <span class="lineNum" id="container65"><a name="65"></a><a href="#65" id="line65">      65</a> </span>                :      * @since: 1.3.8                                                                                                                                                                             
 <span class="lineNum" id="container66"><a name="66"></a><a href="#66" id="line66">      66</a> </span>                :      * @returns int Integer reply: the number of clients that received the message.                                                                                                              
-<span class="lineNum" id="container67"><a name="67"></a><a href="#67" id="line67">      67</a> </span>                :      */                                                                                                                                                                                          
-<span class="lineNum" id="container68"><a name="68"></a><a href="#68" id="line68">      68</a> </span>                :     class PUBLISH extends RedisCommand {                                                                                                                                                         
-<span class="lineNum" id="container69"><a name="69"></a><a href="#69" id="line69">      69</a> </span>                :         function validate(&amp;$arguments) {                                                                                                                                                         
-<span class="lineNum" id="container70"><a name="70"></a><a href="#70" id="line70">      70</a> </span><span class="lineNoCov">              0 :             $this-&gt;validateLargerThenEqual(count($arguments), 1);                                                                                                                                </span>
-<span class="lineNum" id="container71"><a name="71"></a><a href="#71" id="line71">      71</a> </span><span class="lineNoCov">              0 :         }                                                                                                                                                                                        </span>
-<span class="lineNum" id="container72"><a name="72"></a><a href="#72" id="line72">      72</a> </span>                :     }                                                                                                                                                                                            
-<span class="lineNum" id="container73"><a name="73"></a><a href="#73" id="line73">      73</a> </span>                :                                                                                                                                                                                                  
-<span class="lineNum" id="container74"><a name="74"></a><a href="#74" id="line74">      74</a> </span>                :     /**                                                                                                                                                                                          
-<span class="lineNum" id="container75"><a name="75"></a><a href="#75" id="line75">      75</a> </span>                :      * UNSUBSCRIBE [channel [channel ...]] ~ Stop listening for messages posted to the given channels                                                                                            
-<span class="lineNum" id="container76"><a name="76"></a><a href="#76" id="line76">      76</a> </span>                :      *                                                                                                                                                                                           
-<span class="lineNum" id="container77"><a name="77"></a><a href="#77" id="line77">      77</a> </span>                :      * Unsubscribes the client from the given channels, or from all of them if none is given.                                                                                                    
-<span class="lineNum" id="container78"><a name="78"></a><a href="#78" id="line78">      78</a> </span>                :      *                                                                                                                                                                                           
-<span class="lineNum" id="container79"><a name="79"></a><a href="#79" id="line79">      79</a> </span>                :      * When no channels are specified, the client is unsubscribed from all the previously subscribed channels. In this case, a message for every unsubscribed channel will be sent to the client.
-<span class="lineNum" id="container80"><a name="80"></a><a href="#80" id="line80">      80</a> </span>                :      *                                                                                                                                                                                           
-<span class="lineNum" id="container81"><a name="81"></a><a href="#81" id="line81">      81</a> </span>                :      * Time complexity: O(N) where N is the number of clients already subscribed to a channel.                                                                                                   
-<span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span>                :      *                                                                                                                                                                                           
-<span class="lineNum" id="container83"><a name="83"></a><a href="#83" id="line83">      83</a> </span>                :      * @since: 1.3.8                                                                                                                                                                             
-<span class="lineNum" id="container84"><a name="84"></a><a href="#84" id="line84">      84</a> </span>                :      * @package Redis\Commands\PubSub                                                                                                                                                            
-<span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span>                :      */                                                                                                                                                                                          
-<span class="lineNum" id="container86"><a name="86"></a><a href="#86" id="line86">      86</a> </span>                :     class UNSUBSCRIBE extends RedisCommand {                                                                                                                                                     
-<span class="lineNum" id="container87"><a name="87"></a><a href="#87" id="line87">      87</a> </span>                :         function validate(&amp;$arguments) {                                                                                                                                                         
-<span class="lineNum" id="container88"><a name="88"></a><a href="#88" id="line88">      88</a> </span><span class="lineNoCov">              0 :             $this-&gt;validateLargerThenEqual(count($arguments), 0);                                                                                                                                </span>
-<span class="lineNum" id="container89"><a name="89"></a><a href="#89" id="line89">      89</a> </span><span class="lineNoCov">              0 :         }                                                                                                                                                                                        </span>
-<span class="lineNum" id="container90"><a name="90"></a><a href="#90" id="line90">      90</a> </span>                :     }                                                                                                                                                                                            
+<span class="lineNum" id="container67"><a name="67"></a><a href="#67" id="line67">      67</a> </span>                :      * @package Redis\Commands\PubSub                                                                                                                                                            
+<span class="lineNum" id="container68"><a name="68"></a><a href="#68" id="line68">      68</a> </span>                :      */                                                                                                                                                                                          
+<span class="lineNum" id="container69"><a name="69"></a><a href="#69" id="line69">      69</a> </span>                :     class PUBLISH extends RedisCommand {                                                                                                                                                         
+<span class="lineNum" id="container70"><a name="70"></a><a href="#70" id="line70">      70</a> </span>                :         function validate(&amp;$arguments) {                                                                                                                                                         
+<span class="lineNum" id="container71"><a name="71"></a><a href="#71" id="line71">      71</a> </span><span class="lineNoCov">              0 :             $this-&gt;validateLargerThenEqual(count($arguments), 1);                                                                                                                                </span>
+<span class="lineNum" id="container72"><a name="72"></a><a href="#72" id="line72">      72</a> </span><span class="lineNoCov">              0 :         }                                                                                                                                                                                        </span>
+<span class="lineNum" id="container73"><a name="73"></a><a href="#73" id="line73">      73</a> </span>                :     }                                                                                                                                                                                            
+<span class="lineNum" id="container74"><a name="74"></a><a href="#74" id="line74">      74</a> </span>                :                                                                                                                                                                                                  
+<span class="lineNum" id="container75"><a name="75"></a><a href="#75" id="line75">      75</a> </span>                :     /**                                                                                                                                                                                          
+<span class="lineNum" id="container76"><a name="76"></a><a href="#76" id="line76">      76</a> </span>                :      * UNSUBSCRIBE [channel [channel ...]] ~ Stop listening for messages posted to the given channels                                                                                            
+<span class="lineNum" id="container77"><a name="77"></a><a href="#77" id="line77">      77</a> </span>                :      *                                                                                                                                                                                           
+<span class="lineNum" id="container78"><a name="78"></a><a href="#78" id="line78">      78</a> </span>                :      * Unsubscribes the client from the given channels, or from all of them if none is given.                                                                                                    
+<span class="lineNum" id="container79"><a name="79"></a><a href="#79" id="line79">      79</a> </span>                :      *                                                                                                                                                                                           
+<span class="lineNum" id="container80"><a name="80"></a><a href="#80" id="line80">      80</a> </span>                :      * When no channels are specified, the client is unsubscribed from all the previously subscribed channels. In this case, a message for every unsubscribed channel will be sent to the client.
+<span class="lineNum" id="container81"><a name="81"></a><a href="#81" id="line81">      81</a> </span>                :      *                                                                                                                                                                                           
+<span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span>                :      * Time complexity: O(N) where N is the number of clients already subscribed to a channel.                                                                                                   
+<span class="lineNum" id="container83"><a name="83"></a><a href="#83" id="line83">      83</a> </span>                :      *                                                                                                                                                                                           
+<span class="lineNum" id="container84"><a name="84"></a><a href="#84" id="line84">      84</a> </span>                :      * @since: 1.3.8                                                                                                                                                                             
+<span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span>                :      * @package Redis\Commands\PubSub                                                                                                                                                            
+<span class="lineNum" id="container86"><a name="86"></a><a href="#86" id="line86">      86</a> </span>                :      */                                                                                                                                                                                          
+<span class="lineNum" id="container87"><a name="87"></a><a href="#87" id="line87">      87</a> </span>                :     class UNSUBSCRIBE extends RedisCommand {                                                                                                                                                     
+<span class="lineNum" id="container88"><a name="88"></a><a href="#88" id="line88">      88</a> </span>                :         function validate(&amp;$arguments) {                                                                                                                                                         
+<span class="lineNum" id="container89"><a name="89"></a><a href="#89" id="line89">      89</a> </span><span class="lineNoCov">              0 :             $this-&gt;validateLargerThenEqual(count($arguments), 0);                                                                                                                                </span>
+<span class="lineNum" id="container90"><a name="90"></a><a href="#90" id="line90">      90</a> </span><span class="lineNoCov">              0 :         }                                                                                                                                                                                        </span>
+<span class="lineNum" id="container91"><a name="91"></a><a href="#91" id="line91">      91</a> </span>                :     }                                                                                                                                                                                            
 
 </pre>
         </td>
@@ -474,7 +475,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.0.4</a> using <a href="http://www.php.net/" target="_top">PHP 5.3.5</a> and PHPUnit 3.5.13 at Sat Jul 2 16:04:13 CEST 2011.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://github.com/sebastianbergmann/php-code-coverage" target="_top">PHP_CodeCoverage 1.0.4</a> using <a href="http://www.php.net/" target="_top">PHP 5.3.5</a> and PHPUnit 3.5.13 at Sun Jul 3 1:49:07 CEST 2011.</td></tr>
     </table>
 
     <br />
