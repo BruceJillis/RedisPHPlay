@@ -67,6 +67,26 @@
 		}
 
 		/**
+		 * Test SORT
+		 */
+		function testSort() {
+			$client = $this->connect();
+			$client->DEL('key1');
+			$this->assertFalse($client->EXISTS('key1'));
+			$client->LPUSH('key1', 3);
+			$client->LPUSH('key1', 1);
+			$client->LPUSH('key1', 2);
+			$res = $client->SORT('key1');
+			$this->assertEquals('1', $res[0]);
+			$this->assertEquals('2', $res[1]);
+			$this->assertEquals('3', $res[2]);
+			$res = $client->SORT('key1', 'DESC');
+			$this->assertEquals('3', $res[0]);
+			$this->assertEquals('2', $res[1]);
+			$this->assertEquals('1', $res[2]);
+		}
+
+		/**
 		 * Testing key commands SET, EXISTS, EXPIREAT
 		 */		
 		public function testSetExistsExpireAt() {

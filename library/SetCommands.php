@@ -69,8 +69,8 @@
 	class SDIFFSTORE extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateLargerThenEqual(count($arguments), 2);
-			$this->validateKey($argument[0]);
-			$this->validateKey($argument[1]);
+			$this->validateKey($arguments[0]);
+			$this->validateKey($arguments[1]);
 		}
 	}
 
@@ -108,9 +108,9 @@
 	class SINTERSTORE extends RedisCommand {
 		function validate(&$arguments) {
 			$this->validateLargerThenEqual(count($arguments), 2);
-			$this->validateKey($argument[0]);
-			for($i = 1; $i < count($argument); $i++)
-				$this->validateKey($argument[$i]);
+			$this->validateKey($arguments[0]);
+			for($i = 1; $i < count($arguments); $i++)
+				$this->validateKey($arguments[$i]);
 		}
 	}
 
@@ -130,6 +130,10 @@
 			$this->validateEquals(count($arguments), 2);
 			$this->validateKey($arguments[0]);
 			$this->validateKey($arguments[1]);
+		}
+
+		function output($line) {
+			return intval($line) == 1;
 		}
 	}
 

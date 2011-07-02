@@ -17,6 +17,17 @@
 			$this->validateLargerThen(count($arguments), 1);
 			// todo: validation
 		}
+
+		function output($array) {
+			if( $array == null )
+				return null;
+			$array = array_chunk($array, 2);
+			$result = array();
+			foreach($array as $value) {
+				$result[$value[0]] = $value[1];
+			}
+			return $result;
+		}
 	}
 
 	/**
@@ -106,9 +117,10 @@
 	 */
 	class LINSERT extends RedisCommand {
 		function validate(&$arguments) {
-			$this->validateEquals(count($arguments), 2);
+			$this->validateEquals(count($arguments), 4);
 			$this->validateKey($arguments[0]);
-			$this->validateInt($arguments[1]);
+			$arguments[1] = strtoupper($arguments[1]);
+			$this->validateEnumerate($arguments[1], array('BEFORE', 'AFTER'));
 		}
 	}
 

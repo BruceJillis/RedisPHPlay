@@ -238,10 +238,7 @@
 	 */
 	class SORT extends RedisCommand {
 		function validate(&$arguments) {
-		}
-
-		function output($line) {
-			return intval($line) == 1;
+			RedisCommand::validateLargerThenEqual(count($arguments), 1);
 		}
 	}
 

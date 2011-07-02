@@ -42,6 +42,46 @@
 		}
 
 		/**
+		 * Test BLPOP 
+		 */
+		function testBLPop() {
+			$client = $this->connect();
+			$client->DEL('key1');
+			$this->assertFalse($client->EXISTS('key1'));
+			$client->LPUSH('key1', 'a');
+			$this->assertEquals(1, $client->LLEN('key1'));
+			$time = microtime(true);
+			$ans = $client->BLPOP('key1', 1);
+			$this->assertEquals('a', $ans['key1']);
+			$delta = microtime(true) - $time;
+			$this->assertTrue($delta < 0.1);
+			$time = microtime(true);
+			$ans = $client->BLPOP('key1', 1);
+			$delta = microtime(true) - $time;
+			$this->assertTrue($delta > 0.99);
+		}
+
+		/**
+		 * Test BRPOP 
+		 */
+		function testBRPop() {
+			$client = $this->connect();
+			$client->DEL('key1');
+			$this->assertFalse($client->EXISTS('key1'));
+			$client->LPUSH('key1', 'a');
+			$this->assertEquals(1, $client->LLEN('key1'));
+			$time = microtime(true);
+			$ans = $client->BRPOP('key1', 1);
+			$this->assertEquals('a', $ans['key1']);
+			$delta = microtime(true) - $time;
+			$this->assertTrue($delta < 0.1);
+			$time = microtime(true);
+			$ans = $client->BRPOP('key1', 1);
+			$delta = microtime(true) - $time;
+			$this->assertTrue($delta > 0.99);
+		}
+
+		/**
 		 * Test the LPOP command
 		 */
 		function testLPop() {
@@ -70,6 +110,26 @@
 			$client->LPUSH('key1', 'b');
 			$client->LPUSH('key1', 'c');
 			$this->assertTrue($client->EXISTS('key1'));
+			$res = $client->LRANGE('key1', 0, 1);
+			$this->assertEquals('c', $res[0]);
+			$this->assertEquals('b', $res[1]);
+		}
+
+
+		/**
+		 * Test LINSERT
+		 */
+		function testLInsert() {
+			$client = $this->connect();
+			$client->DEL('key1');
+			$this->assertFalse($client->EXISTS('key1'));
+			$client->LPUSH('key1', 'a');
+			$client->LPUSH('key1', 'c');
+			$this->assertTrue($client->EXISTS('key1'));
+			$res = $client->LRANGE('key1', 0, 1);
+			$this->assertEquals('c', $res[0]);
+			$this->assertEquals('a', $res[1]);
+			$client->LINSERT('key1', 'BEFORE', 'a', 'b');
 			$res = $client->LRANGE('key1', 0, 1);
 			$this->assertEquals('c', $res[0]);
 			$this->assertEquals('b', $res[1]);

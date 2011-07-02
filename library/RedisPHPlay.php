@@ -10,4 +10,5 @@
 		require_once('ListCommands.php');
 		require_once('SetCommands.php');
 		require_once('HashesCommands.php');
+		require_once('TransactionCommands.php');
 		require_once('PubSubCommands.php');
