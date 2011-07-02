@@ -36,6 +36,13 @@ Contents
    examples/
       contains a number of examples that show how to work with the library and 
       redis in general.
+         * chat/
+             - a basic irc like chat server based on ajax long polling via jquery, html5's 
+             sessionStorage and redis pub/sub. Supports joining channels via (/join #<channel>) 
+             and sending messages. Tested in chrome, firefox.
+         * pubsub.php
+             - a example showing Pub/Sub functionality using multiple browser windows to simulate concurrent connections.
+
          * basic.php
              - examples of basic operations 
          * hashes.php
@@ -44,16 +51,12 @@ Contents
              - examples of basic list operations 
          * pipelining.php
              - benchmark showing the speedup of pipelining
-         * pubsub.php
-             - a simple example showing Pub/Sub functionality.
          * sets.php
              - some examples of working with sets
+         * sortedsets.php
+             - some examples of working with sorted sets
          * transactions.php
              - some examples of how transactions work in redis
-         * chat/
-             - a basic irc like chat server based on ajax long polling via jquery, html5's 
-             sessionStorage and redis pub/sub. Supports joining channels via (/join #<channel>) 
-             and sending messages. Tested in chrome, firefox.
          * sharding.php
              - (WIP) examples showing the sharding/replication functionality of the library
          * twitter/
