@@ -190,7 +190,7 @@
 			$client = $this->connect();
 			$this->assertEquals($client->SET('a', 10), true);
 			$client->EXPIRE('a', 2);
-			$this->assertEquals(2, $client->TTL('a'));
+			$this->assertTrue($client->TTL('a') <= 2);
 			sleep(3);
 			$this->assertFalse($client->EXISTS('a'));
 			$client->close();

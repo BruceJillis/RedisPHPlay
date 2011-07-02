@@ -44,4 +44,13 @@
 			$client->close();
 			$this->assertFalse($client->connected());
 		}
+
+		/**
+		 * Testing QUIT
+		 */		
+		public function testQuit() {
+			$client = $this->connect();
+			$client->QUIT();
+			$this->assertFalse($client->connected());
+		}
 	}
