@@ -131,11 +131,11 @@
 		}
 
 		/**
-		 * Validate if a value is an glob-style pattern
+		 * Validate if a value is an int or a float.
 		 *
 		 * @throws NotATimestampException if the value is not a valid timestamp
 		 */
-		final function validateEnumerate($value) {
+		final function validateNumber($value) {
 			if( !is_float($value) || !is_int($value) )
 				throw new InvalidArgumentException("not an int, or a float");
 		}

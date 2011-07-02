@@ -82,11 +82,11 @@ Completion
    |  Hashes         |   100% |   100% |   100% |
    |  Lists          |   100% |   100% |   100% |
    |  Sets           |   100% |   100% |   100% |
-   |  Sorted Sets    |     0% |     0% |     0% |
+   |  Sorted Sets    |   100% |   100% |     0% |
    |  Pub/Sub        |   100% |   100% |     0% |
    |  Transactions   |   100% |   100% |   100% |
    |  Connection     |   100% |   100% |   100% |
-   |  Server         |     0% |     0% |     0% |
+   |  Server         |   100% |   100% |     0% |
    ----------------------------------------------
    | Pipelining      |    90% |    10% |     0% |
    | Partitioning    |    10% |     5% |     0% |

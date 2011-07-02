@@ -4,11 +4,13 @@
 	require_once('RedisExceptions.php');
 		require_once('RedisValidationExceptions.php');
 	require_once('RedisCommand.php');
-		require_once('ConnectionCommands.php');
 		require_once('KeyCommands.php');
 		require_once('StringCommands.php');
+		require_once('HashesCommands.php');
 		require_once('ListCommands.php');
 		require_once('SetCommands.php');
-		require_once('HashesCommands.php');
-		require_once('TransactionCommands.php');
+		require_once('SortedSetCommands.php');
 		require_once('PubSubCommands.php');
+		require_once('TransactionCommands.php');
+		require_once('ConnectionCommands.php');
+		require_once('ServerCommands.php');
